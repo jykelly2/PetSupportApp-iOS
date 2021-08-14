@@ -64,6 +64,7 @@ class FavoritePetListVC: UIViewController {
     //MARK:- Custome Methods
     
     func configureUI(){
+        tblFavoritePet.rowHeight = 250
         favPetlists = viewModel.favPetList
     }
 
@@ -112,7 +113,11 @@ extension FavoritePetListVC:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+         let favPetModel = favPetlists[indexPath.row]
+         let petModel = PetModel.init(petName: favPetModel.petName, petImages: [favPetModel.petImage], petCollectionType: "NEW")
+         let vc = self.storyboard?.instantiateViewController(withIdentifier: "AnimalDetailVC") as! AnimalDetailVC
+        vc.petModel = petModel
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }

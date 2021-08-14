@@ -35,9 +35,10 @@ class BreadModalVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        makeRoundView()
+
     }
     override func viewDidLayoutSubviews() {
-        makeRoundView()
     }
    
     func makeRoundView(){
@@ -141,6 +142,7 @@ extension BreadModalVC:UITableViewDelegate,UITableViewDataSource{
 extension BreadModalVC : UITextFieldDelegate{
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        searchView.layer.borderColor = UIColor.purple.cgColor
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

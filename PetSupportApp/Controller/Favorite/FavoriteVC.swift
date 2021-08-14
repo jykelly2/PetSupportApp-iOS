@@ -28,7 +28,7 @@ class FavModel : NSObject {
 //----------------------------------------------------------------------------
 class FavColCell: UICollectionViewCell {
     @IBOutlet weak var lblType : UILabel!
-    @IBOutlet weak var imgRight : UIImageView!
+    @IBOutlet weak var imgSelection : UIImageView!
     override func awakeFromNib() {
         self.lblType.adjustsFontSizeToFitWidth = true
     }
@@ -64,9 +64,7 @@ class FavoriteVC: UIViewController {
     
     //----------------------------------------------------------------------------
     //MARK:- Custome Methods
-    
-    //Desc:- Centre method to call in View
-    
+        
     func setUpView(){
         //self.title = "My Rides"
         self.configureUI()
@@ -106,7 +104,9 @@ class FavoriteVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.setData()
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -138,15 +138,16 @@ extension FavoriteVC : UICollectionViewDataSource, UICollectionViewDelegate,UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavColCell", for: indexPath) as! FavColCell
         let obj = self.FavTypeArray[indexPath.row]
         
-        cell.imgRight.isHidden = indexPath.row == self.FavTypeArray.count - 1 ? true : false
         
         if obj.isSelect{
            // "Ubuntu-Medium"
             cell.lblType.textColor = UIColor(rgb: 0xB80CC9)
             cell.lblType.font = UIFont.init(name: "HelveticaNeue-Medium", size: 20)
+            cell.imgSelection.isHidden = false
         }else{
             cell.lblType.textColor = .black
             cell.lblType.font = UIFont.init(name: "HelveticaNeue", size: 20)
+            cell.imgSelection.isHidden = true
         }
         cell.lblType.text = obj.tilte
         
@@ -179,7 +180,7 @@ extension FavoriteVC : UICollectionViewDataSource, UICollectionViewDelegate,UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        return CGSize(width: self.view.frame.width / 2, height: self.colView.frame.size.height)
+        return CGSize(width: self.colView.frame.width / 2, height: self.colView.frame.size.height)
     }
 }
 
