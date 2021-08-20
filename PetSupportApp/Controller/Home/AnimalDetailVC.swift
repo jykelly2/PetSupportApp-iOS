@@ -118,7 +118,7 @@ class AnimalDetailVC: UIViewController {
     
     @IBAction func optionButtonAction(_ sender: UIButton) {
         
-        let vc = SMain.instantiateViewController(withIdentifier: "OptionVC") as! OptionVC
+        let vc = SHome.instantiateViewController(withIdentifier: "OptionVC") as! OptionVC
         self.addChild(vc)
         vc.delegate = self
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
@@ -133,7 +133,7 @@ class AnimalDetailVC: UIViewController {
         
     @IBAction func scheduleButtonAction(_ sender: UIButton) {
         
-        let vc = SMain.instantiateViewController(withIdentifier: "CreateScheduleModalVC") as! CreateScheduleModalVC
+        let vc = SHome.instantiateViewController(withIdentifier: "CreateScheduleModalVC") as! CreateScheduleModalVC
         self.addChild(vc)
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
@@ -154,7 +154,7 @@ class AnimalDetailVC: UIViewController {
     }
     
     @IBAction func seeShelterDetailButtonAction(_ sender: UIButton) {
-        let vc = SMain.instantiateViewController(withIdentifier: "ShelterDetailVC") as! ShelterDetailVC
+        let vc = SHome.instantiateViewController(withIdentifier: "ShelterDetailVC") as! ShelterDetailVC
         //vc.hidesBottomBarWhenPushed = true
         vc.petModel = petModel
         self.navigationController?.pushViewController(vc, animated: true)
@@ -253,11 +253,11 @@ extension AnimalDetailVC:UIScrollViewDelegate{
 
 extension AnimalDetailVC:OptionVCDelegate{
     func didSelectOption(_ controller: OptionVC, optionname: String) {
-        let vc = SMain.instantiateViewController(withIdentifier: "CreateScheduleModalVC") as! CreateScheduleModalVC
+        let vc = SHome.instantiateViewController(withIdentifier: "CreateScheduleModalVC") as! CreateScheduleModalVC
         self.addChild(vc)
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)
-    }    
+    }
 }
 

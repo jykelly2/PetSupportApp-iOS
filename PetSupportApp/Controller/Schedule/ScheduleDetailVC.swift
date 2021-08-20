@@ -61,6 +61,7 @@ class ScheduleDetailVC: UIViewController {
         case .Approved:
             statusIconView.backgroundColor = .green
             break
+            
         case .Reviewing:
             statusIconView.backgroundColor = .orange
         break

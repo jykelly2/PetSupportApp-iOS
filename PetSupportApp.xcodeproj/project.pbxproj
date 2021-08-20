@@ -23,6 +23,7 @@
 		CE0D43FB26C6ED3300221319 /* PetFavOptionPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D43FA26C6ED3300221319 /* PetFavOptionPopUpVC.swift */; };
 		CE0D43FD26C6FE4700221319 /* FilterItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D43FC26C6FE4700221319 /* FilterItems.swift */; };
 		CE0D4A9026C1CC3D00366CE0 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0D4A8F26C1CC3D00366CE0 /* SearchVC.swift */; };
+		CE0FA7E526CFE52E0070DC2B /* Favourite.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE0FA7E426CFE52E0070DC2B /* Favourite.storyboard */; };
 		CE247A3826C440940075D25B /* DistanceModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE247A3726C440940075D25B /* DistanceModalVC.swift */; };
 		CE247A3A26C440B60075D25B /* AgeModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE247A3926C440B60075D25B /* AgeModalVC.swift */; };
 		CE247A3C26C440DA0075D25B /* BreadModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE247A3B26C440DA0075D25B /* BreadModalVC.swift */; };
@@ -86,6 +87,7 @@
 		CE0D43FA26C6ED3300221319 /* PetFavOptionPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetFavOptionPopUpVC.swift; sourceTree = "<group>"; };
 		CE0D43FC26C6FE4700221319 /* FilterItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItems.swift; sourceTree = "<group>"; };
 		CE0D4A8F26C1CC3D00366CE0 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		CE0FA7E426CFE52E0070DC2B /* Favourite.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Favourite.storyboard; sourceTree = "<group>"; };
 		CE247A3726C440940075D25B /* DistanceModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceModalVC.swift; sourceTree = "<group>"; };
 		CE247A3926C440B60075D25B /* AgeModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeModalVC.swift; sourceTree = "<group>"; };
 		CE247A3B26C440DA0075D25B /* BreadModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreadModalVC.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				CE0AE3B226C0796300D1058B /* ShelterAnnotationView.swift */,
 				CE0AE3B326C0796300D1058B /* ShelterAnnotation.swift */,
 				CEE3529D26C8693B00C3B377 /* Account.storyboard */,
+				CE0FA7E426CFE52E0070DC2B /* Favourite.storyboard */,
 				CEE3529B26C8692C00C3B377 /* Home.storyboard */,
 				CEE3528D26C84FDF00C3B377 /* Schedule.storyboard */,
 				BA388AE826BCEF060073E496 /* LaunchScreen.storyboard */,
@@ -385,6 +388,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE0FA7E526CFE52E0070DC2B /* Favourite.storyboard in Resources */,
 				BA388AEA26BCEF060073E496 /* LaunchScreen.storyboard in Resources */,
 				BA388AE726BCEF060073E496 /* Assets.xcassets in Resources */,
 				CE0AE3B926C079A600D1058B /* Data.plist in Resources */,

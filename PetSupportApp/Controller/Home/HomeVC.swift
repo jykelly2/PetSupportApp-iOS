@@ -281,7 +281,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
     
     
     func goToAnimalDetailVC(_ petModel:PetModel){
-        let vc = SMain.instantiateViewController(withIdentifier: "AnimalDetailVC") as! AnimalDetailVC
+        let vc = SHome.instantiateViewController(withIdentifier: "AnimalDetailVC") as! AnimalDetailVC
         //vc.hidesBottomBarWhenPushed = true
         vc.petModel = petModel
         self.navigationController?.pushViewController(vc, animated: true)
@@ -298,14 +298,14 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
         }else{
         switch filterMenu.filterModalMenu {
         case .BreadModalVC:
-            let destVC:BreadModalVC!  = self.storyboard!.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue) as? BreadModalVC
+            let destVC:BreadModalVC!  = SHome.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue) as? BreadModalVC
             destVC.delegate = self
             self.addChild(destVC)
             destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
             self.view.addSubview(destVC.view)
             destVC.didMove(toParent: self)
         default:
-            let destVC:UIViewController!  = self.storyboard!.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue)
+            let destVC:UIViewController!  = SHome.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue)
             self.addChild(destVC)
             destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
             self.view.addSubview(destVC.view)
@@ -331,7 +331,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
    
     //MARK:- Action Methods
     @IBAction func filterAction(_ sender: UIButton) {
-        let vc = SMain.instantiateViewController(withIdentifier: "FilterVC") as! FilterVC
+        let vc = SHome.instantiateViewController(withIdentifier: "FilterVC") as! FilterVC
             vc.hidesBottomBarWhenPushed = true
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
@@ -339,13 +339,13 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
     }
     
     @IBAction func mapButtonAction(_ sender: UIButton) {
-        let vc = SMain.instantiateViewController(withIdentifier: "MapVC") as! MapVC
+        let vc = SHome.instantiateViewController(withIdentifier: "MapVC") as! MapVC
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func sortButtonAction(_ sender: UIButton) {
-        let destVC = SMain.instantiateViewController(withIdentifier: "SortModalVC") as! SortModalVC
+        let destVC = SHome.instantiateViewController(withIdentifier: "SortModalVC") as! SortModalVC
         self.addChild(destVC)
         destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(destVC.view)
@@ -453,7 +453,7 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
 extension HomeVC:UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
-        let vc = SMain.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
+        let vc = SHome.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
         vc.hidesBottomBarWhenPushed = true
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)

@@ -208,11 +208,11 @@ extension FavoriteVC{
         
         self.pageViewController.delegate = self
         self.pageViewController.dataSource = self
-        let past : FavoritePetListVC = SMain.instantiateViewController(withIdentifier: "FavoritePetListVC") as! FavoritePetListVC
+        let past : FavoritePetListVC = SFavorite.instantiateViewController(withIdentifier: "FavoritePetListVC") as! FavoritePetListVC
        // past.rideType = .Past
         self.arrViewController.append(past)
         
-        let schedule : FavoriteShelterListVC = SMain.instantiateViewController(withIdentifier: "FavoriteShelterListVC") as! FavoriteShelterListVC
+        let schedule : FavoriteShelterListVC = SFavorite.instantiateViewController(withIdentifier: "FavoriteShelterListVC") as! FavoriteShelterListVC
         //schedule.rideType = .Schedule
         self.arrViewController.append(schedule)
         
