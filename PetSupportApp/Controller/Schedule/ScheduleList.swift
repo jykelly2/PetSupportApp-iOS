@@ -119,10 +119,9 @@ extension ScheduleList:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // let scheduleListModel = scheduleLists[indexPath.row]
-        // let petModel = PetModel.init(petName: favPetModel.petName, petImages: [favPetModel.petImage], petCollectionType: "NEW")
+         let scheduleListModel = scheduleLists[indexPath.row]
          let vc = SSchedule.instantiateViewController(withIdentifier: "ScheduleDetailVC") as! ScheduleDetailVC
-       // vc.petModel = petModel
+        vc.scheduleListModel = scheduleListModel
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
