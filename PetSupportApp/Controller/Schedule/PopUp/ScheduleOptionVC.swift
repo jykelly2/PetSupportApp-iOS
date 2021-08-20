@@ -1,19 +1,14 @@
 //
-//  AnimalDetailOptionVC.swift
+//  ScheduleOptionVC.swift
 //  PetSupportApp
 //
-//  Created by Enam on 8/11/21.
+//  Created by Enam on 8/15/21.
 //  Copyright © 2021 Jun K. All rights reserved.
 //
 
 import UIKit
 
-
-protocol OptionVCDelegate {
-    func didSelectOption(_ controller: OptionVC, optionname: String)
-}
-
-class OptionVC: UIViewController {
+class ScheduleOptionVC: UIViewController {
     
     //MARK:- UIControl's Outlets
     
@@ -21,7 +16,7 @@ class OptionVC: UIViewController {
     @IBOutlet weak var mainView : UIView!
     @IBOutlet weak var btnClose : UIButton!
   
-    var delegate: OptionVCDelegate?
+
     //MARK:- View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,16 +62,27 @@ class OptionVC: UIViewController {
         self.dismissAnimation()
     }
     
-    @IBAction func shareButtonAction(_ sender: UIButton) {
+    @IBAction func viewScheduleButtonAction(_ sender: UIButton) {
     }
     
-    @IBAction func favoriteButtonAction(_ sender: UIButton) {
+    @IBAction func viewPetButtonAction(_ sender: UIButton) {
+    }
+    
+    @IBAction func viewShelterButtonAction(_ sender: UIButton) {
+    }
+    
+    @IBAction func cancelScheduleButtonAction(_ sender: UIButton) {
         
     }
         
     @IBAction func scheduleButtonAction(_ sender: UIButton) {
-        delegate?.didSelectOption(self, optionname: "")
-        self.dismissAnimation()
+        /*
+        let vc = SMain.instantiateViewController(withIdentifier: "CreateScheduleModalVC") as! CreateScheduleModalVC
+        self.addChild(vc)
+        vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+        self.view.addSubview(vc.view)
+        vc.didMove(toParent: self)
+        */
     }
     
     

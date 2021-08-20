@@ -1,20 +1,19 @@
 //
-//  FavoriteVC.swift
+//  ScheduleVC.swift
 //  PetSupportApp
 //
-//  Created by Enam on 8/13/21.
+//  Created by Enam on 8/15/21.
 //  Copyright © 2021 Jun K. All rights reserved.
 //
 
-
 import UIKit
 
-enum FAVORITE_TYPE : String {
-    case Pet = "Pets"
-    case Shelter = "Shelters"
+enum SCHEDULE_TYPE : String {
+    case Future = "Future"
+    case Past = "Past"
 }
 
-class TopTabModel : NSObject {
+class ScheduleModel : NSObject {
     var tilte : String!
     var isSelect : Bool = false
     
@@ -26,15 +25,7 @@ class TopTabModel : NSObject {
 //----------------------------------------------------------------------------
 //MARK:- UICollectionViewCell
 //----------------------------------------------------------------------------
-class FavColCell: UICollectionViewCell {
-    @IBOutlet weak var lblType : UILabel!
-    @IBOutlet weak var imgSelection : UIImageView!
-    override func awakeFromNib() {
-        self.lblType.adjustsFontSizeToFitWidth = true
-    }
-}
-
-class FavoriteVC: UIViewController {
+class ScheduleVC: UIViewController {
 
     //----------------------------------------------------------------------------
     //MARK:- UIControl's Outlets
@@ -47,7 +38,7 @@ class FavoriteVC: UIViewController {
     var pageViewController : UIPageViewController   = UIPageViewController()
     var selectIndex : Int                           = 0
     var arrViewController : [UIViewController]      = []
-    var FavTypeArray : [TopTabModel] = []
+    var scheduleTypeArray : [TopTabModel] = []
     
     
     //----------------------------------------------------------------------------
@@ -78,12 +69,12 @@ class FavoriteVC: UIViewController {
     }
     
     func setData(){
-        self.FavTypeArray = []
+        self.scheduleTypeArray = []
         
-        let pet = TopTabModel(tilte: FAVORITE_TYPE.Pet.rawValue)
-        pet.isSelect = true
-        self.FavTypeArray.append(pet)
-        self.FavTypeArray.append(TopTabModel(tilte: FAVORITE_TYPE.Shelter.rawValue))
+        let future = TopTabModel(tilte: SCHEDULE_TYPE.Future.rawValue)
+        future.isSelect = true
+        self.scheduleTypeArray.append(future)
+        self.scheduleTypeArray.append(TopTabModel(tilte: SCHEDULE_TYPE.Past.rawValue))
         self.colView.reloadData()
     }
     
@@ -128,15 +119,15 @@ class FavoriteVC: UIViewController {
 //----------------------------------------------------------------------------
 //MARK:- UICollectionView Method
 //----------------------------------------------------------------------------
-extension FavoriteVC : UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
+extension ScheduleVC : UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.FavTypeArray.count
+        return self.scheduleTypeArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FavColCell", for: indexPath) as! FavColCell
-        let obj = self.FavTypeArray[indexPath.row]
+        let obj = self.scheduleTypeArray[indexPath.row]
         
         
         if obj.isSelect{
@@ -184,12 +175,12 @@ extension FavoriteVC : UICollectionViewDataSource, UICollectionViewDelegate,UICo
     }
 }
 
-extension FavoriteVC{
+extension ScheduleVC{
     
     func setViewSelection(index: Int){
-        if self.FavTypeArray.count > 0 {
-            let obj = self.FavTypeArray[index]
-            self.FavTypeArray  = self.FavTypeArray.filter { (object) -> Bool in
+        if self.scheduleTypeArray.count > 0 {
+            let obj = self.scheduleTypeArray[index]
+            self.scheduleTypeArray  = self.scheduleTypeArray.filter { (object) -> Bool in
                 object.isSelect = false
                 if object.tilte == obj.tilte {
                     object.isSelect = true
@@ -208,13 +199,13 @@ extension FavoriteVC{
         
         self.pageViewController.delegate = self
         self.pageViewController.dataSource = self
-        let past : FavoritePetListVC = SMain.instantiateViewController(withIdentifier: "FavoritePetListVC") as! FavoritePetListVC
+        let future : ScheduleList = SSchedule.instantiateViewController(withIdentifier: "ScheduleList") as! ScheduleList
        // past.rideType = .Past
-        self.arrViewController.append(past)
+        self.arrViewController.append(future)
         
-        let schedule : FavoriteShelterListVC = SMain.instantiateViewController(withIdentifier: "FavoriteShelterListVC") as! FavoriteShelterListVC
+        let past : ScheduleList = SSchedule.instantiateViewController(withIdentifier: "ScheduleList") as! ScheduleList
         //schedule.rideType = .Schedule
-        self.arrViewController.append(schedule)
+        self.arrViewController.append(past)
         
         self.selectIndex = 0
         self.pageViewController.view.frame = CGRect(x: 0, y: 0, width: self.vwPageContainer.frame.size.width, height: self.vwPageContainer.frame.size.height)
@@ -226,7 +217,7 @@ extension FavoriteVC{
     }
 }
 
-extension FavoriteVC : UIPageViewControllerDelegate , UIPageViewControllerDataSource
+extension ScheduleVC : UIPageViewControllerDelegate , UIPageViewControllerDataSource
 {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?{
         

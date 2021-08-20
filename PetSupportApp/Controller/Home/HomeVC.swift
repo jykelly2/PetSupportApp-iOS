@@ -281,7 +281,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
     
     
     func goToAnimalDetailVC(_ petModel:PetModel){
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "AnimalDetailVC") as! AnimalDetailVC
+        let vc = SMain.instantiateViewController(withIdentifier: "AnimalDetailVC") as! AnimalDetailVC
         //vc.hidesBottomBarWhenPushed = true
         vc.petModel = petModel
         self.navigationController?.pushViewController(vc, animated: true)
@@ -331,7 +331,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
    
     //MARK:- Action Methods
     @IBAction func filterAction(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "FilterVC") as! FilterVC
+        let vc = SMain.instantiateViewController(withIdentifier: "FilterVC") as! FilterVC
             vc.hidesBottomBarWhenPushed = true
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
@@ -339,13 +339,13 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
     }
     
     @IBAction func mapButtonAction(_ sender: UIButton) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "MapVC") as! MapVC
+        let vc = SMain.instantiateViewController(withIdentifier: "MapVC") as! MapVC
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func sortButtonAction(_ sender: UIButton) {
-        let destVC = self.storyboard?.instantiateViewController(withIdentifier: "SortModalVC") as! SortModalVC
+        let destVC = SMain.instantiateViewController(withIdentifier: "SortModalVC") as! SortModalVC
         self.addChild(destVC)
         destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(destVC.view)
@@ -453,7 +453,7 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
 extension HomeVC:UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
+        let vc = SMain.instantiateViewController(withIdentifier: "SearchVC") as! SearchVC
         vc.hidesBottomBarWhenPushed = true
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)

@@ -72,7 +72,7 @@ class FavoritePetListVC: UIViewController {
     //MARK:- Action Methods
     @objc func optionButtonAction(_ sender:UIButton){
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "PetFavOptionPopUpVC") as! PetFavOptionPopUpVC
+        let vc = SMain.instantiateViewController(withIdentifier: "PetFavOptionPopUpVC") as! PetFavOptionPopUpVC
         self.addChild(vc)
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
@@ -115,7 +115,7 @@ extension FavoritePetListVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          let favPetModel = favPetlists[indexPath.row]
          let petModel = PetModel.init(petName: favPetModel.petName, petImages: [favPetModel.petImage], petCollectionType: "NEW")
-         let vc = self.storyboard?.instantiateViewController(withIdentifier: "AnimalDetailVC") as! AnimalDetailVC
+         let vc = SMain.instantiateViewController(withIdentifier: "AnimalDetailVC") as! AnimalDetailVC
         vc.petModel = petModel
         self.navigationController?.pushViewController(vc, animated: true)
     }

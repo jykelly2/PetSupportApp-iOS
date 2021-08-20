@@ -21,6 +21,12 @@ enum FilterModalMenu :String {
     case Filter
 }
 
+enum Pet_Status :String {
+    case Approved
+    case Reviewing
+    case InProgress = "In progress"
+}
+
 
 enum DateTimeFormaterEnum : String
 {

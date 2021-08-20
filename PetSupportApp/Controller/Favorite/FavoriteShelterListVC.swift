@@ -54,7 +54,7 @@ class FavoriteShelterListVC: UIViewController  {
     //MARK:- Action Methods
     @objc func optionButtonAction(_ sender:UIButton){
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ShelterFavOptionPopUpVC") as! ShelterFavOptionPopUpVC
+        let vc = SMain.instantiateViewController(withIdentifier: "ShelterFavOptionPopUpVC") as! ShelterFavOptionPopUpVC
         self.addChild(vc)
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)

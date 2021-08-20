@@ -100,7 +100,29 @@ final class PetViewModel {
             return list
         }
     }
+    
+    var scheduleList: [ScheduleListModel] {
+        get {
+            var list: [ScheduleListModel] = []
+            list.append(ScheduleListModel(petName: "Sloan", petStatus: Pet_Status.Approved, date: "2021/06/09", petImage: "pet1"))
+            list.append(ScheduleListModel(petName: "Nahla", petStatus: Pet_Status.Reviewing, date: "2021/09/09", petImage: "pet2"))
+            list.append(ScheduleListModel(petName: "Bingo", petStatus: Pet_Status.InProgress, date: "2021/08/09", petImage: "pet5"))
+            list.append(ScheduleListModel(petName: "Terry", petStatus: Pet_Status.Reviewing, date: "2021/11/09", petImage: "pet4"))
 
+            return list
+        }
+    }
+
+    var idealPetList: [IdealPetModel] {
+        get {
+            var list: [IdealPetModel] = []
+            list.append(IdealPetModel(title: "Dog", icon: "pet1"))
+            list.append(IdealPetModel(title: "Cat", icon: "pet1"))
+            list.append(IdealPetModel(title: "Other", icon: "pet1"))
+
+            return list
+        }
+    }
 
 
 }
@@ -137,6 +159,13 @@ struct SearchModel {
     var searchItems:[String]
     
 }
+struct ScheduleListModel {
+    var petName: String
+    var petStatus: Pet_Status
+    var date: String
+    var petImage: String
+}
+
 
 struct FavPetModel {
     var petName: String
@@ -149,6 +178,27 @@ struct FavShelterModel {
     var shelterName: String
     var shelterImage: String
 }
+
+struct IdealPetModel: Codable {
+    var title: String
+    var icon: String
+}
+
+struct Account: Codable {
+    
+    var title: String
+    var icon: String
+    var identifier: String
+}
+
+extension Account {
+    init(_ account : Dictionary<String,Any>){
+        title = account["title"] as? String ?? ""
+        icon = account["icon"] as? String ?? ""
+        identifier = account["identifier"] as? String ?? ""
+    }
+}
+
 
 
 class FilterMenu : NSObject {

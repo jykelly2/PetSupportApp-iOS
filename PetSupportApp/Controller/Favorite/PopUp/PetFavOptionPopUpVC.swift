@@ -77,7 +77,7 @@ class PetFavOptionPopUpVC: UIViewController {
         
     @IBAction func scheduleButtonAction(_ sender: UIButton) {
         
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "CreateScheduleModalVC") as! CreateScheduleModalVC
+        let vc = SMain.instantiateViewController(withIdentifier: "CreateScheduleModalVC") as! CreateScheduleModalVC
         self.addChild(vc)
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)

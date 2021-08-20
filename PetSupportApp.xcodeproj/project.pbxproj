@@ -37,6 +37,8 @@
 		CE29F86E26C5DCA1008DCA60 /* FavoriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29F86D26C5DCA1008DCA60 /* FavoriteVC.swift */; };
 		CE29F87026C5DCC4008DCA60 /* FavoritePetListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29F86F26C5DCC4008DCA60 /* FavoritePetListVC.swift */; };
 		CE29F87226C5DCD9008DCA60 /* FavoriteShelterListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29F87126C5DCD9008DCA60 /* FavoriteShelterListVC.swift */; };
+		CE57944E26CD8115001BB55B /* AboutMeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE57944D26CD8115001BB55B /* AboutMeVC.swift */; };
+		CE57945026CD8FE2001BB55B /* IdealPetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE57944F26CD8FE2001BB55B /* IdealPetVC.swift */; };
 		CE69B60026C2989100BDBE57 /* ShelterDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69B5FF26C2989100BDBE57 /* ShelterDetailVC.swift */; };
 		CE75838426BEF6430028E99C /* PetTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE75838326BEF6430028E99C /* PetTabBarController.swift */; };
 		CE75838626BF2D980028E99C /* PetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE75838526BF2D980028E99C /* PetModel.swift */; };
@@ -44,8 +46,25 @@
 		CE84B0D226C18F3C00667594 /* Shelter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE84B0D126C18F3C00667594 /* Shelter.swift */; };
 		CE897DAA26C31C6100A33D8E /* OptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE897DA926C31C6000A33D8E /* OptionVC.swift */; };
 		CE96EB6A26C083750071009C /* FilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE96EB6926C083750071009C /* FilterVC.swift */; };
+		CEB0B7D526CC4B5000065F66 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0B7D426CC4B5000065F66 /* LoginVC.swift */; };
+		CEB0B7D726CC588500065F66 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0B7D626CC588500065F66 /* SignUpVC.swift */; };
+		CEB0B7D926CC631900065F66 /* EditAcountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0B7D826CC631900065F66 /* EditAcountVC.swift */; };
+		CEB0B7DB26CC6D5100065F66 /* AdopterProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0B7DA26CC6D5100065F66 /* AdopterProfileVC.swift */; };
+		CED6608C26CF046A006EF167 /* IdealPetDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED6608B26CF046A006EF167 /* IdealPetDetailsVC.swift */; };
 		CEDF3F8B26C13CAC00057B1F /* AppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDF3F8A26C13CAC00057B1F /* AppExtension.swift */; };
 		CEDF3F8E26C15EE900057B1F /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDF3F8D26C15EE900057B1F /* Animal.swift */; };
+		CEE2788626CC1F1600CAEE85 /* AccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2788526CC1F1600CAEE85 /* AccountVC.swift */; };
+		CEE2788A26CC32AE00CAEE85 /* SignInModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2788926CC32AE00CAEE85 /* SignInModalVC.swift */; };
+		CEE2788C26CC397600CAEE85 /* SettingInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2788B26CC397600CAEE85 /* SettingInfoVC.swift */; };
+		CEE3528E26C84FDF00C3B377 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE3528D26C84FDF00C3B377 /* Schedule.storyboard */; };
+		CEE3529026C8505800C3B377 /* GConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE3528F26C8505800C3B377 /* GConstants.swift */; };
+		CEE3529326C856A800C3B377 /* ScheduleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE3529226C856A800C3B377 /* ScheduleList.swift */; };
+		CEE3529726C856E100C3B377 /* ScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE3529626C856E100C3B377 /* ScheduleVC.swift */; };
+		CEE3529A26C8658500C3B377 /* ScheduleOptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE3529926C8658500C3B377 /* ScheduleOptionVC.swift */; };
+		CEE3529C26C8692C00C3B377 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE3529B26C8692C00C3B377 /* Home.storyboard */; };
+		CEE3529E26C8693B00C3B377 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE3529D26C8693B00C3B377 /* Account.storyboard */; };
+		CEE352A026C86AB100C3B377 /* ScheduleDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE3529F26C86AB100C3B377 /* ScheduleDetailVC.swift */; };
+		CEE352A226C87F6200C3B377 /* ConfirmScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE352A126C87F6200C3B377 /* ConfirmScheduleVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +100,8 @@
 		CE29F86D26C5DCA1008DCA60 /* FavoriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteVC.swift; sourceTree = "<group>"; };
 		CE29F86F26C5DCC4008DCA60 /* FavoritePetListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePetListVC.swift; sourceTree = "<group>"; };
 		CE29F87126C5DCD9008DCA60 /* FavoriteShelterListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteShelterListVC.swift; sourceTree = "<group>"; };
+		CE57944D26CD8115001BB55B /* AboutMeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeVC.swift; sourceTree = "<group>"; };
+		CE57944F26CD8FE2001BB55B /* IdealPetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdealPetVC.swift; sourceTree = "<group>"; };
 		CE69B5FF26C2989100BDBE57 /* ShelterDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelterDetailVC.swift; sourceTree = "<group>"; };
 		CE75838326BEF6430028E99C /* PetTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTabBarController.swift; sourceTree = "<group>"; };
 		CE75838526BF2D980028E99C /* PetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetModel.swift; sourceTree = "<group>"; };
@@ -88,8 +109,25 @@
 		CE84B0D126C18F3C00667594 /* Shelter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shelter.swift; sourceTree = "<group>"; };
 		CE897DA926C31C6000A33D8E /* OptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionVC.swift; sourceTree = "<group>"; };
 		CE96EB6926C083750071009C /* FilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterVC.swift; sourceTree = "<group>"; };
+		CEB0B7D426CC4B5000065F66 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		CEB0B7D626CC588500065F66 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		CEB0B7D826CC631900065F66 /* EditAcountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAcountVC.swift; sourceTree = "<group>"; };
+		CEB0B7DA26CC6D5100065F66 /* AdopterProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdopterProfileVC.swift; sourceTree = "<group>"; };
+		CED6608B26CF046A006EF167 /* IdealPetDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdealPetDetailsVC.swift; sourceTree = "<group>"; };
 		CEDF3F8A26C13CAC00057B1F /* AppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtension.swift; sourceTree = "<group>"; };
 		CEDF3F8D26C15EE900057B1F /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
+		CEE2788526CC1F1600CAEE85 /* AccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVC.swift; sourceTree = "<group>"; };
+		CEE2788926CC32AE00CAEE85 /* SignInModalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInModalVC.swift; sourceTree = "<group>"; };
+		CEE2788B26CC397600CAEE85 /* SettingInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingInfoVC.swift; sourceTree = "<group>"; };
+		CEE3528D26C84FDF00C3B377 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
+		CEE3528F26C8505800C3B377 /* GConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GConstants.swift; sourceTree = "<group>"; };
+		CEE3529226C856A800C3B377 /* ScheduleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleList.swift; sourceTree = "<group>"; };
+		CEE3529626C856E100C3B377 /* ScheduleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleVC.swift; sourceTree = "<group>"; };
+		CEE3529926C8658500C3B377 /* ScheduleOptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleOptionVC.swift; sourceTree = "<group>"; };
+		CEE3529B26C8692C00C3B377 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		CEE3529D26C8693B00C3B377 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
+		CEE3529F26C86AB100C3B377 /* ScheduleDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDetailVC.swift; sourceTree = "<group>"; };
+		CEE352A126C87F6200C3B377 /* ConfirmScheduleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmScheduleVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +219,9 @@
 				CE0AE3B626C0797E00D1058B /* ClusterView.swift */,
 				CE0AE3B226C0796300D1058B /* ShelterAnnotationView.swift */,
 				CE0AE3B326C0796300D1058B /* ShelterAnnotation.swift */,
+				CEE3529D26C8693B00C3B377 /* Account.storyboard */,
+				CEE3529B26C8692C00C3B377 /* Home.storyboard */,
+				CEE3528D26C84FDF00C3B377 /* Schedule.storyboard */,
 				BA388AE826BCEF060073E496 /* LaunchScreen.storyboard */,
 				BA388AE326BCEF030073E496 /* Main.storyboard */,
 			);
@@ -202,6 +243,8 @@
 			isa = PBXGroup;
 			children = (
 				CE75838326BEF6430028E99C /* PetTabBarController.swift */,
+				CEE2788726CC1F1E00CAEE85 /* Account */,
+				CEE3529126C8565E00C3B377 /* Schedule */,
 				CE29F86C26C5DC5B008DCA60 /* Favorite */,
 				CE0AE3AD26BFE2F400D1058B /* Home */,
 			);
@@ -223,6 +266,7 @@
 				CEDF3F8A26C13CAC00057B1F /* AppExtension.swift */,
 				CE247A4726C44B390075D25B /* PSGEnum.swift */,
 				CE0D43FC26C6FE4700221319 /* FilterItems.swift */,
+				CEE3528F26C8505800C3B377 /* GConstants.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -236,6 +280,51 @@
 				CE84B0CF26C18EB000667594 /* Schedule.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		CEE2788726CC1F1E00CAEE85 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				CEE2788526CC1F1600CAEE85 /* AccountVC.swift */,
+				CE57944F26CD8FE2001BB55B /* IdealPetVC.swift */,
+				CED6608B26CF046A006EF167 /* IdealPetDetailsVC.swift */,
+				CE57944D26CD8115001BB55B /* AboutMeVC.swift */,
+				CEB0B7DA26CC6D5100065F66 /* AdopterProfileVC.swift */,
+				CEB0B7D826CC631900065F66 /* EditAcountVC.swift */,
+				CEB0B7D626CC588500065F66 /* SignUpVC.swift */,
+				CEB0B7D426CC4B5000065F66 /* LoginVC.swift */,
+				CEE2788B26CC397600CAEE85 /* SettingInfoVC.swift */,
+				CEE2788826CC329700CAEE85 /* PopUp */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		CEE2788826CC329700CAEE85 /* PopUp */ = {
+			isa = PBXGroup;
+			children = (
+				CEE2788926CC32AE00CAEE85 /* SignInModalVC.swift */,
+			);
+			path = PopUp;
+			sourceTree = "<group>";
+		};
+		CEE3529126C8565E00C3B377 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				CEE3529826C8655600C3B377 /* PopUp */,
+				CEE3529626C856E100C3B377 /* ScheduleVC.swift */,
+				CEE3529226C856A800C3B377 /* ScheduleList.swift */,
+				CEE3529F26C86AB100C3B377 /* ScheduleDetailVC.swift */,
+				CEE352A126C87F6200C3B377 /* ConfirmScheduleVC.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		CEE3529826C8655600C3B377 /* PopUp */ = {
+			isa = PBXGroup;
+			children = (
+				CEE3529926C8658500C3B377 /* ScheduleOptionVC.swift */,
+			);
+			path = PopUp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,7 +388,10 @@
 				BA388AEA26BCEF060073E496 /* LaunchScreen.storyboard in Resources */,
 				BA388AE726BCEF060073E496 /* Assets.xcassets in Resources */,
 				CE0AE3B926C079A600D1058B /* Data.plist in Resources */,
+				CEE3529C26C8692C00C3B377 /* Home.storyboard in Resources */,
 				BA388AE526BCEF030073E496 /* Main.storyboard in Resources */,
+				CEE3528E26C84FDF00C3B377 /* Schedule.storyboard in Resources */,
+				CEE3529E26C8693B00C3B377 /* Account.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +402,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE57944E26CD8115001BB55B /* AboutMeVC.swift in Sources */,
 				BA388AE226BCEF030073E496 /* HomeVC.swift in Sources */,
 				CE247A4226C441730075D25B /* ShelterRescueModalVC.swift in Sources */,
 				CE247A3C26C440DA0075D25B /* BreadModalVC.swift in Sources */,
@@ -317,31 +410,46 @@
 				CE29F86E26C5DCA1008DCA60 /* FavoriteVC.swift in Sources */,
 				CE84B0D226C18F3C00667594 /* Shelter.swift in Sources */,
 				CE96EB6A26C083750071009C /* FilterVC.swift in Sources */,
+				CEE3529026C8505800C3B377 /* GConstants.swift in Sources */,
 				CE0D43F926C6ED2100221319 /* ShelterFavOptionPopUpVC.swift in Sources */,
 				CE75838426BEF6430028E99C /* PetTabBarController.swift in Sources */,
+				CEE352A026C86AB100C3B377 /* ScheduleDetailVC.swift in Sources */,
 				CEDF3F8E26C15EE900057B1F /* Animal.swift in Sources */,
+				CEE3529326C856A800C3B377 /* ScheduleList.swift in Sources */,
 				CEDF3F8B26C13CAC00057B1F /* AppExtension.swift in Sources */,
 				CE247A4626C441AD0075D25B /* CoatLengthModalVC.swift in Sources */,
 				CE247A3826C440940075D25B /* DistanceModalVC.swift in Sources */,
 				CE247A4026C441410075D25B /* GoodWithModalVC.swift in Sources */,
 				BA388ADE26BCEF030073E496 /* AppDelegate.swift in Sources */,
 				CE29F87026C5DCC4008DCA60 /* FavoritePetListVC.swift in Sources */,
+				CE57945026CD8FE2001BB55B /* IdealPetVC.swift in Sources */,
 				CE247A3E26C441220075D25B /* SizeModalVC.swift in Sources */,
 				CE247A4A26C467EA0075D25B /* SortModalVC.swift in Sources */,
 				CE0AE3B726C0797E00D1058B /* ClusterView.swift in Sources */,
+				CEB0B7D526CC4B5000065F66 /* LoginVC.swift in Sources */,
 				CE247A3A26C440B60075D25B /* AgeModalVC.swift in Sources */,
+				CED6608C26CF046A006EF167 /* IdealPetDetailsVC.swift in Sources */,
 				CE0D43FB26C6ED3300221319 /* PetFavOptionPopUpVC.swift in Sources */,
 				CE0D4A9026C1CC3D00366CE0 /* SearchVC.swift in Sources */,
 				CE75838626BF2D980028E99C /* PetModel.swift in Sources */,
 				CE0D43FD26C6FE4700221319 /* FilterItems.swift in Sources */,
 				CE0AE3B126C061BD00D1058B /* MapVC.swift in Sources */,
 				CE0AE3B526C0796300D1058B /* ShelterAnnotation.swift in Sources */,
+				CEB0B7D926CC631900065F66 /* EditAcountVC.swift in Sources */,
+				CEE352A226C87F6200C3B377 /* ConfirmScheduleVC.swift in Sources */,
 				BA388AE026BCEF030073E496 /* SceneDelegate.swift in Sources */,
 				CE29F86A26C59ECD008DCA60 /* CreateScheduleModalVC.swift in Sources */,
+				CEE3529A26C8658500C3B377 /* ScheduleOptionVC.swift in Sources */,
+				CEE2788C26CC397600CAEE85 /* SettingInfoVC.swift in Sources */,
 				CE247A4826C44B390075D25B /* PSGEnum.swift in Sources */,
+				CEB0B7D726CC588500065F66 /* SignUpVC.swift in Sources */,
 				CE29F87226C5DCD9008DCA60 /* FavoriteShelterListVC.swift in Sources */,
+				CEE2788A26CC32AE00CAEE85 /* SignInModalVC.swift in Sources */,
 				CE0AE3AF26BFE35F00D1058B /* AnimalDetailVC.swift in Sources */,
 				CE897DAA26C31C6100A33D8E /* OptionVC.swift in Sources */,
+				CEB0B7DB26CC6D5100065F66 /* AdopterProfileVC.swift in Sources */,
+				CEE3529726C856E100C3B377 /* ScheduleVC.swift in Sources */,
+				CEE2788626CC1F1600CAEE85 /* AccountVC.swift in Sources */,
 				CE84B0D026C18EB000667594 /* Schedule.swift in Sources */,
 				CE69B60026C2989100BDBE57 /* ShelterDetailVC.swift in Sources */,
 				CE0AE3B426C0796300D1058B /* ShelterAnnotationView.swift in Sources */,

@@ -112,8 +112,8 @@ class CreateScheduleModalVC: UIViewController {
         datePicker.date = Date()
         datePicker.locale = .current
 
-        if #available(iOS 13.4, *) {
-            datePicker.preferredDatePickerStyle = .wheels
+        if #available(iOS 14.0, *) {
+            datePicker.preferredDatePickerStyle = .inline
         } else {
             // Fallback on earlier versions
         }
@@ -201,6 +201,9 @@ class CreateScheduleModalVC: UIViewController {
     
     @IBAction func scheduleButtonAction(_ sender: UIButton) {
         self.dismissAnimation()
+        let vc = SSchedule.instantiateViewController(withIdentifier: "ConfirmScheduleVC") as! ConfirmScheduleVC
+      // vc.petModel = petModel
+       self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }
