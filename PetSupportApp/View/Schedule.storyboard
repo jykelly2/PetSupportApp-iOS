@@ -742,7 +742,7 @@
                                                         <color key="textColor" red="0.9027213784" green="0.16736618789999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b7Y-qK-AQU">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="visa-card" translatesAutoresizingMaskIntoConstraints="NO" id="b7Y-qK-AQU">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="2vV-nH-0WF"/>
@@ -1289,7 +1289,7 @@
                                                         <color key="textColor" red="0.9027213784" green="0.16736618789999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w5B-lv-4jp">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="visa-card" translatesAutoresizingMaskIntoConstraints="NO" id="w5B-lv-4jp">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="Ebz-aG-zns"/>
@@ -1526,6 +1526,7 @@
         <image name="diamondinruff" width="154" height="117"/>
         <image name="option" width="40" height="40"/>
         <image name="view_profile" width="40" height="40"/>
+        <image name="visa-card" width="40" height="40"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
