@@ -22,6 +22,8 @@ class OptionVC: UIViewController {
     @IBOutlet weak var btnClose : UIButton!
   
     var delegate: OptionVCDelegate?
+    var petModel: PetModel?
+
     //MARK:- View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,9 @@ class OptionVC: UIViewController {
     
     func configureUI(){
         //self.mainView.alpha = 0.0
+        if let _petModel = petModel {
+            lblPetName.text = _petModel.petName
+        }
         self.view.backgroundColor = .clear
         self.presentAnimation()
     }

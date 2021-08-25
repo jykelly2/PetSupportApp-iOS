@@ -8,6 +8,9 @@
 
 import UIKit
 
+@objc protocol CoatLengthModalVCDelegate {
+    @objc func didSelectItem(_ isSelect: Bool)
+}
 class CoatLengthModalVC: UIViewController {
     //MARK:- UIControl's Outlets
     
@@ -24,6 +27,7 @@ class CoatLengthModalVC: UIViewController {
     @IBOutlet private var optionContainerVw: UIView!
 
     //MARK:- Class Variables
+    weak var delegate: CoatLengthModalVCDelegate?
     var optionBtnArray:[UIButton] = []
 
     //MARK:- View life cycle
@@ -76,7 +80,13 @@ class CoatLengthModalVC: UIViewController {
     func configureUI(){
         //self.mainView.alpha = 0.0
         optionBtnArray = [btnhairLess,btnShort,btnMedium,btnLong,btnWire,btnCurly]
-
+        for btn in optionBtnArray {
+            if FilterItems.shared.isAlreadyItemSelected(btn.titleLabel?.text ?? "") {
+                btn.backgroundColor = UIColor.init(rgb: 0x6e0b9c)
+                btn.setTitleColor(.white, for: .normal)
+            }
+           
+        }
         self.view.backgroundColor = .clear
         self.presentAnimation()
     }
@@ -104,6 +114,7 @@ class CoatLengthModalVC: UIViewController {
     
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
+        self.delegate?.didSelectItem(true)
         self.dismissAnimation()
     }
     
@@ -111,8 +122,11 @@ class CoatLengthModalVC: UIViewController {
         for btn in optionBtnArray {
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(.black, for: .normal)
+            if btn.isSelected {
+                FilterItems.shared.removeItem(btn.titleLabel?.text ?? "")
+            }
         }
-        
+        FilterItems.shared.addItem(sender.titleLabel?.text ?? "")
         sender.backgroundColor = UIColor.init(rgb: 0x6e0b9c)
         sender.setTitleColor(.white, for: .normal)
 

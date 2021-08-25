@@ -9,6 +9,7 @@
 import UIKit
 
 class AboutMeVC: UIViewController {
+    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var yardSV: UIStackView!
     @IBOutlet weak var outdoorSV: UIStackView!
     @IBOutlet weak var kidsSV: UIStackView!
@@ -37,6 +38,13 @@ class AboutMeVC: UIViewController {
     @IBOutlet weak var btnOutDoorArea: UIButton!
     @IBOutlet weak var btnNearByPark: UIButton!
     
+    var isPetOwnerTypeSelected:Bool = false
+    var isYardSelected:Bool = false
+    var isAdoptingTypeSelected:Bool = false
+    var isHomePetTypeSelected:Bool = false
+    var isKidsOptionSelected:Bool = false
+    var isParkSelected:Bool = false
+
     
     var yardBtnArray:[UIButton] = []
     var kidsBtnArray:[UIButton] = []
@@ -44,6 +52,8 @@ class AboutMeVC: UIViewController {
     var currentPetBtnArray:[UIButton] = []
     var petOwnerBtnTypeArray:[UIButton] = []
     var outDoorParkBtnTypeArray:[UIButton] = []
+    var total:Float = 6.0
+    var totalOptionFillup:Float = 0.0
 
     
     override func viewDidLoad() {
@@ -57,6 +67,8 @@ class AboutMeVC: UIViewController {
         yardBtnArray = [btnNoYard,btnFenchedYard,btnOpenYard]
         petOwnerBtnTypeArray = [btnFirst,btnPrevious,btnCurrent]
         outDoorParkBtnTypeArray = [btnOutDoorArea,btnNearByPark]
+        
+        progressView.progress = 0.0/total
     }
     
     override func viewDidLayoutSubviews() {
@@ -127,6 +139,11 @@ class AboutMeVC: UIViewController {
         
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
+        if !isPetOwnerTypeSelected {
+            isPetOwnerTypeSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
 
     }
     
@@ -138,7 +155,11 @@ class AboutMeVC: UIViewController {
         
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
-
+        if !isHomePetTypeSelected {
+            isHomePetTypeSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
     
     @IBAction func adoptingButtonAction(_ sender:UIButton){
@@ -149,7 +170,11 @@ class AboutMeVC: UIViewController {
         
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
-
+        if !isAdoptingTypeSelected {
+            isAdoptingTypeSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
     
     @IBAction func kidsButtonAction(_ sender:UIButton){
@@ -161,6 +186,11 @@ class AboutMeVC: UIViewController {
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
+        if !isKidsOptionSelected {
+            isKidsOptionSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
     
     @IBAction func yardButtonAction(_ sender:UIButton){
@@ -172,6 +202,11 @@ class AboutMeVC: UIViewController {
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
+        if !isYardSelected {
+            isYardSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
     
     @IBAction func outDoorParkButtonAction(_ sender:UIButton){
@@ -182,7 +217,11 @@ class AboutMeVC: UIViewController {
         
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
-
+        if !isParkSelected {
+            isParkSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
    
 

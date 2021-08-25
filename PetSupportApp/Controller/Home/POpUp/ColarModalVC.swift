@@ -8,6 +8,9 @@
 
 import UIKit
 
+@objc protocol ColarModalVCDelegate {
+    @objc func didSelectItem(_ isSelect: Bool)
+}
 class ColorTableViewCell: UITableViewCell {
     //MARK:- UIControl's Outlets
     @IBOutlet weak var containerView: UIView!
@@ -17,9 +20,15 @@ class ColorTableViewCell: UITableViewCell {
 
      var colorModel: ColorModel? {
         didSet{
-            if let _colorModel = colorModel {
+            if var _colorModel = colorModel {
                 lblColorName.text = _colorModel.colorName
                 colorView.backgroundColor = _colorModel.color
+                if FilterItems.shared.isAlreadyItemSelected(_colorModel.colorName) {
+                    _colorModel.isSelected = true
+                }else{
+                    _colorModel.isSelected = false
+                }
+                btnCheck.isSelected = _colorModel.isSelected
                 btnCheck.setBackgroundImage(UIImage(named: "uncheck_box_icon"), for: .normal)
                 btnCheck.setBackgroundImage(UIImage(named: "check_box_icon"), for: .selected)
                 btnCheck.isSelected = _colorModel.isSelected
@@ -46,6 +55,7 @@ class ColarModalVC: UIViewController {
     @IBOutlet weak var tblColor: UITableView!
 
     //MARK:- Class Variables
+    weak var delegate: ColarModalVCDelegate?
     let viewModel = PetViewModel()
     var masterColorlists:[ColorModel] = []
     var filteredColorLists:[ColorModel] = []
@@ -106,6 +116,7 @@ class ColarModalVC: UIViewController {
     
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
+        self.delegate?.didSelectItem(true)
         self.dismissAnimation()
     }
     
@@ -119,6 +130,13 @@ class ColarModalVC: UIViewController {
     
     @objc func checkAction(_ sender:UIButton){
         sender.isSelected = !sender.isSelected
+        if sender.isSelected {
+            let color = filteredColorLists[sender.tag]
+            FilterItems.shared.addItem(color.colorName)
+        }else{
+            let color = filteredColorLists[sender.tag]
+            FilterItems.shared.removeItem(color.colorName)
+        }
     }
   
 
@@ -135,6 +153,7 @@ extension ColarModalVC:UITableViewDelegate,UITableViewDataSource{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ColorTableViewCell") as? ColorTableViewCell else { return UITableViewCell() }
         let colorModel = filteredColorLists[indexPath.row]
         cell.colorModel = colorModel
+        cell.btnCheck.tag = indexPath.row
         cell.btnCheck.addTarget(self, action: #selector(checkAction), for: .touchUpInside)
 
         return cell

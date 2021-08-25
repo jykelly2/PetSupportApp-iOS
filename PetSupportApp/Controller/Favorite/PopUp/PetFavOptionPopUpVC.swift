@@ -16,6 +16,7 @@ class PetFavOptionPopUpVC: UIViewController {
     @IBOutlet weak var mainView : UIView!
     @IBOutlet weak var btnClose : UIButton!
   
+    var favPetModel: FavPetModel?
 
     //MARK:- View life cycle
     override func viewDidLoad() {
@@ -31,6 +32,11 @@ class PetFavOptionPopUpVC: UIViewController {
     //MARK:- Custome Methods
     
     func configureUI(){
+        if let _favPetModel = favPetModel {
+            lblPetName.text = _favPetModel.petName
+        }
+        print("favPetlists:\(favPetModel?.petName)")
+
         //self.mainView.alpha = 0.0
         self.view.backgroundColor = .clear
         self.presentAnimation()

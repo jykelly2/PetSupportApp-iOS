@@ -26,7 +26,7 @@ class FilterItems: NSObject {
     }
     
     func isAlreadyItemSelected(_ item:String)->Bool{
-        let items = filterItemArray.filter { $0.title != item}
+        let items = filterItemArray.filter { $0.title == item}
         if items.count > 0 {
             return true
         }

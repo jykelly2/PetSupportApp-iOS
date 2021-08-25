@@ -200,14 +200,14 @@
 		CE247A3626C4405E0075D25B /* POpUp */ = {
 			isa = PBXGroup;
 			children = (
+				CE247A3B26C440DA0075D25B /* BreadModalVC.swift */,
+				CE247A4126C441730075D25B /* ShelterRescueModalVC.swift */,
+				CE247A4326C4418A0075D25B /* ColarModalVC.swift */,
 				CE897DA926C31C6000A33D8E /* OptionVC.swift */,
 				CE247A3726C440940075D25B /* DistanceModalVC.swift */,
-				CE247A3B26C440DA0075D25B /* BreadModalVC.swift */,
 				CE247A3926C440B60075D25B /* AgeModalVC.swift */,
 				CE247A3D26C441220075D25B /* SizeModalVC.swift */,
 				CE247A3F26C441410075D25B /* GoodWithModalVC.swift */,
-				CE247A4126C441730075D25B /* ShelterRescueModalVC.swift */,
-				CE247A4326C4418A0075D25B /* ColarModalVC.swift */,
 				CE247A4526C441AD0075D25B /* CoatLengthModalVC.swift */,
 				CE247A4926C467EA0075D25B /* SortModalVC.swift */,
 				CE29F86926C59ECD008DCA60 /* CreateScheduleModalVC.swift */,
@@ -601,7 +601,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = B78RE88UQ5;
 				INFOPLIST_FILE = PetSupportApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -619,7 +619,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = B78RE88UQ5;
 				INFOPLIST_FILE = PetSupportApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

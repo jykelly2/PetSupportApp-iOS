@@ -10,6 +10,7 @@ import UIKit
 
 class IdealPetDetailsVC: UIViewController {
 
+    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var petrestrictionBreedSV: UIStackView!
     @IBOutlet weak var petRestrictionSizeSV: UIStackView!
     @IBOutlet weak var petSpecialNeedSV: UIStackView!
@@ -64,6 +65,16 @@ class IdealPetDetailsVC: UIViewController {
     @IBOutlet weak var btnNoBreedRestriction: UIButton!
     
     
+    var isAgePreferenceSelected:Bool = false
+    var isGenderPreferenceSelected:Bool = false
+    var isSizePreferenceSelected:Bool = false
+    var isActivePreferenceSelected:Bool = false
+    var isLookingPreferenceSelected:Bool = false
+    var isRestrictionPreferenceSelected:Bool = false
+    var isSpecialNeedSelected:Bool = false
+    var isNorestrictionSelected:Bool = false
+    var isBreadSelected:Bool = false
+
     var agePreferenceBtnArray:[UIButton] = []
     var genderPreferenceBtnArray:[UIButton] = []
     var sizePreferenceBtnArray:[UIButton] = []
@@ -71,7 +82,11 @@ class IdealPetDetailsVC: UIViewController {
     var lookingPreferenceBtnArray:[UIButton] = []
     var restrictionPreferenceBtnArray:[UIButton] = []
     var specialNeedBtnArray:[UIButton] = []
+    var selectedTxtField: UITextField!
 
+    var total:Float = 9.0
+    var totalOptionFillup:Float = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "My ideal pet"
@@ -86,6 +101,7 @@ class IdealPetDetailsVC: UIViewController {
         txtSearch.setRightIamge("search2")
         txtBreedSearch.setRightIamge("search2")
 
+        progressView.progress = 0.0
 
     }
     
@@ -170,6 +186,12 @@ class IdealPetDetailsVC: UIViewController {
         
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
+        
+        if !isLookingPreferenceSelected {
+            isLookingPreferenceSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
 
     }
     
@@ -181,6 +203,12 @@ class IdealPetDetailsVC: UIViewController {
         
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
+        
+        if !isRestrictionPreferenceSelected {
+            isRestrictionPreferenceSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
 
     }
     
@@ -193,7 +221,13 @@ class IdealPetDetailsVC: UIViewController {
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
+        if !isSpecialNeedSelected {
+            isSpecialNeedSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
+    
     @IBAction func agePreferenceButtonAction(_ sender:UIButton){
         for btn in agePreferenceBtnArray {
             btn.backgroundColor = UIColor.white
@@ -203,6 +237,11 @@ class IdealPetDetailsVC: UIViewController {
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
+        if !isAgePreferenceSelected {
+            isAgePreferenceSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
     
     @IBAction func genderPreferenceButtonAction(_ sender:UIButton){
@@ -214,6 +253,11 @@ class IdealPetDetailsVC: UIViewController {
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
+        if !isGenderPreferenceSelected {
+            isGenderPreferenceSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
     
     @IBAction func sizePreferenceButtonAction(_ sender:UIButton){
@@ -225,6 +269,11 @@ class IdealPetDetailsVC: UIViewController {
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
+        if !isSizePreferenceSelected {
+            isSizePreferenceSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
     
     @IBAction func activePreferenceButtonAction(_ sender:UIButton){
@@ -236,6 +285,11 @@ class IdealPetDetailsVC: UIViewController {
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
+        if !isActivePreferenceSelected {
+            isActivePreferenceSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
     
     @IBAction func noRestrictionButtonAction(_ sender: UIButton) {
@@ -244,6 +298,12 @@ class IdealPetDetailsVC: UIViewController {
         
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
+        
+        if !isNorestrictionSelected {
+            isNorestrictionSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
     @IBAction func breedPreferenceSearchButtonAction(_ sender: UIButton) {
         txtBreedSearch.superview?.backgroundColor = UIColor.white
@@ -251,13 +311,37 @@ class IdealPetDetailsVC: UIViewController {
 
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
+        
+        if !isBreadSelected {
+            isBreadSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+        }
     }
+    
+    func goToBreadVC(){
+        let destVC:BreadModalVC!  = SHome.instantiateViewController(withIdentifier: "BreadModalVC") as? BreadModalVC
+        destVC.delegate = self
+        self.addChild(destVC)
+        destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+        self.view.addSubview(destVC.view)
+        destVC.didMove(toParent: self)
+    }
+}
+
+extension IdealPetDetailsVC: BreadModalVCDelegate {
+    func didSelectItem(_ isSelect: Bool) {
+        selectedTxtField.text = "Test"
+    }
+    
 }
 
 //MARK:- UITextFieldDelegate
 extension IdealPetDetailsVC : UITextFieldDelegate{
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        selectedTxtField = textField
+        self.goToBreadVC()
         if textField == txtSearch {
             txtSearch.superview?.backgroundColor = UIColor.init(rgb: 0x8256D6)
             txtSearch.textColor = .white
@@ -279,7 +363,19 @@ extension IdealPetDetailsVC : UITextFieldDelegate{
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-                
+        if textField == txtBreedSearch {
+            if !isBreadSelected {
+                isBreadSelected = true
+                totalOptionFillup += 1
+                progressView.progress = totalOptionFillup/total
+            }
+        }else if textField == txtSearch{
+            if !isNorestrictionSelected {
+                isNorestrictionSelected = true
+                totalOptionFillup += 1
+                progressView.progress = totalOptionFillup/total
+            }
+        }
         return true
     }
 }

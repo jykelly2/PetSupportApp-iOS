@@ -8,6 +8,9 @@
 
 import UIKit
 
+@objc protocol DistanceModalVCDelegate {
+    @objc func didSelectItem(_ isSelect: Bool)
+}
 class DistanceModalVC: UIViewController {
     //MARK:- UIControl's Outlets
     
@@ -23,6 +26,7 @@ class DistanceModalVC: UIViewController {
     @IBOutlet private var distanceOptionContainerVw: UIView!
 
     //MARK:- Class Variables
+    weak var delegate: DistanceModalVCDelegate?
     var distanceBtnArray:[UIButton] = []
 
     //MARK:- View life cycle
@@ -48,6 +52,14 @@ class DistanceModalVC: UIViewController {
         self.presentAnimation()
         
         distanceBtnArray = [btnTenMiles,btnTwentyFiveMiles,btnFiftyMiles,btnHundredMiles,btnCustomMiles]
+        
+        for btn in distanceBtnArray {
+            if FilterItems.shared.isAlreadyItemSelected(btn.titleLabel?.text ?? "") {
+                btn.backgroundColor = UIColor.init(rgb: 0x6e0b9c)
+                btn.setTitleColor(.white, for: .normal)
+            }
+           
+        }
 
     }
 
@@ -74,6 +86,7 @@ class DistanceModalVC: UIViewController {
     
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
+        self.delegate?.didSelectItem(true)
         self.dismissAnimation()
     }
     
@@ -81,11 +94,14 @@ class DistanceModalVC: UIViewController {
         for btn in distanceBtnArray {
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(.black, for: .normal)
+            if btn.isSelected {
+                FilterItems.shared.removeItem(btn.titleLabel?.text ?? "")
+            }
         }
-        
+        FilterItems.shared.addItem(sender.titleLabel?.text ?? "")
+
         sender.backgroundColor = UIColor.init(rgb: 0x6e0b9c)
         sender.setTitleColor(.white, for: .normal)
-
     }
 
 }

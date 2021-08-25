@@ -16,6 +16,7 @@ class ScheduleOptionVC: UIViewController {
     @IBOutlet weak var mainView : UIView!
     @IBOutlet weak var btnClose : UIButton!
   
+    var scheduleListModel:ScheduleListModel?
 
     //MARK:- View life cycle
     override func viewDidLoad() {
@@ -31,6 +32,9 @@ class ScheduleOptionVC: UIViewController {
     //MARK:- Custome Methods
     
     func configureUI(){
+        if let _scheduleListModel = scheduleListModel {
+            lblPetName.text = _scheduleListModel.petName
+        }
         //self.mainView.alpha = 0.0
         self.view.backgroundColor = .clear
         self.presentAnimation()

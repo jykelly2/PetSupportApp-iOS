@@ -8,6 +8,9 @@
 
 import UIKit
 
+@objc protocol SortModalVCDelegate {
+    @objc func didSelectItem(_ isSelect: Bool)
+}
 class SortModalVC: UIViewController {
     //MARK:- UIControl's Outlets
     
@@ -23,6 +26,7 @@ class SortModalVC: UIViewController {
     @IBOutlet private var optionContainerVw: UIView!
 
     //MARK:- Class Variables
+    weak var delegate: SortModalVCDelegate?
     var optionBtnArray:[UIButton] = []
 
     //MARK:- View life cycle
@@ -80,6 +84,7 @@ class SortModalVC: UIViewController {
     
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
+        self.delegate?.didSelectItem(true)
         self.dismissAnimation()
     }
     
@@ -87,8 +92,11 @@ class SortModalVC: UIViewController {
         for btn in optionBtnArray {
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(.black, for: .normal)
+            if btn.isSelected {
+                FilterItems.shared.removeItem(btn.titleLabel?.text ?? "")
+            }
         }
-        
+        FilterItems.shared.addItem(sender.titleLabel?.text ?? "")
         sender.backgroundColor = UIColor.init(rgb: 0x6e0b9c)
         sender.setTitleColor(.white, for: .normal)
 

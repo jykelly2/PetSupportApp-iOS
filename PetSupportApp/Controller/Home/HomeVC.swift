@@ -206,7 +206,7 @@ extension PetTableViewCell: UICollectionViewDelegateFlowLayout {
 
 
 
-class HomeVC: UIViewController, BreadModalVCDelegate {
+class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelegate, ColarModalVCDelegate, DistanceModalVCDelegate, AgeModalVCDelegate, SizeModalVCDelegate, GoodWithModalVCDelegate, CoatLengthModalVCDelegate {
     func didSelectItem(_ isSelect: Bool) {
         if self.filterMasterMenuArray.count > 0 && FilterItems.shared.filterItemArray.count > 0 {
             self.filterMenuArray = []
@@ -224,6 +224,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
     @IBOutlet weak var txtPetCurrentLocation: UITextField!
     @IBOutlet weak var lblTotalResult: UILabel!
     @IBOutlet weak var lblSortedTxt: UILabel!
+    @IBOutlet weak var bannarView: UIView!
     @IBOutlet weak var lblTotalFilter: UILabel!
 
     //MARK:- Class Variables
@@ -239,6 +240,10 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
         petTableView.rowHeight = 490
         updateUI()
         setFilterMenu()
+        let vw = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 100))
+        vw.backgroundColor = UIColor.blue
+       // petTableView.tableHeaderView = bannarView
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -304,6 +309,63 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
             destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
             self.view.addSubview(destVC.view)
             destVC.didMove(toParent: self)
+            
+        case .ShelterRescueModalVC:
+            let destVC:ShelterRescueModalVC!  = SHome.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue) as? ShelterRescueModalVC
+            destVC.delegate = self
+            self.addChild(destVC)
+            destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+            self.view.addSubview(destVC.view)
+            destVC.didMove(toParent: self)
+            
+        case .ColarModalVC:
+            let destVC:ColarModalVC!  = SHome.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue) as? ColarModalVC
+            destVC.delegate = self
+            self.addChild(destVC)
+            destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+            self.view.addSubview(destVC.view)
+            destVC.didMove(toParent: self)
+            
+        case .DistanceModalVC:
+            let destVC:DistanceModalVC!  = SHome.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue) as? DistanceModalVC
+            destVC.delegate = self
+            self.addChild(destVC)
+            destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+            self.view.addSubview(destVC.view)
+            destVC.didMove(toParent: self)
+            
+        case .AgeModalVC:
+            let destVC:AgeModalVC!  = SHome.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue) as? AgeModalVC
+            destVC.delegate = self
+            self.addChild(destVC)
+            destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+            self.view.addSubview(destVC.view)
+            destVC.didMove(toParent: self)
+            
+        case .SizeModalVC:
+            let destVC:SizeModalVC!  = SHome.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue) as? SizeModalVC
+            destVC.delegate = self
+            self.addChild(destVC)
+            destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+            self.view.addSubview(destVC.view)
+            destVC.didMove(toParent: self)
+            
+        case .GoodWithModalVC:
+            let destVC:GoodWithModalVC!  = SHome.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue) as? GoodWithModalVC
+            destVC.delegate = self
+            self.addChild(destVC)
+            destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+            self.view.addSubview(destVC.view)
+            destVC.didMove(toParent: self)
+            
+        case .CoatLengthModalVC:
+            let destVC:CoatLengthModalVC!  = SHome.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue) as? CoatLengthModalVC
+            destVC.delegate = self
+            self.addChild(destVC)
+            destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+            self.view.addSubview(destVC.view)
+            destVC.didMove(toParent: self)
+            
         default:
             let destVC:UIViewController!  = SHome.instantiateViewController(withIdentifier: filterMenu.filterModalMenu.rawValue)
             self.addChild(destVC)
@@ -332,7 +394,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate {
     //MARK:- Action Methods
     @IBAction func filterAction(_ sender: UIButton) {
         let vc = SHome.instantiateViewController(withIdentifier: "FilterVC") as! FilterVC
-            vc.hidesBottomBarWhenPushed = true
+        vc.hidesBottomBarWhenPushed = true
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
         //self.navigationController?.pushViewController(vc, animated: true)

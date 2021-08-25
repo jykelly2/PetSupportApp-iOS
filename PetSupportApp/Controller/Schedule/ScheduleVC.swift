@@ -39,7 +39,7 @@ class ScheduleVC: UIViewController {
     var selectIndex : Int                           = 0
     var arrViewController : [UIViewController]      = []
     var scheduleTypeArray : [TopTabModel] = []
-    
+
     
     //----------------------------------------------------------------------------
     //MARK:- Memory management
@@ -200,11 +200,11 @@ extension ScheduleVC{
         self.pageViewController.delegate = self
         self.pageViewController.dataSource = self
         let future : ScheduleList = SSchedule.instantiateViewController(withIdentifier: "ScheduleList") as! ScheduleList
-       // past.rideType = .Past
+        future.scheduleType = .Future
         self.arrViewController.append(future)
         
         let past : ScheduleList = SSchedule.instantiateViewController(withIdentifier: "ScheduleList") as! ScheduleList
-        //schedule.rideType = .Schedule
+        past.scheduleType = .Past
         self.arrViewController.append(past)
         
         self.selectIndex = 0

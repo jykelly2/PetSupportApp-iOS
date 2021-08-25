@@ -12,9 +12,6 @@ class ConfirmScheduleVC: UIViewController {
     @IBOutlet weak var lblMeetPet: UILabel!
     @IBOutlet weak var lblPetDescription: UILabel!
     
-    @IBOutlet weak var lblStatus: UILabel!
-    @IBOutlet weak var statusIconView: UIView!
-    @IBOutlet weak var lblProgress: UILabel!
     @IBOutlet weak var lbldateTitle: UILabel!
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var lblStartTimeTitle: UILabel!
@@ -66,10 +63,7 @@ class ConfirmScheduleVC: UIViewController {
         
         btnEdit.layer.cornerRadius = btnCancel.frame.height/2
         btnEdit.clipsToBounds = true
-        
-        statusIconView.layer.cornerRadius = statusIconView.frame.height/2
-        statusIconView.clipsToBounds = true
-        
+                
     }
     
    

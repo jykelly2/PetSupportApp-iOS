@@ -30,6 +30,8 @@ class ShelterListTableViewCell: UITableViewCell {
 
 class FavoriteShelterListVC: UIViewController  {
     //MARK:- UIControl's Outlets
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var lblTotalShelter: UILabel!
     @IBOutlet weak var tblFavoriteShelter: UITableView!
 
     //MARK:- Class Variables
@@ -44,10 +46,23 @@ class FavoriteShelterListVC: UIViewController  {
     override func viewDidLayoutSubviews() {
     }
        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let parent = self.parent?.parent as? FavoriteVC{
+            parent.selectIndex = 1
+            parent.setViewSelection(index: 1)
+        }
+    }
     //MARK:- Custome Methods
     
     func configureUI(){
+//        headerView.layer.borderWidth = 0.5
+//        headerView.layer.borderColor = UIColor.black.cgColor
+        
         favShelterlists = viewModel.favShelterList
+        lblTotalShelter.text = "\(viewModel.favShelterList.count) Shelters"
+
     }
 
     
@@ -56,6 +71,7 @@ class FavoriteShelterListVC: UIViewController  {
         
         let vc = SFavorite.instantiateViewController(withIdentifier: "ShelterFavOptionPopUpVC") as! ShelterFavOptionPopUpVC
         self.addChild(vc)
+        vc.favShelter = favShelterlists[sender.tag]
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)
@@ -69,27 +85,18 @@ class FavoriteShelterListVC: UIViewController  {
 //MARK:- UITableViewDelegate,UITableViewDataSource
 extension FavoriteShelterListVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if favShelterlists.count>0 {
             return favShelterlists.count
-        }else{
-            return 1
-        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if favShelterlists.count == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "NoItemTableViewCell") as? NoItemTableViewCell else { return UITableViewCell() }
-            cell.btnSelect.addTarget(self, action: #selector(selectButtonAction(_:)), for: .touchUpInside)
-
-            return cell
-        }else{
+      
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShelterListTableViewCell") as? ShelterListTableViewCell else { return UITableViewCell() }
         let favShelterModel = favShelterlists[indexPath.row]
         cell.favShelterModel = favShelterModel
+            cell.btnOption.tag = indexPath.row
         cell.btnOption.addTarget(self, action: #selector(optionButtonAction(_:)), for: .touchUpInside)
 
         return cell
-        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

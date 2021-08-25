@@ -16,7 +16,8 @@ class ShelterFavOptionPopUpVC: UIViewController {
     @IBOutlet weak var mainView : UIView!
     @IBOutlet weak var btnClose : UIButton!
   
-
+    var favShelter:FavShelterModel?
+    
     //MARK:- View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,9 @@ class ShelterFavOptionPopUpVC: UIViewController {
     //MARK:- Custome Methods
     
     func configureUI(){
+        if let _favShelter = favShelter {
+            lblShelterName.text = _favShelter.shelterName
+        }
         //self.mainView.alpha = 0.0
         self.view.backgroundColor = .clear
         self.presentAnimation()

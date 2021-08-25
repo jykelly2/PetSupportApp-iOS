@@ -8,6 +8,9 @@
 
 import UIKit
 
+@objc protocol ShelterRescueModalVCDelegate {
+    @objc func didSelectItem(_ isSelect: Bool)
+}
 class ShelterTableViewCell: UITableViewCell {
     //MARK:- UIControl's Outlets
     @IBOutlet weak var containerView: UIView!
@@ -17,9 +20,16 @@ class ShelterTableViewCell: UITableViewCell {
 
      var shelterModel: ShelterModel? {
         didSet{
-            if let _shelterModel = shelterModel {
+            if var _shelterModel = shelterModel {
                 lblShelterName.text = _shelterModel.shelterName
                 lblShelterDistance.text = _shelterModel.shelterDistance
+                
+                if FilterItems.shared.isAlreadyItemSelected(_shelterModel.shelterName) {
+                    _shelterModel.isSelected = true
+                }else{
+                    _shelterModel.isSelected = false
+                }
+                btnCheck.isSelected = _shelterModel.isSelected
                 btnCheck.setBackgroundImage(UIImage(named: "uncheck_box_icon"), for: .normal)
                 btnCheck.setBackgroundImage(UIImage(named: "check_box_icon"), for: .selected)
 
@@ -45,6 +55,7 @@ class ShelterRescueModalVC: UIViewController {
     @IBOutlet weak var tblShelter: UITableView!
 
     //MARK:- Class Variables
+    weak var delegate: ShelterRescueModalVCDelegate?
     let viewModel = PetViewModel()
     var masterShelterlists:[ShelterModel] = []
     var filteredShelterLists:[ShelterModel] = []
@@ -106,6 +117,7 @@ class ShelterRescueModalVC: UIViewController {
     
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
+        self.delegate?.didSelectItem(true)
         self.dismissAnimation()
     }
     
@@ -119,6 +131,13 @@ class ShelterRescueModalVC: UIViewController {
     
     @objc func checkAction(_ sender:UIButton){
         sender.isSelected = !sender.isSelected
+        if sender.isSelected {
+            let shelter = filteredShelterLists[sender.tag]
+            FilterItems.shared.addItem(shelter.shelterName)
+        }else{
+            let shelter = filteredShelterLists[sender.tag]
+            FilterItems.shared.removeItem(shelter.shelterName)
+        }
     }
   
 
@@ -135,6 +154,7 @@ extension ShelterRescueModalVC:UITableViewDelegate,UITableViewDataSource{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShelterTableViewCell") as? ShelterTableViewCell else { return UITableViewCell() }
         let shelterModel = filteredShelterLists[indexPath.row]
         cell.shelterModel = shelterModel
+        cell.btnCheck.tag = indexPath.row
         cell.btnCheck.addTarget(self, action: #selector(checkAction), for: .touchUpInside)
 
         return cell

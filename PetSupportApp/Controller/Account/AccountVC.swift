@@ -33,6 +33,7 @@ class AccountVC: UIViewController, SignInModalVCDelegate {
         self.signIn()
     }
     
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var tblAccount: UITableView!
     var arrayAccountOptions = [Account]()
 
@@ -47,6 +48,11 @@ class AccountVC: UIViewController, SignInModalVCDelegate {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
 
+    }
+    
+    override func viewDidLayoutSubviews() {
+        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+        profileImageView.clipsToBounds = true
     }
     
     func updateArrayAccountOptions(){

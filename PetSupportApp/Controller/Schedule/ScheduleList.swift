@@ -54,10 +54,12 @@ class ScheduleListTableViewCell: UITableViewCell {
 class ScheduleList: UIViewController {
     //MARK:- UIControl's Outlets
     @IBOutlet weak var tblSchedule: UITableView!
-
+    @IBOutlet weak var lblTotalItems: UILabel!
+    
     //MARK:- Class Variables
     let viewModel = PetViewModel()
     var scheduleLists:[ScheduleListModel] = []
+    var scheduleType : SCHEDULE_TYPE = .Future
 
     //MARK:- View life cycle
     override func viewDidLoad() {
@@ -66,12 +68,35 @@ class ScheduleList: UIViewController {
     }
     override func viewDidLayoutSubviews() {
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let parent = self.parent?.parent as? ScheduleVC{
+            
+            switch self.scheduleType {
+                
+            case .Future:
+               // self.page = 1
+                parent.selectIndex = 0
+                parent.setViewSelection(index: 0)
+                
+                break
+            case .Past:
+               // self.page = 1
+                parent.selectIndex = 1
+                parent.setViewSelection(index: 1)
+                break
+            }
+        }
+    }
        
     //MARK:- Custome Methods
-    
+        
     func configureUI(){
         tblSchedule.rowHeight = 150
         scheduleLists = viewModel.scheduleList
+        lblTotalItems.text = "\(viewModel.scheduleList.count) schedules"
     }
 
     
@@ -80,6 +105,7 @@ class ScheduleList: UIViewController {
         
         let vc = SSchedule.instantiateViewController(withIdentifier: "ScheduleOptionVC") as! ScheduleOptionVC
         self.addChild(vc)
+        vc.scheduleListModel = scheduleLists[sender.tag]
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)
@@ -112,6 +138,7 @@ extension ScheduleList:UITableViewDelegate,UITableViewDataSource{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ScheduleListTableViewCell") as? ScheduleListTableViewCell else { return UITableViewCell() }
         let scheduleListModel = scheduleLists[indexPath.row]
         cell.scheduleListModel = scheduleListModel
+        cell.btnOption.tag = indexPath.row
         cell.btnOption.addTarget(self, action: #selector(optionButtonAction(_:)), for: .touchUpInside)
 
         return cell

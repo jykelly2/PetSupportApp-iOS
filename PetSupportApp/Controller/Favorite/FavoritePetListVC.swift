@@ -47,6 +47,8 @@ class NoItemTableViewCell: UITableViewCell {
 
 class FavoritePetListVC: UIViewController {
     //MARK:- UIControl's Outlets
+    @IBOutlet weak var lblTotalPets: UILabel!
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tblFavoritePet: UITableView!
 
     //MARK:- Class Variables
@@ -60,12 +62,25 @@ class FavoritePetListVC: UIViewController {
     }
     override func viewDidLayoutSubviews() {
     }
-       
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let parent = self.parent?.parent as? FavoriteVC{
+            parent.selectIndex = 0
+            parent.setViewSelection(index: 0)
+        }
+    }
     //MARK:- Custome Methods
     
     func configureUI(){
+//        headerView.layer.borderWidth = 0.5
+//        headerView.layer.borderColor = UIColor.black.cgColor
+
         tblFavoritePet.rowHeight = 250
         favPetlists = viewModel.favPetList
+        lblTotalPets.text = "\(viewModel.favPetList.count) Pets"
+
     }
 
     
@@ -74,6 +89,7 @@ class FavoritePetListVC: UIViewController {
         
         let vc = SFavorite.instantiateViewController(withIdentifier: "PetFavOptionPopUpVC") as! PetFavOptionPopUpVC
         self.addChild(vc)
+        vc.favPetModel = favPetlists[sender.tag]
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)
@@ -89,27 +105,16 @@ class FavoritePetListVC: UIViewController {
 //MARK:- UITableViewDelegate,UITableViewDataSource
 extension FavoritePetListVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if favPetlists.count>0 {
             return favPetlists.count
-        }else{
-            return 1
-        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if favPetlists.count == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "NoItemTableViewCell") as? NoItemTableViewCell else { return UITableViewCell() }
-            cell.btnSelect.addTarget(self, action: #selector(selectButtonAction(_:)), for: .touchUpInside)
-
-            return cell
-            }else{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PetListTableViewCell") as? PetListTableViewCell else { return UITableViewCell() }
         let favPetModel = favPetlists[indexPath.row]
         cell.favPetModel = favPetModel
+        cell.btnOption.tag = indexPath.row
         cell.btnOption.addTarget(self, action: #selector(optionButtonAction(_:)), for: .touchUpInside)
-
         return cell
-        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
