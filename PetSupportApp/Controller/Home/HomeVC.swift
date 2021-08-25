@@ -206,7 +206,14 @@ extension PetTableViewCell: UICollectionViewDelegateFlowLayout {
 
 
 
-class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelegate, ColarModalVCDelegate, DistanceModalVCDelegate, AgeModalVCDelegate, SizeModalVCDelegate, GoodWithModalVCDelegate, CoatLengthModalVCDelegate {
+class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelegate, ColarModalVCDelegate, DistanceModalVCDelegate, AgeModalVCDelegate, SizeModalVCDelegate, GoodWithModalVCDelegate, CoatLengthModalVCDelegate, FilterVCDelegate, SortModalVCDelegate {
+    
+    func didSelectSortItem(_ sortedBy: String) {
+        if sortedBy.count > 0 {
+            self.lblSortedTxt.text = sortedBy
+        }
+    }
+    
     func didSelectItem(_ isSelect: Bool) {
         if self.filterMasterMenuArray.count > 0 && FilterItems.shared.filterItemArray.count > 0 {
             self.filterMenuArray = []
@@ -214,6 +221,12 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
             self.filterMenuArray.append(contentsOf: self.filterMasterMenuArray)
             self.filterCollectionView.reloadData()
             lblTotalFilter.text = "\(FilterItems.shared.filterItemArray.count)"
+        }
+        
+        if FilterItems.shared.sortedItemArray.count > 0 {
+            lblSortedTxt.text = FilterItems.shared.sortedItemArray[0].title
+        }else{
+            lblSortedTxt.text = "Newest Addition"
         }
     }
     
@@ -224,7 +237,6 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
     @IBOutlet weak var txtPetCurrentLocation: UITextField!
     @IBOutlet weak var lblTotalResult: UILabel!
     @IBOutlet weak var lblSortedTxt: UILabel!
-    @IBOutlet weak var bannarView: UIView!
     @IBOutlet weak var lblTotalFilter: UILabel!
 
     //MARK:- Class Variables
@@ -375,18 +387,6 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
 
            }
         }
-        
-//        case DistanceModalVC
-//        case AgeModalVC
-//        case BreadModalVC
-//        case SizeModalVC
-//        case GoodWithModalVC
-//        case ShelterRescueModalVC
-//        case ColarModalVC
-//        case CoatLengthModalVC
-//        case Filter
-        
-       
     }
     
     
@@ -394,6 +394,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
     //MARK:- Action Methods
     @IBAction func filterAction(_ sender: UIButton) {
         let vc = SHome.instantiateViewController(withIdentifier: "FilterVC") as! FilterVC
+        vc.delegate = self
         vc.hidesBottomBarWhenPushed = true
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
@@ -409,6 +410,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
     @IBAction func sortButtonAction(_ sender: UIButton) {
         let destVC = SHome.instantiateViewController(withIdentifier: "SortModalVC") as! SortModalVC
         self.addChild(destVC)
+        destVC.delegate = self
         destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(destVC.view)
         destVC.didMove(toParent: self)

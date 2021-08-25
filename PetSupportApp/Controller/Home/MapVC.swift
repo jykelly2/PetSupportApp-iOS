@@ -111,108 +111,23 @@ class MapVC: UIViewController {
         }
     }
     
+    @IBAction func filterButtonAction(_ sender: UIButton) {
+        let destVC:FilterVC!  = SHome.instantiateViewController(withIdentifier: "FilterVC") as? FilterVC
+        destVC.modalPresentationStyle = .fullScreen
+        self.present(destVC, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func shelterListButtonAction(_ sender: UIButton) {
+        let destVC:ShelterRescueModalVC!  = SHome.instantiateViewController(withIdentifier: "ShelterRescueModalVC") as? ShelterRescueModalVC
+        //destVC.delegate = self
+        self.addChild(destVC)
+        destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+        self.view.addSubview(destVC.view)
+        destVC.didMove(toParent: self)
+    }
+    
     @IBAction func backButtonAction(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
 }
-
-
-/*
-extension MapVC:MKMapViewDelegate{
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-
-            if let marker = annotation as? MKMarkerAnnotationView{
-                var view = mapView.dequeueReusableAnnotationView(withIdentifier: "marker") as? UserAnnotationView
-                if view == nil {
-    //Very IMPORTANT
-                    print("nil for Marker")
-                    view = UserAnnotationView(annotation: marker as? MKAnnotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-                }
-                return view
-            }else if let cluster = annotation as? MKClusterAnnotation{
-                var view = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier) as? UserClusterAnnotationView
-                if view == nil{
-    //Very IMPORTANT
-                    print("nil for Cluster")
-                    view = UserClusterAnnotationView(annotation: cluster, reuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
-                }
-                return view
-            }
-            else{
-                return nil
-            }
-        }
-}
-
-class UserAnnotationView: MKMarkerAnnotationView {
-    static let preferredClusteringIdentifier = Bundle.main.bundleIdentifier! + ".UserAnnotationView"
-
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        clusteringIdentifier = UserAnnotationView.preferredClusteringIdentifier
-        collisionMode = .circle
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override var annotation: MKAnnotation? {
-        willSet {
-            clusteringIdentifier = UserAnnotationView.preferredClusteringIdentifier
-        }
-    }
-}
-
-
-class UserClusterAnnotationView: MKAnnotationView {
-    static let preferredClusteringIdentifier = Bundle.main.bundleIdentifier! + ".UserClusterAnnotationView"
-
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        collisionMode = .circle
-        updateImage()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override var annotation: MKAnnotation? { didSet { updateImage() } }
-
-    private func updateImage() {
-        if let clusterAnnotation = annotation as? MKClusterAnnotation {
-            self.image = image(count: clusterAnnotation.memberAnnotations.count)
-        } else {
-            self.image = image(count: 1)
-        }
-    }
-
-    func image(count: Int) -> UIImage {
-        let bounds = CGRect(origin: .zero, size: CGSize(width: 40, height: 40))
-
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-        return renderer.image { _ in
-            // Fill full circle with tricycle color
-          //  AppTheme.blueColor.setFill()
-            UIBezierPath(ovalIn: bounds).fill()
-
-            // Fill inner circle with white color
-            UIColor.white.setFill()
-            UIBezierPath(ovalIn: bounds.insetBy(dx: 8, dy: 8)).fill()
-
-            // Finally draw count text vertically and horizontally centered
-            let attributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: UIColor.black,
-                .font: UIFont.boldSystemFont(ofSize: 20)
-            ]
-
-            let text = "\(count)"
-            let size = text.size(withAttributes: attributes)
-            let origin = CGPoint(x: bounds.midX - size.width / 2, y: bounds.midY - size.height / 2)
-            let rect = CGRect(origin: origin, size: size)
-            text.draw(in: rect, withAttributes: attributes)
-        }
-    }
-}
-*/

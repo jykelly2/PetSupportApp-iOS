@@ -110,8 +110,6 @@ class BreadModalVC: UIViewController {
             FilterItems.shared.removeItem(breed.petName)
         }
     }
-  
-
 }
 
 //MARK:- UITableViewDelegate,UITableViewDataSource

@@ -9,8 +9,9 @@
 import UIKit
 
 @objc protocol SortModalVCDelegate {
-    @objc func didSelectItem(_ isSelect: Bool)
+    @objc func didSelectSortItem(_ sortedBy: String)
 }
+
 class SortModalVC: UIViewController {
     //MARK:- UIControl's Outlets
     
@@ -28,7 +29,8 @@ class SortModalVC: UIViewController {
     //MARK:- Class Variables
     weak var delegate: SortModalVCDelegate?
     var optionBtnArray:[UIButton] = []
-
+    var selectedItem = ""
+    
     //MARK:- View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +57,14 @@ class SortModalVC: UIViewController {
     func configureUI(){
         //self.mainView.alpha = 0.0
         optionBtnArray = [btnSortByNewest,btnSortByOldest,btnSortByNearest,btnSortByFuthest,btnSortByRandom]
-
+        for btn in optionBtnArray {
+            if FilterItems.shared.isAlreadySortedItemSelected(btn.titleLabel?.text ?? "") {
+                btn.backgroundColor = UIColor.init(rgb: 0x6e0b9c)
+                btn.setTitleColor(.white, for: .normal)
+                btn.isSelected = true
+            }
+           
+        }
 
         self.view.backgroundColor = .clear
         self.presentAnimation()
@@ -84,7 +93,7 @@ class SortModalVC: UIViewController {
     
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
-        self.delegate?.didSelectItem(true)
+        self.delegate?.didSelectSortItem(self.selectedItem)
         self.dismissAnimation()
     }
     
@@ -93,13 +102,15 @@ class SortModalVC: UIViewController {
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(.black, for: .normal)
             if btn.isSelected {
-                FilterItems.shared.removeItem(btn.titleLabel?.text ?? "")
+                FilterItems.shared.removeSortedItem(btn.titleLabel?.text ?? "")
             }
+            btn.isSelected = false
         }
-        FilterItems.shared.addItem(sender.titleLabel?.text ?? "")
+        FilterItems.shared.addSortedItem(sender.titleLabel?.text ?? "")
+        sender.isSelected = true
         sender.backgroundColor = UIColor.init(rgb: 0x6e0b9c)
         sender.setTitleColor(.white, for: .normal)
-
+        self.selectedItem = sender.titleLabel?.text ?? ""
     }
 
 }

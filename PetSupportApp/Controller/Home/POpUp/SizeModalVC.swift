@@ -72,6 +72,7 @@ class SizeModalVC: UIViewController {
             if FilterItems.shared.isAlreadyItemSelected(btn.titleLabel?.text ?? "") {
                 btn.backgroundColor = UIColor.init(rgb: 0x6e0b9c)
                 btn.setTitleColor(.white, for: .normal)
+                btn.isSelected = true
             }
            
         }
@@ -114,11 +115,12 @@ class SizeModalVC: UIViewController {
             if btn.isSelected {
                 FilterItems.shared.removeItem(btn.titleLabel?.text ?? "")
             }
+            btn.isSelected = false
         }
         FilterItems.shared.addItem(sender.titleLabel?.text ?? "")
+        sender.isSelected = true
         sender.backgroundColor = UIColor.init(rgb: 0x6e0b9c)
         sender.setTitleColor(.white, for: .normal)
-
     }
 
 }
