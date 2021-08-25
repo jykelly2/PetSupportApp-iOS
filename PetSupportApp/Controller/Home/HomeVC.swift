@@ -215,7 +215,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
     }
     
     func didSelectItem(_ isSelect: Bool) {
-        if self.filterMasterMenuArray.count > 0 && FilterItems.shared.filterItemArray.count > 0 {
+        if self.filterMasterMenuArray.count > 0  {
             self.filterMenuArray = []
             self.filterMenuArray.append(contentsOf: FilterItems.shared.filterItemArray)
             self.filterMenuArray.append(contentsOf: self.filterMasterMenuArray)
