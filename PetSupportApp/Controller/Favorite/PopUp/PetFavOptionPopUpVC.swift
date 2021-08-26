@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol PetFavOptionPopUpVCDelegate {
+    @objc func didFavPetOptionClose(_ isSelect: Bool)
+}
+
 class PetFavOptionPopUpVC: UIViewController {
     
     //MARK:- UIControl's Outlets
@@ -17,7 +21,7 @@ class PetFavOptionPopUpVC: UIViewController {
     @IBOutlet weak var btnClose : UIButton!
   
     var favPetModel: FavPetModel?
-
+    weak var delegate:PetFavOptionPopUpVCDelegate?
     //MARK:- View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +69,7 @@ class PetFavOptionPopUpVC: UIViewController {
     
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
+        self.delegate?.didFavPetOptionClose(true)
         self.dismissAnimation()
     }
     

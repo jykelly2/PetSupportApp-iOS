@@ -208,6 +208,11 @@ extension PetTableViewCell: UICollectionViewDelegateFlowLayout {
 
 class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelegate, ColarModalVCDelegate, DistanceModalVCDelegate, AgeModalVCDelegate, SizeModalVCDelegate, GoodWithModalVCDelegate, CoatLengthModalVCDelegate, FilterVCDelegate, SortModalVCDelegate {
     
+    
+    func didSelectBreadItem(_ item: String) {
+        
+    }
+    
     func didSelectSortItem(_ sortedBy: String) {
         if sortedBy.count > 0 {
             self.lblSortedTxt.text = sortedBy

@@ -9,6 +9,7 @@
 import UIKit
 
 class AboutMeVC: UIViewController {
+    @IBOutlet weak var lblProgess: UILabel!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var yardSV: UIStackView!
     @IBOutlet weak var outdoorSV: UIStackView!
@@ -69,6 +70,7 @@ class AboutMeVC: UIViewController {
         outDoorParkBtnTypeArray = [btnOutDoorArea,btnNearByPark]
         
         progressView.progress = 0.0/total
+        lblProgess.text = "0 % complete"
     }
     
     override func viewDidLayoutSubviews() {
@@ -143,6 +145,9 @@ class AboutMeVC: UIViewController {
             isPetOwnerTypeSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
 
     }
@@ -159,6 +164,9 @@ class AboutMeVC: UIViewController {
             isHomePetTypeSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     
@@ -174,6 +182,9 @@ class AboutMeVC: UIViewController {
             isAdoptingTypeSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     
@@ -190,6 +201,9 @@ class AboutMeVC: UIViewController {
             isKidsOptionSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     
@@ -206,6 +220,9 @@ class AboutMeVC: UIViewController {
             isYardSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     
@@ -221,6 +238,9 @@ class AboutMeVC: UIViewController {
             isParkSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
    

@@ -18,18 +18,23 @@ class BreedTableViewCell: UITableViewCell {
     @IBOutlet weak var lblPetName: UILabel!
     @IBOutlet weak var petImageView: UIImageView!
     @IBOutlet weak var btnCheck: UIButton!
-
+    var isCheckSelectedItem = true
+    
+    
      var breedModel: BreedModel? {
         didSet{
             if var _breedModel = breedModel {
                 lblPetName.text = _breedModel.petName
                 petImageView.image = UIImage(named: "\(_breedModel.petImage)")
-                if FilterItems.shared.isAlreadyItemSelected(_breedModel.petName) {
-                    _breedModel.isSelected = true
-                }else{
-                    _breedModel.isSelected = false
+                if isCheckSelectedItem {
+                    if FilterItems.shared.isAlreadyItemSelected(_breedModel.petName) {
+                        _breedModel.isSelected = true
+                    }else{
+                        _breedModel.isSelected = false
+                    }
+                    btnCheck.isSelected = _breedModel.isSelected
                 }
-                btnCheck.isSelected = _breedModel.isSelected
+             
                 btnCheck.setBackgroundImage(UIImage(named: "uncheck_box_icon"), for: .normal)
                 btnCheck.setBackgroundImage(UIImage(named: "check_box_icon"), for: .selected)
 

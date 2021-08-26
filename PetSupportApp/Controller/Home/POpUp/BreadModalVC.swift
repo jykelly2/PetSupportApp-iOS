@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol BreadModalVCDelegate {
     @objc func didSelectItem(_ isSelect: Bool)
+    @objc optional func didSelectBreadItem(_ item: String)
 }
 
 class BreadModalVC: UIViewController {
@@ -30,6 +31,8 @@ class BreadModalVC: UIViewController {
     let viewModel = PetViewModel()
     var masterPetlists:[BreedModel] = []
     var filteredPetLists:[BreedModel] = []
+    var selectedFilterItem = ""
+    var isFromIdealpet = false
 
     //MARK:- View life cycle
     override func viewDidLoad() {
@@ -89,6 +92,9 @@ class BreadModalVC: UIViewController {
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
         self.delegate?.didSelectItem(true)
+        if isFromIdealpet {
+            self.delegate?.didSelectBreadItem?(selectedFilterItem)
+        }
         self.dismissAnimation()
     }
     
@@ -102,13 +108,23 @@ class BreadModalVC: UIViewController {
     
     @objc func checkAction(_ sender:UIButton){
         sender.isSelected = !sender.isSelected
+        if isFromIdealpet {
+            if sender.isSelected {
+                let breed = filteredPetLists[sender.tag]
+                selectedFilterItem = breed.petName
+            }else{
+                selectedFilterItem = ""
+            }
+        }else{
         if sender.isSelected {
             let breed = filteredPetLists[sender.tag]
             FilterItems.shared.addItem(breed.petName)
+            selectedFilterItem = breed.petName
         }else{
             let breed = filteredPetLists[sender.tag]
             FilterItems.shared.removeItem(breed.petName)
         }
+      }
     }
 }
 
@@ -122,6 +138,7 @@ extension BreadModalVC:UITableViewDelegate,UITableViewDataSource{
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BreedTableViewCell") as? BreedTableViewCell else { return UITableViewCell() }
         let breedModel = filteredPetLists[indexPath.row]
+        cell.isCheckSelectedItem = !isFromIdealpet
         cell.breedModel = breedModel
         cell.btnCheck.tag = indexPath.row
         cell.btnCheck.addTarget(self, action: #selector(checkAction), for: .touchUpInside)

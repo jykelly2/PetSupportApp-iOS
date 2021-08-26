@@ -841,61 +841,75 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="F0B-aC-Rvu">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YWq-Oh-Cdu">
                                                 <rect key="frame" x="10" y="1623" width="394" height="167"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pets Like Haily" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CvO-Il-ALo">
-                                                        <rect key="frame" x="0.0" y="0.0" width="394" height="40"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="40" id="Sdy-G7-Pg1"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                                        <color key="textColor" systemColor="systemPurpleColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Undecided? See other pets like Haily that also need a home" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fv-cL-o6M">
-                                                        <rect key="frame" x="0.0" y="50" width="394" height="47"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4YI-dM-ICp">
-                                                        <rect key="frame" x="0.0" y="107" width="394" height="60"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="F0B-aC-Rvu">
+                                                        <rect key="frame" x="0.0" y="0.0" width="394" height="167"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ct6-Zd-w4u">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pets Like Haily" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CvO-Il-ALo">
                                                                 <rect key="frame" x="0.0" y="0.0" width="394" height="40"/>
-                                                                <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="40" id="Sdy-G7-Pg1"/>
+                                                                </constraints>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                                                <state key="normal" title="SEE SIMILAR LOOKING PETS">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </state>
-                                                                <connections>
-                                                                    <action selector="seeSimilarLookingPetButtonAction:" destination="HMx-6i-ws5" eventType="touchUpInside" id="5WY-6e-YD0"/>
-                                                                </connections>
-                                                            </button>
+                                                                <color key="textColor" systemColor="systemPurpleColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Undecided? See other pets like Haily that also need a home" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fv-cL-o6M">
+                                                                <rect key="frame" x="0.0" y="50" width="394" height="47"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4YI-dM-ICp">
+                                                                <rect key="frame" x="0.0" y="107" width="394" height="60"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ct6-Zd-w4u">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="394" height="40"/>
+                                                                        <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                                                        <state key="normal" title="SEE SIMILAR LOOKING PETS">
+                                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        </state>
+                                                                        <connections>
+                                                                            <action selector="seeSimilarLookingPetButtonAction:" destination="HMx-6i-ws5" eventType="touchUpInside" id="5WY-6e-YD0"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstItem="Ct6-Zd-w4u" firstAttribute="leading" secondItem="4YI-dM-ICp" secondAttribute="leading" id="8Pe-cO-88g"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="Ct6-Zd-w4u" secondAttribute="trailing" id="Ef2-6n-4nC"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="Ct6-Zd-w4u" secondAttribute="bottom" constant="20" id="GjY-DP-lbA"/>
+                                                                    <constraint firstAttribute="height" constant="60" id="eZo-0Q-IcA"/>
+                                                                    <constraint firstItem="Ct6-Zd-w4u" firstAttribute="top" secondItem="4YI-dM-ICp" secondAttribute="top" id="xBl-7j-8Yl"/>
+                                                                </constraints>
+                                                            </view>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstItem="Ct6-Zd-w4u" firstAttribute="leading" secondItem="4YI-dM-ICp" secondAttribute="leading" id="8Pe-cO-88g"/>
-                                                            <constraint firstAttribute="trailing" secondItem="Ct6-Zd-w4u" secondAttribute="trailing" id="Ef2-6n-4nC"/>
-                                                            <constraint firstAttribute="bottom" secondItem="Ct6-Zd-w4u" secondAttribute="bottom" constant="20" id="GjY-DP-lbA"/>
-                                                            <constraint firstAttribute="height" constant="60" id="eZo-0Q-IcA"/>
-                                                            <constraint firstItem="Ct6-Zd-w4u" firstAttribute="top" secondItem="4YI-dM-ICp" secondAttribute="top" id="xBl-7j-8Yl"/>
+                                                            <constraint firstAttribute="height" constant="167" id="qkp-BO-8nY"/>
                                                         </constraints>
-                                                    </view>
+                                                    </stackView>
                                                 </subviews>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" red="0.60392156862745094" green="0.60392156862745094" blue="0.62352941176470589" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="167" id="qkp-BO-8nY"/>
+                                                    <constraint firstAttribute="trailing" secondItem="F0B-aC-Rvu" secondAttribute="trailing" id="CaW-Mh-Q3v"/>
+                                                    <constraint firstAttribute="bottom" secondItem="F0B-aC-Rvu" secondAttribute="bottom" id="Cau-6a-SzU"/>
+                                                    <constraint firstItem="F0B-aC-Rvu" firstAttribute="leading" secondItem="YWq-Oh-Cdu" secondAttribute="leading" id="Qeb-fh-q3D"/>
+                                                    <constraint firstAttribute="bottom" secondItem="F0B-aC-Rvu" secondAttribute="bottom" id="WPz-17-2W9"/>
+                                                    <constraint firstItem="F0B-aC-Rvu" firstAttribute="leading" secondItem="YWq-Oh-Cdu" secondAttribute="leading" id="daK-kk-eGd"/>
+                                                    <constraint firstItem="F0B-aC-Rvu" firstAttribute="top" secondItem="YWq-Oh-Cdu" secondAttribute="top" id="fGp-Se-roS"/>
+                                                    <constraint firstAttribute="trailing" secondItem="F0B-aC-Rvu" secondAttribute="trailing" id="hTr-Ff-sFI"/>
                                                 </constraints>
-                                            </stackView>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="iTi-uZ-XMH" secondAttribute="trailing" id="0hd-H2-CQ9"/>
-                                            <constraint firstAttribute="trailing" secondItem="F0B-aC-Rvu" secondAttribute="trailing" constant="10" id="0m1-9V-6Q6"/>
                                             <constraint firstItem="8Hj-Lb-vQi" firstAttribute="trailing" secondItem="euw-k9-Lx3" secondAttribute="trailing" id="6E2-NN-4di"/>
                                             <constraint firstItem="2Kq-bM-Y4Z" firstAttribute="leading" secondItem="8Hj-Lb-vQi" secondAttribute="leading" id="80Q-Pa-2c8"/>
                                             <constraint firstItem="2vV-uI-Aq8" firstAttribute="leading" secondItem="2Kq-bM-Y4Z" secondAttribute="leading" id="8XN-Jg-2LA"/>
@@ -912,21 +926,22 @@
                                             <constraint firstAttribute="trailing" secondItem="EdN-eF-pVQ" secondAttribute="trailing" id="Xor-zh-VAi"/>
                                             <constraint firstAttribute="trailing" secondItem="aVE-qY-jon" secondAttribute="trailing" constant="10" id="YdC-sA-8Wa"/>
                                             <constraint firstItem="2Kq-bM-Y4Z" firstAttribute="top" secondItem="8Hj-Lb-vQi" secondAttribute="bottom" constant="5" id="Z31-RH-Adb"/>
+                                            <constraint firstAttribute="trailing" secondItem="YWq-Oh-Cdu" secondAttribute="trailing" constant="10" id="a1a-3g-SUw"/>
                                             <constraint firstItem="qoj-xb-6VI" firstAttribute="trailing" secondItem="GQy-tl-h4n" secondAttribute="trailing" id="a2E-ye-YrK"/>
                                             <constraint firstItem="2vV-uI-Aq8" firstAttribute="top" secondItem="aVE-qY-jon" secondAttribute="bottom" constant="5" id="agE-8X-HLr"/>
                                             <constraint firstItem="aVE-qY-jon" firstAttribute="top" secondItem="2Kq-bM-Y4Z" secondAttribute="bottom" constant="5" id="b7D-MJ-8Nf"/>
-                                            <constraint firstItem="F0B-aC-Rvu" firstAttribute="leading" secondItem="Ca8-rv-Ss4" secondAttribute="leading" constant="10" id="dGu-LZ-Vr3"/>
+                                            <constraint firstAttribute="bottom" secondItem="YWq-Oh-Cdu" secondAttribute="bottom" constant="20" id="eUy-aQ-gJ4"/>
                                             <constraint firstAttribute="trailing" secondItem="GQy-tl-h4n" secondAttribute="trailing" constant="10" id="f8e-VG-JP4"/>
                                             <constraint firstItem="euw-k9-Lx3" firstAttribute="trailing" secondItem="iTi-uZ-XMH" secondAttribute="trailing" id="gDQ-NI-4rk"/>
                                             <constraint firstItem="iTi-uZ-XMH" firstAttribute="leading" secondItem="Ca8-rv-Ss4" secondAttribute="leading" id="hC6-sf-26P"/>
-                                            <constraint firstAttribute="bottom" secondItem="F0B-aC-Rvu" secondAttribute="bottom" constant="20" id="iGY-jX-YWR"/>
                                             <constraint firstItem="2vV-uI-Aq8" firstAttribute="trailing" secondItem="2Kq-bM-Y4Z" secondAttribute="trailing" id="mEC-Nk-ZhS"/>
-                                            <constraint firstItem="F0B-aC-Rvu" firstAttribute="top" secondItem="qoj-xb-6VI" secondAttribute="bottom" constant="20" id="nsj-2i-LzL"/>
                                             <constraint firstAttribute="trailing" secondItem="7eD-27-s9x" secondAttribute="trailing" id="pYG-M1-vqm"/>
                                             <constraint firstItem="8Hj-Lb-vQi" firstAttribute="leading" secondItem="euw-k9-Lx3" secondAttribute="leading" id="rn9-Y7-HcK"/>
+                                            <constraint firstItem="YWq-Oh-Cdu" firstAttribute="top" secondItem="qoj-xb-6VI" secondAttribute="bottom" constant="20" id="toN-8F-kvS"/>
                                             <constraint firstItem="qoj-xb-6VI" firstAttribute="leading" secondItem="GQy-tl-h4n" secondAttribute="leading" id="tsf-CX-zwW"/>
                                             <constraint firstItem="7eD-27-s9x" firstAttribute="top" secondItem="Ca8-rv-Ss4" secondAttribute="top" id="u59-Sq-zaS"/>
                                             <constraint firstItem="8Hj-Lb-vQi" firstAttribute="top" secondItem="euw-k9-Lx3" secondAttribute="bottom" constant="5" id="uSb-9k-dCV"/>
+                                            <constraint firstItem="YWq-Oh-Cdu" firstAttribute="leading" secondItem="Ca8-rv-Ss4" secondAttribute="leading" constant="10" id="w8a-DE-A15"/>
                                             <constraint firstItem="EdN-eF-pVQ" firstAttribute="leading" secondItem="Ca8-rv-Ss4" secondAttribute="leading" id="wXK-Ko-9sH"/>
                                         </constraints>
                                     </view>
@@ -1003,58 +1018,9 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b0w-8b-rv5">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
                                                         <subviews>
-                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="S6q-2h-7gg">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="diamondinruff" translatesAutoresizingMaskIntoConstraints="NO" id="DnO-Xd-pau">
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
-                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="G9r-Hm-cqt">
-                                                                    <size key="itemSize" width="413" height="354"/>
-                                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                                </collectionViewFlowLayout>
-                                                                <cells>
-                                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AnimalDetailCollectionViewCell" id="g42-hT-KeW" customClass="AnimalDetailCollectionViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="c6E-Kn-om1">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
-                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                            <subviews>
-                                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vwH-cH-sbb">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
-                                                                                    <subviews>
-                                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Oq3-KB-JSN">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
-                                                                                        </imageView>
-                                                                                    </subviews>
-                                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                                                    <constraints>
-                                                                                        <constraint firstItem="Oq3-KB-JSN" firstAttribute="top" secondItem="vwH-cH-sbb" secondAttribute="top" id="DMo-j8-zXB"/>
-                                                                                        <constraint firstAttribute="bottom" secondItem="Oq3-KB-JSN" secondAttribute="bottom" id="Pin-yi-dls"/>
-                                                                                        <constraint firstItem="Oq3-KB-JSN" firstAttribute="leading" secondItem="vwH-cH-sbb" secondAttribute="leading" id="Uax-Wp-EZX"/>
-                                                                                        <constraint firstAttribute="trailing" secondItem="Oq3-KB-JSN" secondAttribute="trailing" id="qjm-v4-Rye"/>
-                                                                                    </constraints>
-                                                                                </view>
-                                                                            </subviews>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="trailing" secondItem="vwH-cH-sbb" secondAttribute="trailing" id="A9u-3D-vsJ"/>
-                                                                                <constraint firstAttribute="bottom" secondItem="vwH-cH-sbb" secondAttribute="bottom" id="KDV-fV-WcJ"/>
-                                                                                <constraint firstItem="vwH-cH-sbb" firstAttribute="top" secondItem="c6E-Kn-om1" secondAttribute="top" id="Rgh-Ix-f3f"/>
-                                                                                <constraint firstItem="vwH-cH-sbb" firstAttribute="leading" secondItem="c6E-Kn-om1" secondAttribute="leading" id="klQ-pu-vbf"/>
-                                                                            </constraints>
-                                                                        </collectionViewCellContentView>
-                                                                        <size key="customSize" width="414" height="350"/>
-                                                                        <connections>
-                                                                            <outlet property="animalImageView" destination="Oq3-KB-JSN" id="HKb-jl-3S8"/>
-                                                                            <outlet property="containerView" destination="vwH-cH-sbb" id="pio-fz-Ae1"/>
-                                                                        </connections>
-                                                                    </collectionViewCell>
-                                                                </cells>
-                                                                <connections>
-                                                                    <outlet property="dataSource" destination="aIR-cf-z9R" id="lBn-FC-LLe"/>
-                                                                    <outlet property="delegate" destination="aIR-cf-z9R" id="UHG-lM-cH8"/>
-                                                                </connections>
-                                                            </collectionView>
+                                                            </imageView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nap-MS-T93">
                                                                 <rect key="frame" x="20" y="50" width="30" height="30"/>
                                                                 <constraints>
@@ -1066,13 +1032,6 @@
                                                                     <action selector="backButtonAction:" destination="aIR-cf-z9R" eventType="touchUpInside" id="tPF-nm-Ekq"/>
                                                                 </connections>
                                                             </button>
-                                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="SCF-VZ-HeQ">
-                                                                <rect key="frame" x="132" y="310" width="150" height="30"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="150" id="6J1-fQ-rB4"/>
-                                                                    <constraint firstAttribute="height" constant="30" id="qy8-2A-43J"/>
-                                                                </constraints>
-                                                            </pageControl>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZM-Zd-HEr">
                                                                 <rect key="frame" x="274" y="315" width="60" height="60"/>
                                                                 <subviews>
@@ -1128,19 +1087,17 @@
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstItem="SCF-VZ-HeQ" firstAttribute="centerX" secondItem="b0w-8b-rv5" secondAttribute="centerX" id="1oI-Nw-zAf"/>
                                                             <constraint firstItem="Nap-MS-T93" firstAttribute="leading" secondItem="b0w-8b-rv5" secondAttribute="leading" constant="20" id="58M-sq-bo3"/>
-                                                            <constraint firstAttribute="trailing" secondItem="S6q-2h-7gg" secondAttribute="trailing" id="6SS-VY-BJz"/>
+                                                            <constraint firstAttribute="bottom" secondItem="DnO-Xd-pau" secondAttribute="bottom" id="AXm-Rh-KW1"/>
                                                             <constraint firstItem="Nap-MS-T93" firstAttribute="top" secondItem="b0w-8b-rv5" secondAttribute="top" constant="50" id="NW2-Lp-y02"/>
                                                             <constraint firstAttribute="bottom" secondItem="mZM-Zd-HEr" secondAttribute="bottom" constant="-25" id="Otd-j8-ujV"/>
-                                                            <constraint firstAttribute="bottom" secondItem="S6q-2h-7gg" secondAttribute="bottom" id="WSa-xB-dB5"/>
-                                                            <constraint firstItem="SCF-VZ-HeQ" firstAttribute="bottom" secondItem="S6q-2h-7gg" secondAttribute="bottom" constant="-10" id="XvN-P8-VzS"/>
+                                                            <constraint firstAttribute="trailing" secondItem="DnO-Xd-pau" secondAttribute="trailing" id="YgE-8h-WYn"/>
+                                                            <constraint firstItem="DnO-Xd-pau" firstAttribute="top" secondItem="b0w-8b-rv5" secondAttribute="top" id="cCG-Nb-MuG"/>
+                                                            <constraint firstItem="DnO-Xd-pau" firstAttribute="leading" secondItem="b0w-8b-rv5" secondAttribute="leading" id="jHW-yV-VDY"/>
                                                             <constraint firstAttribute="height" constant="350" id="lCi-OV-ZN3"/>
                                                             <constraint firstItem="qtD-wq-Hxe" firstAttribute="centerY" secondItem="mZM-Zd-HEr" secondAttribute="centerY" id="pwd-oP-HJy"/>
-                                                            <constraint firstItem="S6q-2h-7gg" firstAttribute="leading" secondItem="b0w-8b-rv5" secondAttribute="leading" id="sGt-6E-pML"/>
-                                                            <constraint firstItem="S6q-2h-7gg" firstAttribute="top" secondItem="b0w-8b-rv5" secondAttribute="top" id="snV-wi-7SL"/>
                                                             <constraint firstAttribute="trailing" secondItem="qtD-wq-Hxe" secondAttribute="trailing" constant="10" id="v6M-tR-ahl"/>
                                                             <constraint firstItem="qtD-wq-Hxe" firstAttribute="leading" secondItem="mZM-Zd-HEr" secondAttribute="trailing" constant="10" id="xiI-qk-g3p"/>
                                                         </constraints>
@@ -1629,7 +1586,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="animalDetailCollectionView" destination="S6q-2h-7gg" id="4MS-sg-Po7"/>
                         <outlet property="btnViewAllPet" destination="sy6-fu-fRb" id="qfY-T5-N5u"/>
                         <outlet property="calenderBtnContainerView" destination="qtD-wq-Hxe" id="da5-Sk-Ded"/>
                         <outlet property="favBtnContainerView" destination="mZM-Zd-HEr" id="oXx-ui-Z5U"/>
@@ -1640,9 +1596,9 @@
                         <outlet property="lblShelterDescription" destination="z6i-QD-mPu" id="al1-ER-iFb"/>
                         <outlet property="lblShelterName" destination="wI5-7Z-JWL" id="Hnn-Vc-eLr"/>
                         <outlet property="lblShelterSub" destination="xEv-KN-9Wz" id="7vp-Up-a7g"/>
-                        <outlet property="pageControl" destination="SCF-VZ-HeQ" id="mjq-Ce-Ne2"/>
                         <outlet property="shelterFavBtnContainerView" destination="rOy-fo-dVO" id="hrq-xW-t6G"/>
-                        <outlet property="shelterImageView" destination="1bK-bi-guH" id="zue-5W-pga"/>
+                        <outlet property="shelterImageView" destination="1bK-bi-guH" id="xVJ-OW-WCe"/>
+                        <outlet property="shelterTopImageView" destination="DnO-Xd-pau" id="ktt-cy-diq"/>
                         <outlet property="sheltetPetCollectionView" destination="4rw-ID-97U" id="beC-gF-v6B"/>
                     </connections>
                 </viewController>
@@ -5190,9 +5146,6 @@
         <image name="weight" width="21" height="21"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

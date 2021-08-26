@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol ScheduleOptionVCDelegate {
+        @objc func didScheduleOptionClose(_ isSelect: Bool)
+    }
+
 class ScheduleOptionVC: UIViewController {
     
     //MARK:- UIControl's Outlets
@@ -17,7 +21,7 @@ class ScheduleOptionVC: UIViewController {
     @IBOutlet weak var btnClose : UIButton!
   
     var scheduleListModel:ScheduleListModel?
-
+    weak var delegate:ScheduleOptionVCDelegate?
     //MARK:- View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +67,7 @@ class ScheduleOptionVC: UIViewController {
     
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
+        self.delegate?.didScheduleOptionClose(true)
         self.dismissAnimation()
     }
     

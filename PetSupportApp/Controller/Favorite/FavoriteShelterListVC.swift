@@ -28,7 +28,13 @@ class ShelterListTableViewCell: UITableViewCell {
 }
 
 
-class FavoriteShelterListVC: UIViewController  {
+class FavoriteShelterListVC: UIViewController,ShelterFavOptionPopUpVCDelegate  {
+    func didShelterFavOptionClose(_ isSelect: Bool) {
+        if let parent = self.parent?.parent as? FavoriteVC{
+            parent.hidefadeView()
+        }
+    }
+    
     //MARK:- UIControl's Outlets
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var lblTotalShelter: UILabel!
@@ -72,9 +78,14 @@ class FavoriteShelterListVC: UIViewController  {
         let vc = SFavorite.instantiateViewController(withIdentifier: "ShelterFavOptionPopUpVC") as! ShelterFavOptionPopUpVC
         self.addChild(vc)
         vc.favShelter = favShelterlists[sender.tag]
+        vc.delegate = self
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)
+        
+        if let parent = self.parent?.parent as? FavoriteVC{
+            parent.showfadeView()
+        }
         
     }
     @objc func selectButtonAction(_ sender:UIButton){
@@ -100,7 +111,12 @@ extension FavoriteShelterListVC:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-    }
+        let favShelter = favShelterlists[indexPath.row]
+       // let petModel = PetModel.init(petName: favPetModel.petName, petImages: [favPetModel.petImage], petCollectionType: "NEW")
+        
+        let vc = SHome.instantiateViewController(withIdentifier: "ShelterDetailVC") as! ShelterDetailVC
+        vc.shelterModel = favShelter
+       self.navigationController?.pushViewController(vc, animated: true)
+   }
 
 }

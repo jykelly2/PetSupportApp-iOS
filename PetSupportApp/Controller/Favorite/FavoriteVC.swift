@@ -35,7 +35,8 @@ class FavColCell: UICollectionViewCell {
 }
 
 class FavoriteVC: UIViewController {
-
+    @IBOutlet weak var fadeView: UIView!
+    
     //----------------------------------------------------------------------------
     //MARK:- UIControl's Outlets
     
@@ -106,6 +107,7 @@ class FavoriteVC: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.setData()
+        self.hidefadeView()
 
     }
     
@@ -185,6 +187,14 @@ extension FavoriteVC : UICollectionViewDataSource, UICollectionViewDelegate,UICo
 }
 
 extension FavoriteVC{
+    
+    func showfadeView(){
+        fadeView.isHidden = false
+    }
+    
+    func hidefadeView(){
+        fadeView.isHidden = true
+    }
     
     func setViewSelection(index: Int){
         if self.FavTypeArray.count > 0 {

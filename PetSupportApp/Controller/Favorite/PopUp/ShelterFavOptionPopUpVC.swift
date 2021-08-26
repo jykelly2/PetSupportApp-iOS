@@ -8,6 +8,11 @@
 
 import UIKit
 
+
+@objc protocol ShelterFavOptionPopUpVCDelegate {
+        @objc func didShelterFavOptionClose(_ isSelect: Bool)
+    }
+
 class ShelterFavOptionPopUpVC: UIViewController {
     
     //MARK:- UIControl's Outlets
@@ -17,6 +22,7 @@ class ShelterFavOptionPopUpVC: UIViewController {
     @IBOutlet weak var btnClose : UIButton!
   
     var favShelter:FavShelterModel?
+    weak var delegate:ShelterFavOptionPopUpVCDelegate?
     
     //MARK:- View life cycle
     override func viewDidLoad() {
@@ -63,6 +69,7 @@ class ShelterFavOptionPopUpVC: UIViewController {
     
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
+        self.delegate?.didShelterFavOptionClose(true)
         self.dismissAnimation()
     }
     

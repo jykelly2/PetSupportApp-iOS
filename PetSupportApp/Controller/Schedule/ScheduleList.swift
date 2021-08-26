@@ -51,7 +51,13 @@ class ScheduleListTableViewCell: UITableViewCell {
     }
 }
 
-class ScheduleList: UIViewController {
+class ScheduleList: UIViewController, ScheduleOptionVCDelegate {
+    func didScheduleOptionClose(_ isSelect: Bool) {
+        if let parent = self.parent?.parent as? ScheduleVC{
+            parent.hidefadeView()
+        }
+    }
+    
     //MARK:- UIControl's Outlets
     @IBOutlet weak var tblSchedule: UITableView!
     @IBOutlet weak var lblTotalItems: UILabel!
@@ -106,10 +112,13 @@ class ScheduleList: UIViewController {
         let vc = SSchedule.instantiateViewController(withIdentifier: "ScheduleOptionVC") as! ScheduleOptionVC
         self.addChild(vc)
         vc.scheduleListModel = scheduleLists[sender.tag]
+        vc.delegate = self
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)
-        
+        if let parent = self.parent?.parent as? ScheduleVC{
+            parent.showfadeView()
+        }
     }
     
     @objc func selectButtonAction(_ sender:UIButton){

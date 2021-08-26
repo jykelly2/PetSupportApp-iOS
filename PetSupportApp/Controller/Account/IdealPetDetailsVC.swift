@@ -9,7 +9,8 @@
 import UIKit
 
 class IdealPetDetailsVC: UIViewController {
-
+    @IBOutlet weak var lblProgess: UILabel!
+    
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var petrestrictionBreedSV: UIStackView!
     @IBOutlet weak var petRestrictionSizeSV: UIStackView!
@@ -102,6 +103,7 @@ class IdealPetDetailsVC: UIViewController {
         txtBreedSearch.setRightIamge("search2")
 
         progressView.progress = 0.0
+        lblProgess.text = "0 % complete"
 
     }
     
@@ -191,6 +193,9 @@ class IdealPetDetailsVC: UIViewController {
             isLookingPreferenceSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
 
     }
@@ -208,6 +213,10 @@ class IdealPetDetailsVC: UIViewController {
             isRestrictionPreferenceSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
+            
         }
 
     }
@@ -225,6 +234,9 @@ class IdealPetDetailsVC: UIViewController {
             isSpecialNeedSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     
@@ -241,6 +253,9 @@ class IdealPetDetailsVC: UIViewController {
             isAgePreferenceSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     
@@ -257,6 +272,9 @@ class IdealPetDetailsVC: UIViewController {
             isGenderPreferenceSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     
@@ -273,6 +291,9 @@ class IdealPetDetailsVC: UIViewController {
             isSizePreferenceSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     
@@ -289,6 +310,9 @@ class IdealPetDetailsVC: UIViewController {
             isActivePreferenceSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     
@@ -303,6 +327,9 @@ class IdealPetDetailsVC: UIViewController {
             isNorestrictionSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     @IBAction func breedPreferenceSearchButtonAction(_ sender: UIButton) {
@@ -316,12 +343,16 @@ class IdealPetDetailsVC: UIViewController {
             isBreadSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
         }
     }
     
     func goToBreadVC(){
         let destVC:BreadModalVC!  = SHome.instantiateViewController(withIdentifier: "BreadModalVC") as? BreadModalVC
         destVC.delegate = self
+        destVC.isFromIdealpet = true
         self.addChild(destVC)
         destVC.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(destVC.view)
@@ -331,8 +362,34 @@ class IdealPetDetailsVC: UIViewController {
 
 extension IdealPetDetailsVC: BreadModalVCDelegate {
     func didSelectItem(_ isSelect: Bool) {
-        selectedTxtField.text = "Test"
+        
     }
+    
+    func didSelectBreadItem(_ item: String) {
+        if item.count > 0 {
+            selectedTxtField.text = item
+            if self.selectedTxtField == txtBreedSearch {
+                if !isBreadSelected {
+                    isBreadSelected = true
+                    totalOptionFillup += 1
+                    progressView.progress = totalOptionFillup/total
+                    let per = (totalOptionFillup/total)*100
+                    let perString = String(format: "%.2f", per)
+                    lblProgess.text = "\(perString)% complete"
+                }
+            }else if self.selectedTxtField == txtSearch{
+                if !isNorestrictionSelected {
+                    isNorestrictionSelected = true
+                    totalOptionFillup += 1
+                    progressView.progress = totalOptionFillup/total
+                    let per = (totalOptionFillup/total)*100
+                    let perString = String(format: "%.2f", per)
+                    lblProgess.text = "\(perString)% complete"
+                }
+            }
+        }
+    }
+
     
 }
 
@@ -340,8 +397,8 @@ extension IdealPetDetailsVC: BreadModalVCDelegate {
 extension IdealPetDetailsVC : UITextFieldDelegate{
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
         selectedTxtField = textField
-        self.goToBreadVC()
         if textField == txtSearch {
             txtSearch.superview?.backgroundColor = UIColor.init(rgb: 0x8256D6)
             txtSearch.textColor = .white
@@ -355,6 +412,7 @@ extension IdealPetDetailsVC : UITextFieldDelegate{
             btnSearchNoPreference.backgroundColor = .white
             btnSearchNoPreference.setTitleColor(.lightGray, for: .normal)
         }
+        self.goToBreadVC()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -363,18 +421,10 @@ extension IdealPetDetailsVC : UITextFieldDelegate{
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        textField.resignFirstResponder()
         if textField == txtBreedSearch {
-            if !isBreadSelected {
-                isBreadSelected = true
-                totalOptionFillup += 1
-                progressView.progress = totalOptionFillup/total
-            }
         }else if textField == txtSearch{
-            if !isNorestrictionSelected {
-                isNorestrictionSelected = true
-                totalOptionFillup += 1
-                progressView.progress = totalOptionFillup/total
-            }
+           
         }
         return true
     }

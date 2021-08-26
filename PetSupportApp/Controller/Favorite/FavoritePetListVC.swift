@@ -45,7 +45,13 @@ class NoItemTableViewCell: UITableViewCell {
 
 
 
-class FavoritePetListVC: UIViewController {
+class FavoritePetListVC: UIViewController, PetFavOptionPopUpVCDelegate {
+    func didFavPetOptionClose(_ isSelect: Bool) {
+        if let parent = self.parent?.parent as? FavoriteVC{
+            parent.hidefadeView()
+        }
+    }
+    
     //MARK:- UIControl's Outlets
     @IBOutlet weak var lblTotalPets: UILabel!
     @IBOutlet weak var headerView: UIView!
@@ -90,9 +96,14 @@ class FavoritePetListVC: UIViewController {
         let vc = SFavorite.instantiateViewController(withIdentifier: "PetFavOptionPopUpVC") as! PetFavOptionPopUpVC
         self.addChild(vc)
         vc.favPetModel = favPetlists[sender.tag]
+        vc.delegate = self
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)
+        
+        if let parent = self.parent?.parent as? FavoriteVC{
+            parent.showfadeView()
+        }
         
     }
     

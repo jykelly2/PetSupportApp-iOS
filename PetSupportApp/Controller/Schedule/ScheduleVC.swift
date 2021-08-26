@@ -32,7 +32,8 @@ class ScheduleVC: UIViewController {
     
     @IBOutlet weak var colView : UICollectionView!
     @IBOutlet weak var vwPageContainer : UIView!
-    
+    @IBOutlet weak var fadeView: UIView!
+
     //----------------------------------------------------------------------------
     //MARK:- Class Variables
     var pageViewController : UIPageViewController   = UIPageViewController()
@@ -97,6 +98,7 @@ class ScheduleVC: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.setData()
+        self.hidefadeView()
 
     }
     
@@ -176,6 +178,14 @@ extension ScheduleVC : UICollectionViewDataSource, UICollectionViewDelegate,UICo
 }
 
 extension ScheduleVC{
+    
+    func showfadeView(){
+        fadeView.isHidden = false
+    }
+    
+    func hidefadeView(){
+        fadeView.isHidden = true
+    }
     
     func setViewSelection(index: Int){
         if self.scheduleTypeArray.count > 0 {

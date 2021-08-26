@@ -42,8 +42,9 @@ class ShelterPetCollectionVC: UICollectionViewCell {
 class ShelterDetailVC: UIViewController {
     //MARK:- UIControl's Outlets
 
-    @IBOutlet weak var pageControl: UIPageControl!
-    @IBOutlet weak var animalDetailCollectionView: UICollectionView!
+    @IBOutlet weak var shelterTopImageView: UIImageView!
+   // @IBOutlet weak var pageControl: UIPageControl!
+   // @IBOutlet weak var animalDetailCollectionView: UICollectionView!
     @IBOutlet weak var sheltetPetCollectionView: UICollectionView!
 
     @IBOutlet weak var favBtnContainerView: UIView!
@@ -66,6 +67,8 @@ class ShelterDetailVC: UIViewController {
 
     //MARK:- Class Variables
     var petModel: PetModel?
+    var shelterModel: FavShelterModel?
+
     var indexOfCellBeforeDragging:Int = 0
 
     //MARK:- View life cycle
@@ -86,12 +89,20 @@ class ShelterDetailVC: UIViewController {
     //MARK:- Custome Methods
     func setupUI(){
         imageContainerView.backgroundColor = UIColor.lightGray
-        if let _pet = petModel,let petImageName = _pet.petImages.first {
-            lblShelterName.text = _pet.petName
+//        if let _pet = petModel,let petImageName = _pet.petImages.first {
+//            lblShelterName.text = _pet.petName
+//
+//           // pageControl.currentPage = 0
+//           // pageControl.numberOfPages = _pet.petImages.count
+//        }
+        
+        if let _shelterModel = shelterModel {
+            lblShelterName.text = _shelterModel.shelterName
+            shelterTopImageView.image = UIImage(named: _shelterModel.shelterImage)
 
-            pageControl.currentPage = 0
-            pageControl.numberOfPages = _pet.petImages.count
         }
+        
+        
     }
     
     func makeCircle(){
@@ -212,11 +223,11 @@ extension ShelterDetailVC: UICollectionViewDelegate,UICollectionViewDataSource{
 extension ShelterDetailVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == sheltetPetCollectionView {
+       // if collectionView == sheltetPetCollectionView {
             return CGSize(width: (self.view.frame.size.width - 25)/2.5, height: sheltetPetCollectionView.frame.size.height)
-        }else{
-            return CGSize(width: animalDetailCollectionView.frame.size.width, height: animalDetailCollectionView.frame.size.height)
-        }
+//        }else{
+//            return CGSize(width: animalDetailCollectionView.frame.size.width, height: animalDetailCollectionView.frame.size.height)
+//        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         if collectionView == sheltetPetCollectionView {
@@ -229,7 +240,7 @@ extension ShelterDetailVC: UICollectionViewDelegateFlowLayout {
         return 0
     }
 }
-
+/*
 extension ShelterDetailVC:UIScrollViewDelegate{
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -290,5 +301,5 @@ extension ShelterDetailVC:UIScrollViewDelegate{
             }
         }
     }
-}
+}*/
 
