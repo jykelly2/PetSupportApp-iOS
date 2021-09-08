@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -84,10 +84,6 @@
                                                                         </connections>
                                                                     </collectionViewCell>
                                                                 </cells>
-                                                                <connections>
-                                                                    <outlet property="dataSource" destination="HMx-6i-ws5" id="uDs-eo-U1j"/>
-                                                                    <outlet property="delegate" destination="HMx-6i-ws5" id="47b-lS-eoD"/>
-                                                                </connections>
                                                             </collectionView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GBQ-UC-VEJ">
                                                                 <rect key="frame" x="20" y="50" width="30" height="30"/>
@@ -985,7 +981,10 @@
                         <outlet property="lblLeashTrained" destination="h27-na-xkG" id="pjn-hG-IZx"/>
                         <outlet property="lblLocation" destination="pE3-Py-fXc" id="dFL-2z-CFa"/>
                         <outlet property="lblMeetPet" destination="lhJ-o7-KGw" id="0vR-CQ-ld8"/>
+                        <outlet property="lblPetsInfo" destination="8fv-cL-o6M" id="Ib6-O0-yBY"/>
+                        <outlet property="lblPetsLike" destination="CvO-Il-ALo" id="JLL-HH-ypv"/>
                         <outlet property="lblPottyTrained" destination="Gyj-Bi-kC9" id="hVz-bu-5fy"/>
+                        <outlet property="lblShelterName" destination="GQy-tl-h4n" id="rFh-le-RD6"/>
                         <outlet property="lblSpayed" destination="2qU-n9-LYs" id="1Oc-K6-uj1"/>
                         <outlet property="lblVaccination" destination="2qU-n9-LYs" id="6zS-R9-glq"/>
                         <outlet property="pageControl" destination="h0c-uJ-khB" id="p1Q-zW-i3Y"/>
@@ -1586,6 +1585,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnPhone" destination="CXf-ZJ-tma" id="TZw-Sj-Gog"/>
                         <outlet property="btnViewAllPet" destination="sy6-fu-fRb" id="qfY-T5-N5u"/>
                         <outlet property="calenderBtnContainerView" destination="qtD-wq-Hxe" id="da5-Sk-Ded"/>
                         <outlet property="favBtnContainerView" destination="mZM-Zd-HEr" id="oXx-ui-Z5U"/>
@@ -2738,7 +2738,7 @@
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BreedTableViewCell" rowHeight="70" id="kTu-tD-Apt" customClass="BreedTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="24.5" width="374" height="70"/>
+                                                <rect key="frame" x="0.0" y="28" width="374" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kTu-tD-Apt" id="Oz9-gv-LOg">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -3139,7 +3139,7 @@
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ColorTableViewCell" rowHeight="70" id="rac-5q-Dw7" customClass="ColorTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="24.5" width="374" height="70"/>
+                                                <rect key="frame" x="0.0" y="28" width="374" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rac-5q-Dw7" id="02b-MD-epC">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -3342,7 +3342,7 @@
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShelterTableViewCell" rowHeight="70" id="LM2-Yx-Nhx" customClass="ShelterTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="24.5" width="374" height="70"/>
+                                                <rect key="frame" x="0.0" y="28" width="374" height="70"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LM2-Yx-Nhx" id="lqN-mo-bZG">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -4231,7 +4231,7 @@
                                                 </constraints>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BreedTableViewCell" rowHeight="70" id="1Wj-hn-REg" customClass="BreedTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="24.5" width="374" height="70"/>
+                                                        <rect key="frame" x="0.0" y="28" width="374" height="70"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Wj-hn-REg" id="ZlU-3y-G6t">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -4525,7 +4525,7 @@
                                                 </constraints>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShelterTableViewCell" rowHeight="70" id="37H-U2-vrB" customClass="ShelterTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="24.5" width="374" height="70"/>
+                                                        <rect key="frame" x="0.0" y="28" width="374" height="70"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="37H-U2-vrB" id="T6d-3z-Irh">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -4757,7 +4757,7 @@
                                                 </constraints>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ColorTableViewCell" rowHeight="70" id="RI4-MF-ll3" customClass="ColorTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="24.5" width="374" height="70"/>
+                                                        <rect key="frame" x="0.0" y="28" width="374" height="70"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RI4-MF-ll3" id="UKW-iC-goX">
                                                             <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -5008,7 +5008,7 @@
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchHeaderCell" rowHeight="51" id="L6Y-QT-RhA" customClass="SearchHeaderCell" customModule="PetSupportApp" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="24.5" width="374" height="51"/>
+                                                <rect key="frame" x="0.0" y="28" width="374" height="51"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="L6Y-QT-RhA" id="5ZP-C1-sxv">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>
@@ -5048,7 +5048,7 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchTableViewCell" id="eT0-Wg-uxU" customClass="SearchTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="75.5" width="374" height="51"/>
+                                                <rect key="frame" x="0.0" y="79" width="374" height="51"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eT0-Wg-uxU" id="gPT-Ll-357">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>

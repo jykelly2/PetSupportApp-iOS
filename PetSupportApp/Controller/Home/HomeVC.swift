@@ -7,205 +7,11 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import KRProgressHUD
 
-class PetCollectionViewCell: UICollectionViewCell {
-    
-    @IBOutlet weak var lblPetType: UILabel!
-    @IBOutlet weak var petImageView: UIImageView!
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var circleView: UIView!
-    
-    override func layoutSubviews() {
-        circleView.layer.borderWidth = 1
-        circleView.layer.borderColor = UIColor.white.cgColor
-        
-        circleView.layer.cornerRadius = circleView.frame.height/2
-        circleView.clipsToBounds = true
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-            
-        }
-
-}
-
-class PetFilterCollectionViewCell: UICollectionViewCell {
-    
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var downArrowImageView: UIImageView!
-    @IBOutlet weak var lblFilterType: UILabel!
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        containerView.layer.borderWidth = 1
-        containerView.layer.borderColor = UIColor.lightGray.cgColor
-        containerView.layer.cornerRadius = 5
-        containerView.clipsToBounds = true
-    }
-
-}
-
-protocol PetTableViewCellDelegate {
-    func didSelectItem(_ petModel: PetModel?)
-}
-
-class PetTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var lblPetName: UILabel!
-    @IBOutlet weak var lblPetTypeAndDistance: UILabel!
-    @IBOutlet weak var lblHehavior: UILabel!
-    @IBOutlet weak var btnViewProfile: UIButton!
-    @IBOutlet weak var btnFavorite: UIButton!
-    @IBOutlet weak var btnShare: UIButton!
-
-    @IBOutlet weak var petCollectionView: UICollectionView!
-    @IBOutlet weak var pagingView: UIPageControl!
-    
-    var delegate: PetTableViewCellDelegate!
-    var indexOfCellBeforeDragging:Int = 0
-    var petImages:[String] = []
-
-     var petModel: PetModel? {
-        didSet{
-            if let _petModel = petModel {
-                lblPetName.text = _petModel.petName
-                pagingView.currentPage = 0
-                pagingView.numberOfPages = _petModel.petImages.count
-                petImages = _petModel.petImages
-            }
-        }
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-            resetCollectionView()
-    }
-    
-    func resetCollectionView() {
-        guard petImages.count <= 0 else { return }
-        petImages = []
-        petCollectionView.reloadData()
-    }
-    
-    override func layoutSubviews() {
-        
-        containerView.layer.cornerRadius = 5
-        containerView.clipsToBounds = true
-        
-        lblHehavior.layer.cornerRadius = lblHehavior.frame.height/2
-        lblHehavior.clipsToBounds = true
-        
-    }
-    
-    override func awakeFromNib() {
-            super.awakeFromNib()
-        self.petCollectionView.dataSource = self
-        self.petCollectionView.delegate = self
-            
-    }
-}
-
-extension PetTableViewCell:UIScrollViewDelegate{
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        let pageWidth = petCollectionView.frame.width
-        let offset = petCollectionView.contentOffset.x / pageWidth
-        indexOfCellBeforeDragging = Int(round(offset))
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        targetContentOffset.pointee = scrollView.contentOffset
-        let pageWidth = petCollectionView.frame.width
-        let collectionViewTotalItem = Int(petModel?.petImages.count ?? 0)
-        let offset = petCollectionView.contentOffset.x / pageWidth
-        let indexOfMajorCell = Int(round(offset))
-        let swipeVelocityThreshold: CGFloat = 0.5
-        let hasEnoughVelocityToSlideToTheNextCell = indexOfCellBeforeDragging + 1 < collectionViewTotalItem && velocity.x > swipeVelocityThreshold
-        let hasEnoughVelocityToSlideToThePreviousCell = indexOfCellBeforeDragging - 1 >= 0 && velocity.x < -swipeVelocityThreshold
-        let majorCellIsTheCellBeforeDragging = indexOfMajorCell == indexOfCellBeforeDragging
-        let didUseSwipeToSkipCell = majorCellIsTheCellBeforeDragging && (hasEnoughVelocityToSlideToTheNextCell || hasEnoughVelocityToSlideToThePreviousCell)
-
-        if didUseSwipeToSkipCell {
-            let snapToIndex = indexOfCellBeforeDragging + (hasEnoughVelocityToSlideToTheNextCell ? 1 : -1)
-            let toValue = pageWidth * CGFloat(snapToIndex)
-            UIView.animate(
-                withDuration: 0.3,
-                delay: 0,
-                usingSpringWithDamping: 1,
-                initialSpringVelocity: velocity.x,
-                options: .allowUserInteraction,
-                animations: {
-                    scrollView.contentOffset = CGPoint(x: toValue, y: 0)
-                    scrollView.layoutIfNeeded()
-                },
-                completion: nil
-            )
-        } else {
-            let indexPath = IndexPath(row: indexOfMajorCell, section: 0)
-            petCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
-        }
-    }
-    
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == self.petCollectionView {
-            var contentOffset = scrollView.contentOffset
-            if let contentOffsetX = self.petCollectionView?.contentInset.left {
-                contentOffset.x = contentOffset.x - contentOffsetX
-                self.petCollectionView?.contentOffset = contentOffset
-
-                pagingView.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
-
-            }else{
-                print("Test-test")
-            }
-        }
-    }
-}
-
-extension PetTableViewCell: UICollectionViewDelegate,UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
-        return petImages.count
-
-      }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PetCollectionViewCell", for: indexPath) as! PetCollectionViewCell
-        if  petImages.count > indexPath.row {
-            let imageName = petModel?.petImages[indexPath.row]
-            cell.petImageView.image = UIImage(named: imageName!)
-            cell.lblPetType.text = petModel?.petCollectionType
-        }else{
-            return UICollectionViewCell()
-        }
-
-        return cell
-
-      }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.delegate.didSelectItem(petModel)
-    }
-}
-
-extension PetTableViewCell: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: petCollectionView.frame.size.width, height: petCollectionView.frame.size.height)
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-}
-
-
-
+//MARK:- HOME VC CLASS
 class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelegate, ColarModalVCDelegate, DistanceModalVCDelegate, AgeModalVCDelegate, SizeModalVCDelegate, GoodWithModalVCDelegate, CoatLengthModalVCDelegate, FilterVCDelegate, SortModalVCDelegate {
     
     
@@ -248,7 +54,8 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
     let viewModel = PetViewModel()
     var filterMasterMenuArray : [FilterMenu] = []
     var filterMenuArray : [FilterMenu] = []
-
+    var animalClient = [Animal]()
+    var currentAnimalClient = [Animal]()
 
     //MARK:- View life cycle
     override func viewDidLoad() {
@@ -260,6 +67,9 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
         let vw = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 100))
         vw.backgroundColor = UIColor.blue
        // petTableView.tableHeaderView = bannarView
+        getAnimalClient()
+        self.petTableView.delegate = self
+        self.petTableView.dataSource = self
 
     }
     
@@ -302,7 +112,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
     }
     
     
-    func goToAnimalDetailVC(_ petModel:PetModel){
+    func goToAnimalDetailVC(_ petModel:Animal){
         let vc = SHome.instantiateViewController(withIdentifier: "AnimalDetailVC") as! AnimalDetailVC
         //vc.hidesBottomBarWhenPushed = true
         vc.petModel = petModel
@@ -427,21 +237,22 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
 //MARK:- UITableViewDelegate,UITableViewDataSource
 extension HomeVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.petList.count
+        return currentAnimalClient.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PetTableViewCell") as? PetTableViewCell else { return UITableViewCell() }
-        let petModel = viewModel.petList[indexPath.row]
+        let petModel = currentAnimalClient[indexPath.row]
         cell.delegate = self
-        cell.petModel = petModel
+        cell.setValues(values: petModel)
+        
 
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let petModel = viewModel.petList[indexPath.row]
+        let petModel = currentAnimalClient[indexPath.row]
         goToAnimalDetailVC(petModel)
     }
     
@@ -449,23 +260,21 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource{
 //
 //        if let cell = cell as? PetTableViewCell {
 //
-//            cell.petCollectionView.dataSource = self
-//            cell.petCollectionView.delegate = self
-//            cell.petCollectionView.reloadData()
-//
+//          //  cell.petCollectionView.dataSource = self
+//           // cell.petCollectionView.delegate = self
 //        }
 //    }
 }
 
 extension HomeVC:PetTableViewCellDelegate{
-    func didSelectItem(_ petModel: PetModel?) {
+    func didSelectItem(_ petModel: Animal?) {
         if let _petModel = petModel {
             goToAnimalDetailVC(_petModel)
         }
     }    
 }
 
-//MARK:- UICollectionViewDelegate,UICollectionViewDataSource
+//MARK:- FILTER UICollectionViewDelegate,UICollectionViewDataSource
 extension HomeVC: UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
@@ -475,8 +284,8 @@ extension HomeVC: UICollectionViewDelegate,UICollectionViewDataSource{
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PetFilterCollectionViewCell", for: indexPath) as!
-            PetFilterCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as!
+            PetFilterCell
         let filterMenu = filterMenuArray[indexPath.row]
         cell.lblFilterType.text = filterMenu.title
         if filterMenu.filterModalMenu == .Filter {
@@ -533,6 +342,90 @@ extension HomeVC:UITextFieldDelegate{
       textField.resignFirstResponder()
 
         return true
+    }
+}
+
+//MARK:- NETWORK CALLS
+
+extension HomeVC {
+    func getAnimalClient(){
+        KRProgressHUD.show()
+        Alamofire.request("https://petsupportapp.com/api/animals/client/", method: .get).responseJSON { (reponse) in
+            if reponse.result.isSuccess {
+                KRProgressHUD.show()
+                let data:JSON = JSON(reponse.result.value!)
+                self.parseValues(json: data["animals"])
+            }else {
+                print(reponse.result.error!.localizedDescription)
+                KRProgressHUD.dismiss()
+            }
+        }
+    }
+    func parseValues(json:JSON){
+        for item in json {
+            
+            let name = item.1["name"].string ?? ""
+            let type = item.1["animalType"].string ?? ""
+            let breed = item.1["breed"].string ?? ""
+            let gender = item.1["gender"].string ?? ""
+            let age = item.1["age"].int ?? 0
+            let size = item.1["size"].string ?? ""
+            var personalities = [String]()
+            let personalitiesArray = item.1["personalities"].array
+            for item in personalitiesArray! {
+                personalities.append(item.string ?? "")
+            }
+            let description = item.1["description"].string ?? ""
+            let id = item.1["_id"].string ?? ""
+            let createdAt = item.1["createdAt"].string ?? ""
+            
+            let isNeutered = item.1["isNeuteured"].bool ?? false
+            let isVaccinated = item.1["isVaccinated"].bool ?? false
+            let isPottyTrained = item.1["isPottyTrained"].bool ?? false
+            let isLeashTrained = item.1["isLeashTrained"].bool ?? false
+            let isAvailable = item.1["isAvailable"].bool ?? false
+            let isAdobted = item.1["isAdopted"].bool ?? false
+            let isScheduled = item.1["isScheduled"].bool ?? false
+            var animalPicture = [String]()
+            let pictures = item.1["pictures"].array
+            for item in pictures! {
+                animalPicture.append(item.string ?? "")
+            //    getImages(imageArray:item.string ?? "")
+            }
+            //Shelter Values
+            let postalCode = item.1["shelter"]["postalCode"].string ?? ""
+            let city = item.1["shelter"]["city"].string ?? ""
+            let streetAdd = item.1["shelter"]["streetAddress"].string ?? ""
+            let province = item.1["shelter"]["province"].string ?? ""
+            let shelterName = item.1["shelter"]["name"].string ?? ""
+            let shelterId = item.1["shelter"]["_id"].string ?? ""
+            let phoneNum = item.1["shelter"]["phoneNumber"].string ?? ""
+            let email = item.1["shelter"]["email"].string ?? ""
+            var shelterPictuers = [String]()
+            let shelterPictuersArray = item.1["shelter"]["pictures"].array
+            for item in shelterPictuersArray! {
+                shelterPictuers.append(item.string ?? "")
+            }
+            let data = Animal(name: name, type: type, breed: breed, gender: gender, age: age, size: size, personalities: personalities, description: description, id: id, isNeutered: isNeutered, isVaccinated: isVaccinated, isPottyTrained: isPottyTrained, isLeashTrained: isLeashTrained, isAvailable: isAvailable, isAdobted: isAdobted, isScheduled: isScheduled, pictures: animalPicture, createdAt: createdAt,shelter: Shelter(name: shelterName, email: email, phoneNumber: phoneNum, address: streetAdd, city: city, province: province, postalCode: postalCode, pictures: shelterPictuers, shelterId: shelterId))
+            self.animalClient.append(data)
+        }
+        self.currentAnimalClient = self.animalClient
+        lblTotalResult.text = "\(currentAnimalClient.count) Results"
+        self.petTableView.reloadData()
+        KRProgressHUD.dismiss()
+        
+    }
+    
+    func like(){
+        Alamofire.request("https://petsupportapp.com/api/animals/client/favourites", method: .get).responseJSON { (reponse) in
+            if reponse.result.isSuccess {
+                KRProgressHUD.show()
+                let data:JSON = JSON(reponse.result.value!)
+                print(data)
+            }else {
+                print(reponse.result.error!.localizedDescription)
+            }
+        }
     }
 }
 

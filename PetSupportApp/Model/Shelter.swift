@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 struct Shelter {
     var name: String
     var email: String
@@ -15,7 +16,6 @@ struct Shelter {
     var city: String
     var province: String
     var postalCode: String
-    var descriptions: String
     var pictures: [String]
+    var shelterId:String
 }
-

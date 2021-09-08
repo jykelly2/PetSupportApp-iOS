@@ -12,15 +12,22 @@ struct Animal {
     var type: String
     var breed: String
     var gender: String
-    var age: String
+    var age: Int
     var size: String
-    var personalities: String
+    var personalities: [String]
     var description: String
-    var isNeutered: String
-    var isVaccinated: String
-    var isPottyTrained: String
-    var isLeashTrained: String
+    var id : String
+    var isNeutered: Bool
+    var isVaccinated: Bool
+    var isPottyTrained: Bool
+    var isLeashTrained: Bool
+    var isAvailable:Bool
+    var isAdobted : Bool
+    var isScheduled:Bool
     var pictures: [String]
-    var shelteritbelongsto: String
+    var createdAt : String
+    var shelter : Shelter
+   
 }
+
 

@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import KRProgressHUD
 
 class AnimalDetailCollectionViewCell: UICollectionViewCell {
     
@@ -46,12 +49,16 @@ class AnimalDetailVC: UIViewController {
     @IBOutlet weak var lblPottyTrained: UILabel!
     @IBOutlet weak var lblLeashTrained: UILabel!
     @IBOutlet weak var lblAnimalDescription: UILabel!
+    @IBOutlet weak var lblShelterName:UILabel!
     @IBOutlet weak var lblLocation: UILabel!
     @IBOutlet weak var lblEmail: UILabel!
+    @IBOutlet weak var lblPetsLike : UILabel!
+    @IBOutlet weak var lblPetsInfo : UILabel!
 
     @IBOutlet weak var lblMeetPet: UILabel!
     //MARK:- Class Variables
-    var petModel: PetModel?
+    var petImagesArray = [String]()
+    var petModel: Animal?
     var indexOfCellBeforeDragging:Int = 0
 
     //MARK:- View life cycle
@@ -72,13 +79,46 @@ class AnimalDetailVC: UIViewController {
     //MARK:- Custome Methods
     func setupUI(){
         imageContainerView.backgroundColor = UIColor.lightGray
-        if let _pet = petModel,let petImageName = _pet.petImages.first {
-            petProfileImageView.image = UIImage(named: "\(petImageName)")
-            lblAnimalName.text = _pet.petName
-            lblMeetPet.text = "Meet \(_pet.petName)"
-
+        if let pet = petModel{
+           // petProfileImageView.image = UIImage(named: "\(petImageName)")
+            lblAnimalName.text = pet.name
+            lblMeetPet.text = "Meet \(pet.name)"
+            lblAnimalSubTitle.text = "\(pet.breed)"
+            lblAnimalType.text = "\(pet.breed)"
+            lblAnimalWeight.text = pet.size
+            lblAnimalGender.text = pet.gender
+            lblAnimalAge.text = "\(pet.age) years old"
+            lblAnimalDescription.text = pet.description
+            getImages(imageArray:pet.pictures)
+            if pet.isNeutered == true {
+                lblSpayed.text = "Spayed/Neutered"
+            }else{
+                lblSpayed.text = "Not Spayed/Neutered"
+            }
+            if pet.isVaccinated == true {
+                lblVaccination.text = "Vaccinations up-to-date"
+            }else {
+                lblVaccination.text = "Not Vaccinated"
+            }
+            if pet.isPottyTrained == true {
+                lblPottyTrained.text = "Potty Trained"
+            }else {
+                lblPottyTrained.text = "Not Potty Trained"
+            }
+            if pet.isLeashTrained == true {
+                lblLeashTrained.text = "Leash Trained"
+            }else{
+                lblLeashTrained.text = "Not Leash Trained"
+            }
             pageControl.currentPage = 0
-            pageControl.numberOfPages = _pet.petImages.count
+            pageControl.numberOfPages = 4
+            
+           //Shelter info update
+            lblShelterName.text = pet.shelter.name
+            lblLocation.text = "\(pet.shelter.address), \(pet.shelter.postalCode), \(pet.shelter.city), \(pet.shelter.province)"
+            lblEmail.text = pet.shelter.email
+            lblPetsLike.text = "Pets like \(pet.name)"
+            lblPetsInfo.text = "Undecided? See other pets like \(pet.name) that also need a home"
         }
     }
     
@@ -121,7 +161,8 @@ class AnimalDetailVC: UIViewController {
         let vc = SHome.instantiateViewController(withIdentifier: "OptionVC") as! OptionVC
         self.addChild(vc)
         vc.delegate = self
-        vc.petModel = petModel
+        //anish
+     //   vc.petModel = petModel
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)
@@ -157,6 +198,7 @@ class AnimalDetailVC: UIViewController {
     @IBAction func seeShelterDetailButtonAction(_ sender: UIButton) {
         let vc = SHome.instantiateViewController(withIdentifier: "ShelterDetailVC") as! ShelterDetailVC
         //vc.hidesBottomBarWhenPushed = true
+        //anish
         vc.petModel = petModel
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -166,15 +208,18 @@ class AnimalDetailVC: UIViewController {
 extension AnimalDetailVC: UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
-        return petModel?.petImages.count ?? 0
+        return petImagesArray.count
 
       }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnimalDetailCollectionViewCell", for: indexPath) as! AnimalDetailCollectionViewCell
-        let imageName = petModel?.petImages[indexPath.row]
-        cell.animalImageView.image = UIImage(named: imageName!)
+        let imageName = petImagesArray[indexPath.row]
+        if let url = URL(string: imageName){
+            cell.animalImageView.sd_setImage(with: url, completed: nil)
+        }
+        
 
         return cell
 
@@ -205,7 +250,8 @@ extension AnimalDetailVC:UIScrollViewDelegate{
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         targetContentOffset.pointee = scrollView.contentOffset
         let pageWidth = animalDetailCollectionView.frame.width
-        let collectionViewTotalItem = Int(petModel?.petImages.count ?? 0)
+        //anish 
+        let collectionViewTotalItem = Int(10 ?? 0)
         let offset = animalDetailCollectionView.contentOffset.x / pageWidth
         let indexOfMajorCell = Int(round(offset))
         let swipeVelocityThreshold: CGFloat = 0.5
@@ -262,3 +308,28 @@ extension AnimalDetailVC:OptionVCDelegate{
     }
 }
 
+extension AnimalDetailVC {
+    func getImages(imageArray:[String]) {
+        
+        let params:[String:Any] = ["bucket":"Animal","pictures":imageArray]
+        Alamofire.request("https://petsupportapp.com/api/images/getImageUrls/", method:.post, parameters: params, encoding: JSONEncoding.default).responseJSON { (response) in
+            if response.result.isSuccess {
+                let data : JSON = JSON(response.result.value!)
+                self.parseImage(json: data)
+            }else {
+                print(response.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseImage(json:JSON){
+        petImagesArray.removeAll()
+        for item in json {
+            if let myItem = item.1.string {
+                    self.petImagesArray.append(myItem)
+            }
+        }
+        self.animalDetailCollectionView.dataSource = self
+        self.animalDetailCollectionView.delegate = self
+        self.animalDetailCollectionView.reloadData()
+    }
+}

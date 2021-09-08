@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+import Alamofire
+import SwiftyJSON
+import KRProgressHUD
 
 
 class ShelterPetCollectionVC: UICollectionViewCell {
@@ -66,9 +68,9 @@ class ShelterDetailVC: UIViewController {
     @IBOutlet weak var btnViewAllPet: UIButton!
 
     //MARK:- Class Variables
-    var petModel: PetModel?
+    var petModel: Animal?
     var shelterModel: FavShelterModel?
-
+    var petImagesArray = [String]()
     var indexOfCellBeforeDragging:Int = 0
 
     //MARK:- View life cycle
@@ -89,18 +91,18 @@ class ShelterDetailVC: UIViewController {
     //MARK:- Custome Methods
     func setupUI(){
         imageContainerView.backgroundColor = UIColor.lightGray
-//        if let _pet = petModel,let petImageName = _pet.petImages.first {
-//            lblShelterName.text = _pet.petName
-//
-//           // pageControl.currentPage = 0
-//           // pageControl.numberOfPages = _pet.petImages.count
-//        }
-        
-        if let _shelterModel = shelterModel {
-            lblShelterName.text = _shelterModel.shelterName
-            shelterTopImageView.image = UIImage(named: _shelterModel.shelterImage)
-
+        if let pet = petModel {
+            
+            lblShelterName.text = pet.shelter.name
+            lblShelterSub.text = pet.shelter.name
+            lblEmail.text = pet.shelter.email
+            lblPhoneNumber.text = pet.shelter.phoneNumber
+            shelterInfo(id: pet.shelter.shelterId)
+            getImages(imageArray: pet.shelter.pictures)
+           
         }
+        
+      
         
         
     }
@@ -192,9 +194,9 @@ class ShelterDetailVC: UIViewController {
 extension ShelterDetailVC: UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == sheltetPetCollectionView {
-            return 5
+            return petImagesArray.count
         }else{
-            return petModel?.petImages.count ?? 0
+            return petImagesArray.count
         }
 
       }
@@ -203,16 +205,21 @@ extension ShelterDetailVC: UICollectionViewDelegate,UICollectionViewDataSource{
 
         if collectionView == sheltetPetCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShelterPetCollectionVC", for: indexPath) as! ShelterPetCollectionVC
-            cell.petImageView.image = UIImage(named: "pet1")
+            let image = petImagesArray[indexPath.row]
+            if let url = URL(string: image){
+                cell.petImageView.sd_setImage(with: url, completed: nil)
+            }
+            
             cell.lblPetName.text = "Nahla"
             cell.lblPetType.text = "NEW"
 
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnimalDetailCollectionViewCell", for: indexPath) as! AnimalDetailCollectionViewCell
-            let imageName = petModel?.petImages[indexPath.row]
-            cell.animalImageView.image = UIImage(named: imageName!)
-
+            if let url = URL(string: petImagesArray[indexPath.row]){
+                cell.animalImageView.sd_setImage(with: url, completed: nil)
+            }
+            
             return cell
         }
         
@@ -239,6 +246,49 @@ extension ShelterDetailVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+}
+extension ShelterDetailVC {
+ 
+    func shelterInfo(id:String){
+        Alamofire.request("https://petsupportapp.com/api/shelters/client/detail/\(id)", method: .get ).responseJSON { (response) in
+            if response.result.isSuccess {
+                let data:JSON = JSON(response.result.value!)
+                self.parseShelterInfo(json: data)
+            }
+        }
+    }
+    func parseShelterInfo(json:JSON){
+        self.lblShelterDescription.text = json["description"].string ?? ""
+    }
+    func getImages(imageArray:[String]) {
+        
+        let params:[String:Any] = ["bucket":"Shelter","pictures":imageArray]
+        Alamofire.request("https://petsupportapp.com/api/images/getImageUrls/", method:.post, parameters: params, encoding: JSONEncoding.default).responseJSON { (response) in
+            if response.result.isSuccess {
+                let data : JSON = JSON(response.result.value!)
+                self.parseImage(json: data)
+            }else {
+                print(response.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseImage(json:JSON){
+        petImagesArray.removeAll()
+        for item in json {
+            if let myItem = item.1.string {
+                    self.petImagesArray.append(myItem)
+            }
+        }
+       
+        self.sheltetPetCollectionView.reloadData()
+        if petImagesArray.count > 0 {
+        if let url = URL(string: petImagesArray[0]){
+        shelterImageView.sd_setImage(with: url, completed: nil)
+            shelterTopImageView.sd_setImage(with: url, completed: nil)
+        }
+        }
+    }
+
 }
 /*
 extension ShelterDetailVC:UIScrollViewDelegate{

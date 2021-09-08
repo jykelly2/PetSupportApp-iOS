@@ -132,7 +132,8 @@ extension FavoritePetListVC:UITableViewDelegate,UITableViewDataSource{
          let favPetModel = favPetlists[indexPath.row]
          let petModel = PetModel.init(petName: favPetModel.petName, petImages: [favPetModel.petImage], petCollectionType: "NEW")
          let vc = SHome.instantiateViewController(withIdentifier: "AnimalDetailVC") as! AnimalDetailVC
-        vc.petModel = petModel
+        //anish
+      //  vc.petModel = petModel
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

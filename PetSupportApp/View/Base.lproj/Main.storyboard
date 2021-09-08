@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xEO-gq-jnD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xEO-gq-jnD">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -250,7 +250,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PetFilterCollectionViewCell" id="yXy-0H-geH" customClass="PetFilterCollectionViewCell" customModule="PetSupportApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="filterCell" id="yXy-0H-geH" customClass="PetFilterCell" customModule="PetSupportApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="87" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="95I-xQ-U5E">
@@ -296,15 +296,14 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="87" height="35"/>
                                         <connections>
-                                            <outlet property="containerView" destination="5da-5g-4yh" id="QSB-5h-MB0"/>
-                                            <outlet property="downArrowImageView" destination="oHa-xP-QnN" id="0dn-mU-eoX"/>
-                                            <outlet property="lblFilterType" destination="kP5-nl-W1g" id="qEg-bz-J9n"/>
+                                            <outlet property="containerView" destination="5da-5g-4yh" id="Rt8-dK-13R"/>
+                                            <outlet property="downArrowImageView" destination="oHa-xP-QnN" id="4Iz-lw-C9R"/>
+                                            <outlet property="lblFilterType" destination="kP5-nl-W1g" id="kCB-qg-sJe"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
-                                    <outlet property="dataSource" destination="Pvg-89-IZ0" id="2n9-yY-bBU"/>
-                                    <outlet property="delegate" destination="Pvg-89-IZ0" id="q05-r8-yM4"/>
+                                    <outlet property="dataSource" destination="Pvg-89-IZ0" id="76h-u7-0ic"/>
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mdz-LT-uNX">
@@ -401,7 +400,7 @@
                                         </view>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PetTableViewCell" rowHeight="490" id="XqM-Lq-ZSN" customClass="PetTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="174.5" width="374" height="490"/>
+                                                <rect key="frame" x="0.0" y="178" width="374" height="490"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XqM-Lq-ZSN" id="c1g-zF-h9I">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="490"/>
@@ -410,7 +409,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdG-Fj-SVX">
                                                             <rect key="frame" x="0.0" y="11" width="374" height="458"/>
                                                             <subviews>
-                                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hmx-JX-fxR">
+                                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hmx-JX-fxR" customClass="PetsColl">
                                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="300"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
@@ -423,7 +422,7 @@
                                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                     </collectionViewFlowLayout>
                                                                     <cells>
-                                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PetCollectionViewCell" id="CwU-8X-nis" customClass="PetCollectionViewCell" customModule="PetSupportApp" customModuleProvider="target">
+                                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell1" id="CwU-8X-nis" customClass="PetsCollectionViewCell" customModule="PetSupportApp" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="372" height="300"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hW4-Lo-R0f">
@@ -598,10 +597,6 @@
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="Pvg-89-IZ0" id="Oeg-b9-xz7"/>
-                                            <outlet property="delegate" destination="Pvg-89-IZ0" id="2Vi-Iq-E43"/>
-                                        </connections>
                                     </tableView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P6u-d1-8WT">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
@@ -651,7 +646,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TMn-gf-cI0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="900.00000000000011" y="-228.34821428571428"/>
+            <point key="canvasLocation" x="723" y="-218"/>
         </scene>
         <!--Pet Tab Bar Controller-->
         <scene sceneID="60Y-45-il1">
@@ -694,7 +689,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ofk-lC-h0x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-22" y="-193"/>
+            <point key="canvasLocation" x="-39" y="-218"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="GJw-90-5lX">
@@ -968,7 +963,7 @@
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AccountTableViewCell" rowHeight="60" id="QIG-Rr-nMW" customClass="AccountTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="374" height="60"/>
+                                        <rect key="frame" x="0.0" y="28" width="374" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QIG-Rr-nMW" id="nyB-UY-Jhg">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
