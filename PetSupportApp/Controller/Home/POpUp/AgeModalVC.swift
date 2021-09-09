@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol AgeModalVCDelegate {
     @objc func didSelectItem(_ isSelect: Bool)
+    func selectedAge(age:String)
 }
 class AgeModalVC: UIViewController {
     //MARK:- UIControl's Outlets

@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+import Alamofire
+import SwiftyJSON
+import KRProgressHUD
 class EditAcountVC: UIViewController {
     
     @IBOutlet weak var txtFirstName: UITextField!
@@ -32,6 +34,9 @@ class EditAcountVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        txtFirstName.text = FIRST_NAME
+        txtLastName.text = LAST_NAME
+        txtPhone.text = EMAIL
 
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -93,7 +98,11 @@ class EditAcountVC: UIViewController {
     
     
     @IBAction func submitButtonTapped(_ sender: UIButton) {
-        
+        if txtLastName.text == "" || txtFirstName.text == "" || txtPhone.text == "" {
+            simpleAlert("Fill all fields")
+        }else {
+            updateClient(firstName: txtFirstName.text!, lastName: txtLastName.text!, email: txtPhone.text!)
+        }
     }
     
     
@@ -114,5 +123,23 @@ extension EditAcountVC : UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
                 
         return true
+    }
+}
+
+extension  EditAcountVC{
+    func updateClient(firstName:String,lastName:String,email:String){
+        let params = ["firstname":firstName,"lastname":lastName,"email":email]
+        Alamofire.request("https://petsupportapp.com/api/clients/update/\(USER_ID)", method: .post, parameters: params).responseJSON { (response) in
+            if response.result.isSuccess {
+                let data:JSON = JSON(response.result.value!)
+                print(data)
+                let alert = UIAlertController(title: "Pet Support", message: "Profile Updated", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 }

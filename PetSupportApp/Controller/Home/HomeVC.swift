@@ -15,17 +15,22 @@ import KRProgressHUD
 class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelegate, ColarModalVCDelegate, DistanceModalVCDelegate, AgeModalVCDelegate, SizeModalVCDelegate, GoodWithModalVCDelegate, CoatLengthModalVCDelegate, FilterVCDelegate, SortModalVCDelegate {
     
     
+    func selectedAge(age: String) {
+        //delegate for age selectionPopUp
+    }
     func didSelectBreadItem(_ item: String) {
-        
+        print(item)
     }
     
     func didSelectSortItem(_ sortedBy: String) {
         if sortedBy.count > 0 {
+//this delegate works on animal tableview sorting for new/old etc
             self.lblSortedTxt.text = sortedBy
         }
     }
     
     func didSelectItem(_ isSelect: Bool) {
+        //this function is calling when closing the popup window
         if self.filterMasterMenuArray.count > 0  {
             self.filterMenuArray = []
             self.filterMenuArray.append(contentsOf: FilterItems.shared.filterItemArray)
@@ -77,6 +82,26 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         
+        if let firstName  = UserDefaults.standard.object(forKey: "firstName") {
+            if let lastName = UserDefaults.standard.object(forKey: "lastName"){
+                NAME = "\(firstName) \(lastName)"
+                FIRST_NAME = firstName as! String
+                LAST_NAME = lastName as! String
+            }
+        }
+        if let userId  = UserDefaults.standard.object(forKey: "userId") {
+            USER_ID = userId as! String
+        }
+        if let email  = UserDefaults.standard.object(forKey: "email") {
+            EMAIL = email as! String
+        }
+        if let isLoggedIn  = UserDefaults.standard.object(forKey: "isLoggedIn") {
+            LOGGED_IN = isLoggedIn as! Bool
+        }
+        
+       
+        
+       
     }
     
     override func viewWillDisappear(_ animated: Bool) {

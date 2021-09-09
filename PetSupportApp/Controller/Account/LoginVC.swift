@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import KRProgressHUD
 
 class LoginVC: UIViewController {
     
@@ -61,11 +64,19 @@ class LoginVC: UIViewController {
     
     //MARK: - IBActions
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
-       
+        if phoneField.text == "" || passwordField.text == "" {
+            self.simpleAlert("Enter your email and password")
+        }else if (!self.isValidEmail(testStr: (self.phoneField.text)!)) {
+            self.simpleAlert("Email is not valid")
+        }else if passwordField.text!.count <= 7 {
+            self.simpleAlert("The password must be at least 8 characters.")
+        }else {
+            self.signIn(email: phoneField.text!, password: passwordField.text!)
+        }
     }
     
     @IBAction func forgotPasswordButtonTapped(_ sender: UIButton) {
@@ -74,7 +85,8 @@ class LoginVC: UIViewController {
     
     @IBAction func signupButtonTapped(_ sender: UIButton) {
         let vc = SAccount.instantiateViewController(withIdentifier: "SignUpVC") as! SignUpVC
-        self.present(vc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+       // self.present(vc, animated: true, completion: nil)
     }
     
     //MARK: - Service Methods
@@ -135,4 +147,47 @@ extension UITextField {
     }
     
  
+}
+
+extension LoginVC {
+    func signIn(email:String,password:String) {
+        KRProgressHUD.show()
+        let params = ["email":email,"password":password]
+        Alamofire.request("https://petsupportapp.com/api/clients/manual/login", method: .get, parameters: params).responseJSON { (response) in
+            if response.result.isSuccess {
+                let result:JSON = JSON(response.result.value!)
+                print(result)
+                if result["message"].string != nil {
+                    self.simpleAlert(result["message"].string!)
+                    KRProgressHUD.dismiss()
+                }else {
+                    self.parseSigninValues(json: result)
+                }
+            }else {
+                KRProgressHUD.dismiss()
+                print(response.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseSigninValues(json:JSON){
+        let firstname = json["firstname"].string ?? ""
+        let lastname = json["lastname"].string ?? ""
+        let userid = json["_id"].string ?? ""
+        let email = json["email"].string ?? ""
+        
+        UserDefaults.standard.setValue(firstname, forKey: "firstName")
+        UserDefaults.standard.setValue(lastname, forKey: "lastName")
+        UserDefaults.standard.setValue(userid, forKey: "userId")
+        UserDefaults.standard.setValue(email, forKey: "email")
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
+        NAME = "\(firstname) \(lastname)"
+        USER_ID = userid
+        LOGGED_IN = true
+        EMAIL = email
+        FIRST_NAME = firstname
+        LAST_NAME = lastname
+        KRProgressHUD.dismiss()
+        
+       
+    }
 }

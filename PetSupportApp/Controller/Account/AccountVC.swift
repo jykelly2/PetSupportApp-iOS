@@ -19,35 +19,52 @@ class AccountTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
 }
 
 class AccountVC: UIViewController, SignInModalVCDelegate {
+    
     func didSelectSignOption(_ controller: SignInModalVC, signInOption: Int) {
         self.signIn()
     }
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var topViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var userEmail: UILabel!
+    @IBOutlet weak var userLoc: UILabel!
+    
     @IBOutlet weak var tblAccount: UITableView!
+    
     var arrayAccountOptions = [Account]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tblAccount.rowHeight = 60
-        updateArrayAccountOptions()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-
+        if LOGGED_IN == false {
+            
+            topViewHeightConstraint.constant = 0
+            topView.isHidden = true
+            updateArrayForNoSigninUsers()
+        }else {
+            topViewHeightConstraint.constant = 150
+            topView.isHidden = false
+            updateArrayAccountOptions()
+            userEmail.text = EMAIL
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -56,7 +73,17 @@ class AccountVC: UIViewController, SignInModalVCDelegate {
     }
     
     func updateArrayAccountOptions(){
+        arrayAccountOptions.removeAll()
         arrayAccountOptions.append(Account(title: "Account Info", icon: "support-icon", identifier: "DashboardViewController"))
+        arrayAccountOptions.append(Account(title: "Adopter Profile", icon: "logout-icon", identifier: "PriceBondListViewController"))
+        arrayAccountOptions.append(Account(title: "Setting & Info", icon: "logout-icon", identifier: "DrawResultViewController"))
+        arrayAccountOptions.append(Account(title: "Feedback", icon: "support-icon", identifier: "ContactUsViewController"))
+        arrayAccountOptions.append(Account(title: "Sign out", icon: "logout-icon", identifier: "SupportViewController"))
+        
+        tblAccount.reloadData()
+    }
+    func updateArrayForNoSigninUsers(){
+        arrayAccountOptions.removeAll()
         arrayAccountOptions.append(Account(title: "Adopter Profile", icon: "logout-icon", identifier: "PriceBondListViewController"))
         arrayAccountOptions.append(Account(title: "Setting & Info", icon: "logout-icon", identifier: "DrawResultViewController"))
         arrayAccountOptions.append(Account(title: "Feedback", icon: "support-icon", identifier: "ContactUsViewController"))
@@ -65,33 +92,81 @@ class AccountVC: UIViewController, SignInModalVCDelegate {
         tblAccount.reloadData()
     }
     
+    
+    
     func signIn()  {
         let vc = SAccount.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
-        self.present(vc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+        // self.present(vc, animated: true, completion: nil)
     }
-
+    
     func didSelectItem(_ index:Int){
-        if index == 0 {
-            let vc = SAccount.instantiateViewController(withIdentifier: "EditAcountVC") as! EditAcountVC
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else if index == 1 {
-            let vc = SAccount.instantiateViewController(withIdentifier: "AdopterProfileVC") as! AdopterProfileVC
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else if index == 2 {
-            let vc = SAccount.instantiateViewController(withIdentifier: "SettingInfoVC") as! SettingInfoVC
-            self.navigationController?.pushViewController(vc, animated: true)            
-        }else if index == 3 {
-            
-        }else if index == 4 {
-            let vc = SAccount.instantiateViewController(withIdentifier: "SignInModalVC") as! SignInModalVC
-            self.addChild(vc)
-            vc.delegate = self
-            vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
-            self.view.addSubview(vc.view)
-            vc.didMove(toParent: self)
+        
+        if LOGGED_IN == true {
+            //user is loged in
+            if index == 0 {
+                let vc = SAccount.instantiateViewController(withIdentifier: "EditAcountVC") as! EditAcountVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else if index == 1 {
+                let vc = SAccount.instantiateViewController(withIdentifier: "AdopterProfileVC") as! AdopterProfileVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else if index == 2 {
+                let vc = SAccount.instantiateViewController(withIdentifier: "SettingInfoVC") as! SettingInfoVC
+                self.navigationController?.pushViewController(vc, animated: true)            
+            }else if index == 3 {
+                openAppStore()
+            }else if index == 4 {
+                UserDefaults.standard.removeObject(forKey:"firstName")
+                UserDefaults.standard.removeObject(forKey: "lastName")
+                UserDefaults.standard.removeObject(forKey: "userId")
+                UserDefaults.standard.removeObject(forKey: "email")
+                UserDefaults.standard.removeObject(forKey: "isLoggedIn")
+                NAME = ""
+                USER_ID = ""
+                LOGGED_IN = false
+                EMAIL = ""
+                FIRST_NAME = ""
+                LAST_NAME = ""
+                simpleAlert("you are successfully logged out")
+                tabBarController?.selectedIndex = 0
+            }
+        }else {
+            //user is not loged in
+            if index == 0 {
+                gotoSignin()
+            }else if index == 1 {
+                let vc = SAccount.instantiateViewController(withIdentifier: "SettingInfoVC") as! SettingInfoVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else if index == 2 {
+                openAppStore()
+            }else if index == 3 {
+                gotoSignin()
+            }
         }
     }
-
+    
+    func openAppStore() {
+        if let url = URL(string: "itms-apps://itunes.apple.com/app/id284882215"),
+           UIApplication.shared.canOpenURL(url){
+            UIApplication.shared.open(url, options: [:]) { (opened) in
+                if(opened){
+                    print("App Store Opened")
+                }
+            }
+        } else {
+            print("Can't Open URL on Simulator")
+        }
+    }
+    func gotoSignin(){
+        let vc = SAccount.instantiateViewController(withIdentifier: "SignInModalVC") as! SignInModalVC
+        self.addChild(vc)
+        vc.delegate = self
+        vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
+        self.view.addSubview(vc.view)
+        vc.didMove(toParent: self)
+    }
+    
+    
 }
 extension AccountVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -131,7 +206,7 @@ extension AccountVC:UITableViewDelegate,UITableViewDataSource{
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-        
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrayAccountOptions.count
     }

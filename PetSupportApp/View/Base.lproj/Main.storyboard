@@ -304,6 +304,7 @@
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="Pvg-89-IZ0" id="76h-u7-0ic"/>
+                                    <outlet property="delegate" destination="Pvg-89-IZ0" id="yrk-qd-kFe"/>
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mdz-LT-uNX">
@@ -1123,6 +1124,10 @@
                     <connections>
                         <outlet property="profileImageView" destination="6GD-mV-1HI" id="hN5-ZW-w97"/>
                         <outlet property="tblAccount" destination="4PL-4I-nA3" id="Pbi-74-f8x"/>
+                        <outlet property="topView" destination="gxz-Re-4GL" id="ObI-Jd-KzY"/>
+                        <outlet property="topViewHeightConstraint" destination="KwK-wP-KdG" id="kqe-bX-zJ0"/>
+                        <outlet property="userEmail" destination="Gi5-wk-zZg" id="bdP-WP-2Iw"/>
+                        <outlet property="userLoc" destination="lHn-TJ-tqI" id="kFE-9m-785"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cF5-7v-aiw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

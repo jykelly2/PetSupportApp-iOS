@@ -59,7 +59,7 @@ class AboutMeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "About Me"
+        self.title = "Scheduler Profile"
         
         petOwnerBtnTypeArray = [btnFirst,btnPrevious,btnCurrent]
         currentPetBtnArray = [btnNone,btnCats,btnDogs,btnBoth]

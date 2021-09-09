@@ -149,29 +149,51 @@ extension SettingInfoVC: UITableViewDelegate, UITableViewDataSource{
     
     //MARK: -TableviewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       
+        if indexPath.section == 0 {
+            if indexPath.row == 0 {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+            }else {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+            }
+        }else {
+            if indexPath.row == 0 {
+                
+            }else if indexPath.row == 1 {
+                
+            }else if indexPath.row == 2 {
+                
+            }else {
+                
+            }
+        }
+        /*
         let cell = tableView.cellForRow(at: indexPath)
         if (cell?.tag)! == SettingDetailType.location_service.rawValue{
-           // self.changePasswordAction()
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+
         }else if (cell?.tag)! == SettingDetailType.notification.rawValue{
-           self.logOutAction()
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+
 
         }else if (cell?.tag)! == SettingDetailType.terms_of_services.rawValue{
-            self.deleteAccountAction()
+           
 
         }else if (cell?.tag)! == SettingDetailType.privacy_policy.rawValue{
-            self.deleteAccountAction()
+           
 
         }else if (cell?.tag)! == SettingDetailType.do_not_sell.rawValue{
-            self.deleteAccountAction()
+            
 
         }else if (cell?.tag)! == SettingDetailType.about_ads.rawValue{
-            self.deleteAccountAction()
+           
 
         }else{
             print("out")
 
             return
         }
+ */
     }
 
 }

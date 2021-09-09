@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import KRProgressHUD
+
 
 class SignUpVC: UIViewController {
     
@@ -84,7 +88,8 @@ class SignUpVC: UIViewController {
     
     //MARK: - IBActions
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+       // self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func checkTermsAndservice(_ sender: UIButton) {
@@ -93,7 +98,18 @@ class SignUpVC: UIViewController {
     }
     
     @IBAction func submitButtonTapped(_ sender: UIButton) {
-        
+        if txtFirstName.text == "" || txtLastName.text == "" || txtPassword.text == "" || txtPhone.text == "" {
+            self.simpleAlert("Fill all fields")
+        }else if (!self.isValidEmail(testStr: (self.txtPhone.text)!)) {
+            self.simpleAlert("Email is not valid")
+        }else if txtPassword.text!.count <= 7 {
+            self.simpleAlert("The password must be at least 8 characters.")
+        }else if isTermsAndserviceSelected == false {
+            self.simpleAlert("Please accept the agreement")
+        }
+        else {
+            self.signUp(firstName: txtFirstName.text!, lastName: txtLastName.text!, email: txtPhone.text!, password: txtPassword.text!)
+        }
     }
     
     
@@ -116,3 +132,52 @@ extension SignUpVC : UITextFieldDelegate{
         return true
     }
 }
+extension  SignUpVC {
+    func signUp(firstName:String,lastName:String,email:String,password:String) {
+        KRProgressHUD.show()
+        let params = ["firstname":firstName,"email":email,"password":password,"lastname":lastName]
+        Alamofire.request("https://petsupportapp.com/api/clients/register", method: .post, parameters: params).responseJSON { (response) in
+            if response.result.isSuccess {
+                let result:JSON = JSON(response.result.value!)
+                print(result)
+                if result["message"].string != nil {
+                    self.simpleAlert(result["message"].string!)
+                    KRProgressHUD.dismiss()
+                }else {
+                    self.parseSignupValues(json: result)
+                }
+            }else {
+                KRProgressHUD.dismiss()
+                print(response.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseSignupValues(json:JSON){
+    
+        let firstname = json["firstname"].string ?? ""
+        let lastname = json["lastname"].string ?? ""
+        let userid = json["_id"].string ?? ""
+        let email = json["email"].string ?? ""
+        
+        UserDefaults.standard.setValue(firstname, forKey: "firstName")
+        UserDefaults.standard.setValue(lastname, forKey: "lastName")
+        UserDefaults.standard.setValue(userid, forKey: "userId")
+        UserDefaults.standard.setValue(email, forKey: "email")
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
+        KRProgressHUD.dismiss()
+        NAME = "\(firstname) \(lastname)"
+        USER_ID = userid
+        LOGGED_IN = true
+        EMAIL = email
+        FIRST_NAME = firstname
+        LAST_NAME = lastname
+       
+        let alert = UIAlertController(title: "Pet Support", message: "You have successfully signup", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
