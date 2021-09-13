@@ -39,6 +39,7 @@ class PetTableViewCell: UITableViewCell {
         self.lblPetTypeAndDistance.text = "\(values.type)  •   \(values.breed)   •   87 mi away"
         self.lblHehavior.text = values.personalities[1]
         getImages(imageArray: values.pictures)
+        
       
     }
     

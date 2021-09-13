@@ -36,6 +36,8 @@ class AnimalDetailVC: UIViewController {
     @IBOutlet weak var imageContainerView: UIView!
     @IBOutlet weak var btnSeeShelterDetails: UIButton!
     @IBOutlet weak var btnSeeSimilarPet: UIButton!
+    @IBOutlet weak var shelterLikeBtn: UIButton!
+    @IBOutlet weak var petLikeBtn: UIButton!
     
     @IBOutlet weak var lblAnimalName: UILabel!
     @IBOutlet weak var lblAnimalSubTitle: UILabel!
@@ -60,7 +62,11 @@ class AnimalDetailVC: UIViewController {
     var petImagesArray = [String]()
     var petModel: Animal?
     var indexOfCellBeforeDragging:Int = 0
-
+    var animalSelectedId = [String]()
+    var animalLikedIds = [String]()
+    var shelterLikedId = [String]()
+    var selectedShelterIds = [String]()
+    
     //MARK:- View life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -70,6 +76,7 @@ class AnimalDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -80,6 +87,13 @@ class AnimalDetailVC: UIViewController {
     func setupUI(){
         imageContainerView.backgroundColor = UIColor.lightGray
         if let pet = petModel{
+            
+            fetchAllShelterLikes()
+            
+            if animalLikedIds.contains(pet.id){
+                petLikeBtn.setImage(UIImage(named: "liked"), for: .normal)
+            }
+            
            // petProfileImageView.image = UIImage(named: "\(petImageName)")
             lblAnimalName.text = pet.name
             lblMeetPet.text = "Meet \(pet.name)"
@@ -170,9 +184,36 @@ class AnimalDetailVC: UIViewController {
     }
     
     @IBAction func favoriteButtonAction(_ sender: UIButton) {
+        if self.animalLikedIds.contains(petModel!.id) {
+            petLikeBtn.setImage(UIImage(named:"like"), for: .normal)
+            animalSelectedId.removeAll { $0 == "\(petModel!.id)" }
+            animalLikedIds.removeAll { $0 == "\(petModel!.id)" }
+            like(petId: animalSelectedId)
+            
+        }else {
+            petLikeBtn.setImage(UIImage(named:"liked"), for: .normal)
+            animalSelectedId.append(petModel!.id)
+            animalLikedIds.append(petModel!.id)
+            like(petId: animalSelectedId)
+        }
+
         
     }
-        
+    @IBAction func shelterFavBtnAction(_ sender: Any) {
+        if self.shelterLikedId.contains(petModel!.shelter.shelterId) {
+            shelterLikeBtn.setImage(UIImage(named:"like"), for: .normal)
+            selectedShelterIds.removeAll { $0 == "\(petModel!.shelter.shelterId)" }
+            shelterLikedId.removeAll { $0 == "\(petModel!.shelter.shelterId)" }
+            Shelterlike(Ids: selectedShelterIds)
+            
+        }else {
+            shelterLikeBtn.setImage(UIImage(named:"liked"), for: .normal)
+            selectedShelterIds.append(petModel!.shelter.shelterId)
+            shelterLikedId.append(petModel!.shelter.shelterId)
+            Shelterlike(Ids: selectedShelterIds)
+        }
+    }
+    
     @IBAction func scheduleButtonAction(_ sender: UIButton) {
         
         let vc = SHome.instantiateViewController(withIdentifier: "CreateScheduleModalVC") as! CreateScheduleModalVC
@@ -331,5 +372,83 @@ extension AnimalDetailVC {
         self.animalDetailCollectionView.dataSource = self
         self.animalDetailCollectionView.delegate = self
         self.animalDetailCollectionView.reloadData()
+    }
+    
+    func fetchAllPetsLikes(){
+        Alamofire.request("https://petsupportapp.com/api/clients/favourite/pets/\(USER_ID)", method: .get).responseJSON { (reponse) in
+            if reponse.result.isSuccess {
+                KRProgressHUD.show()
+                let data:JSON = JSON(reponse.result.value!)
+                print(data)
+                self.parseLikes(json:data["favouritePets"])
+            }else {
+                print(reponse.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseLikes(json:JSON){
+        animalLikedIds.removeAll()
+        for item in json {
+            let id = item.1.string ?? ""
+            self.animalLikedIds.append(id)
+        }
+        animalSelectedId = animalLikedIds
+        KRProgressHUD.dismiss()
+    }
+    
+    func like(petId:[String]){
+        KRProgressHUD.show()
+        let petsId = self.animalSelectedId.removeDuplicates()
+        let params : [String : Any] = ["favouritePets":petsId]
+        Alamofire.request("https://petsupportapp.com/api/clients/favourite/pets/update/\(USER_ID)", method: .post,parameters: params).responseJSON { (reponse) in
+            if reponse.result.isSuccess {
+                let data:JSON = JSON(reponse.result.value!)
+                print(data)
+                KRProgressHUD.dismiss()
+            }else {
+                print(reponse.result.error!.localizedDescription)
+            }
+        }
+    }
+    
+    //SHELTER
+    func fetchAllShelterLikes(){
+        Alamofire.request("https://petsupportapp.com/api/clients/favourite/shelters/\(USER_ID)", method: .get).responseJSON { (reponse) in
+            if reponse.result.isSuccess {
+                KRProgressHUD.show()
+                let data:JSON = JSON(reponse.result.value!)
+                print(data)
+                self.parseShelterLikes(json:data["favouriteShelters"])
+            }else {
+                print(reponse.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseShelterLikes(json:JSON){
+        shelterLikedId.removeAll()
+        for item in json {
+            let id = item.1.string ?? ""
+            self.shelterLikedId.append(id)
+        }
+        selectedShelterIds = shelterLikedId
+        if selectedShelterIds.contains(petModel!.shelter.shelterId){
+            shelterLikeBtn.setImage(UIImage(named: "liked"), for: .normal)
+        }
+        KRProgressHUD.dismiss()
+    }
+    
+    func Shelterlike(Ids:[String]){
+        KRProgressHUD.show()
+        let petsId = self.selectedShelterIds.removeDuplicates()
+        let params : [String : Any] = ["favouriteShelters":petsId]
+        Alamofire.request("https://petsupportapp.com/api/clients/favourite/shelters/update/\(USER_ID)", method: .post,parameters: params).responseJSON { (reponse) in
+            if reponse.result.isSuccess {
+                let data:JSON = JSON(reponse.result.value!)
+                print(data)
+                KRProgressHUD.dismiss()
+            }else {
+                print(reponse.result.error!.localizedDescription)
+            }
+        }
     }
 }

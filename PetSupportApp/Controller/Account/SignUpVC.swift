@@ -18,8 +18,6 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var txtPhone: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
-    @IBOutlet weak var txtCountry: UITextField!
-    @IBOutlet weak var txtPostcode: UITextField!
     @IBOutlet weak var checkBoxImageView: UIImageView!
 
     
@@ -60,15 +58,6 @@ class SignUpVC: UIViewController {
         txtPassword.layer.borderWidth = 1
         txtPassword.layer.borderColor = UIColor.lightGray.cgColor
         
-        txtCountry.layer.cornerRadius = 10
-        txtCountry.clipsToBounds = true
-        txtCountry.layer.borderWidth = 1
-        txtCountry.layer.borderColor = UIColor.lightGray.cgColor
-        
-        txtPostcode.layer.cornerRadius = 10
-        txtPostcode.clipsToBounds = true
-        txtPostcode.layer.borderWidth = 1
-        txtPostcode.layer.borderColor = UIColor.lightGray.cgColor
         
         submitButton.layer.cornerRadius = submitButton.frame.height/2
         submitButton.clipsToBounds = true
@@ -76,12 +65,11 @@ class SignUpVC: UIViewController {
     }
     
     fileprivate func setupFields() {
-        txtFirstName.setLeftPaddingPoints(10)
-        txtLastName.setLeftPaddingPoints(10)
-        txtPostcode.setLeftPaddingPoints(10)
-        txtCountry.setLeftPaddingPoints(10)
         txtPhone.setLeftPaddingPoints(10)
         txtPassword.setLeftPaddingPoints(10)
+        txtLastName.setLeftPaddingPoints(10)
+        txtFirstName.setLeftPaddingPoints(10)
+        
     }
     
    

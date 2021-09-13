@@ -15,8 +15,7 @@ class EditAcountVC: UIViewController {
     @IBOutlet weak var txtFirstName: UITextField!
     @IBOutlet weak var txtLastName: UITextField!
     @IBOutlet weak var txtPhone: UITextField!
-    @IBOutlet weak var txtCountry: UITextField!
-    @IBOutlet weak var txtPostcode: UITextField!
+  
 
     
     @IBOutlet weak var submitButton: UIButton!
@@ -27,7 +26,7 @@ class EditAcountVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Account"
-        setupFields()
+       
     
     }
     
@@ -65,29 +64,13 @@ class EditAcountVC: UIViewController {
         txtPhone.clipsToBounds = true
         txtPhone.layer.borderWidth = 1
         txtPhone.layer.borderColor = UIColor.lightGray.cgColor
-        
-        txtCountry.layer.cornerRadius = 10
-        txtCountry.clipsToBounds = true
-        txtCountry.layer.borderWidth = 1
-        txtCountry.layer.borderColor = UIColor.lightGray.cgColor
-        
-        txtPostcode.layer.cornerRadius = 10
-        txtPostcode.clipsToBounds = true
-        txtPostcode.layer.borderWidth = 1
-        txtPostcode.layer.borderColor = UIColor.lightGray.cgColor
-        
+ 
         submitButton.layer.cornerRadius = submitButton.frame.height/2
         submitButton.clipsToBounds = true
         
     }
     
-    fileprivate func setupFields() {
-        txtFirstName.setLeftPaddingPoints(10)
-        txtLastName.setLeftPaddingPoints(10)
-        txtPostcode.setLeftPaddingPoints(10)
-        txtCountry.setLeftPaddingPoints(10)
-        txtPhone.setLeftPaddingPoints(10)
-    }
+
     
    
     
@@ -133,6 +116,7 @@ extension  EditAcountVC{
             if response.result.isSuccess {
                 let data:JSON = JSON(response.result.value!)
                 print(data)
+                self.pixValues(json: data)
                 let alert = UIAlertController(title: "Pet Support", message: "Profile Updated", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default) { (action) in
                     self.navigationController?.popToRootViewController(animated: true)
@@ -141,5 +125,22 @@ extension  EditAcountVC{
                 self.present(alert, animated: true, completion: nil)
             }
         }
+    }
+    func pixValues(json:JSON){
+        
+        let email = json["email"].string ?? ""
+        let firstName = json["firstname"].string ?? ""
+        let lastName = json["lastname"].string ?? ""
+        
+        self.txtFirstName.text = firstName
+        self.txtPhone.text = email
+        self.txtLastName.text = lastName
+        
+        FIRST_NAME = firstName
+        LAST_NAME = lastName
+        EMAIL = email
+        UserDefaults.standard.setValue(firstName, forKey: "firstName")
+        UserDefaults.standard.setValue(lastName, forKey: "lastName")
+        UserDefaults.standard.setValue(email, forKey: "email")
     }
 }

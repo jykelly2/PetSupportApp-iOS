@@ -473,92 +473,48 @@ extension UIViewController {
 }
 
 
-public func timeAgoSinceDate(date: Date, numericDates: Bool) -> String {
+func timeAgoSinceDate(_ date:Date, currentDate:Date, numericDates:Bool) -> String {
     let calendar = Calendar.current
-    let unitFlags = Set<Calendar.Component>(arrayLiteral: Calendar.Component.minute, Calendar.Component.hour, Calendar.Component.day, Calendar.Component.weekOfYear, Calendar.Component.month, Calendar.Component.year, Calendar.Component.second)
-    let now = Date()
-    let dateComparison = now.compare(date)
-    var earliest: Date
-    var latest: Date
+    let now = currentDate
+    let earliest = (now as NSDate).earlierDate(date)
+    let latest = (earliest == now) ? date : now
+    let components:DateComponents = (calendar as NSCalendar).components([NSCalendar.Unit.minute , NSCalendar.Unit.hour , NSCalendar.Unit.day , NSCalendar.Unit.weekOfYear , NSCalendar.Unit.month , NSCalendar.Unit.year , NSCalendar.Unit.second], from: earliest, to: latest, options: NSCalendar.Options())
     
-    switch dateComparison {
-    case .orderedAscending:
-        earliest = now
-        latest = date
-    default:
-        earliest = date
-        latest = now
-    }
-    
-    let components: DateComponents = calendar.dateComponents(unitFlags, from: earliest, to: latest)
-    
-    guard
-        let year = components.year,
-        let month = components.month,
-        let weekOfYear = components.weekOfYear,
-        let day = components.day,
-        let hour = components.hour,
-        let minute = components.minute,
-        let second = components.second
-        else {
-            fatalError()
-    }
-    
-    if (year >= 2) {
-        return "\(year) years ago"
-    } else if (year >= 1) {
-        if (numericDates){
-            return "1year"
-        } else {
-            return "1year"
-        }
-    } else if (month >= 2) {
-        return "\(month * 4) weeks ago"
-    } else if (month >= 1) {
-        if (numericDates){
-            return "4 weeks ago"
-        } else {
-            return "4 weeks ago"
-        }
-    } else if (weekOfYear >= 2) {
-        return "\(weekOfYear) weeks ago"
-    } else if (weekOfYear >= 1){
-        if (numericDates){
-            return "1 weeks ago"
-        } else {
-            return "1 weeks ago"
-        }
-    } else if (day >= 2) {
-        return "\(components.day ?? 2) days ago"
-    } else if (day >= 1){
-        if (numericDates){
-            return "1 day ago"
-        } else {
-            return "1 day ago"
-        }
-    } else if (hour >= 2) {
-        return "\(hour) hours ago"
-    } else if (hour >= 1){
-        if (numericDates){
-            return "1 hour ago"
-        } else {
-            return "1 hour ago"
-        }
-    } else if (minute >= 2) {
-        return "\(minute) minutes ago"
-    } else if (minute >= 1){
-        if (numericDates){
-            return "1 minute ago"
-        } else {
-            return "1 minute ago"
-        }
-    } else if (second >= 3) {
-        return "\(second) seconds ago"
-    } else {
-        return "now"
-    }
-    
+    if (components.year! >= 2) {
+        return "\(components.year!) years ago"
+    } else if (components.year! >= 1){
+        if (numericDates){ return "1 year ago"
+        } else { return "Last year" }
+    } else if (components.month! >= 2) {
+        return "\(components.month!) months ago"
+    } else if (components.month! >= 1){
+        if (numericDates){ return "1 month ago"
+        } else { return "Last month" }
+    } else if (components.weekOfYear! >= 2) {
+        return "\(components.weekOfYear!) weeks ago"
+    } else if (components.weekOfYear! >= 1){
+        if (numericDates){ return "1 week ago"
+        } else { return "Last week" }
+    } else if (components.day! >= 2) {
+        return "\(components.day!) days ago"
+    } else if (components.day! >= 1){
+        if (numericDates){ return "1 day ago"
+        } else { return "Yesterday" }
+    } else if (components.hour! >= 2) {
+        return "\(components.hour!) hours ago"
+    } else if (components.hour! >= 1){
+        if (numericDates){ return "1 hour ago"
+        } else { return "An hour ago" }
+    } else if (components.minute! >= 2) {
+        return "\(components.minute!) minutes ago"
+    } else if (components.minute! >= 1){
+        if (numericDates){ return "1 minute ago"
+        } else { return "A minute ago" }
+    } else if (components.second! >= 3) {
+        return "\(components.second!) seconds ago"
+    } else { return "Just now" }
 }
+
 
 extension Date {
     func getElapsedInterval() -> String {

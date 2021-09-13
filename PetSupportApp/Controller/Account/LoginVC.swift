@@ -153,7 +153,7 @@ extension LoginVC {
     func signIn(email:String,password:String) {
         KRProgressHUD.show()
         let params = ["email":email,"password":password]
-        Alamofire.request("https://petsupportapp.com/api/clients/manual/login", method: .get, parameters: params).responseJSON { (response) in
+        Alamofire.request("https://petsupportapp.com/api/clients/manual/login", method: .post, parameters: params).responseJSON { (response) in
             if response.result.isSuccess {
                 let result:JSON = JSON(response.result.value!)
                 print(result)
@@ -187,7 +187,12 @@ extension LoginVC {
         FIRST_NAME = firstname
         LAST_NAME = lastname
         KRProgressHUD.dismiss()
-        
+        let alert = UIAlertController(title: "Pet Support", message: "You have successfully signed in", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
        
     }
 }

@@ -19,6 +19,7 @@ class ShelterPetCollectionVC: UICollectionViewCell {
     @IBOutlet weak var petImageView: UIImageView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var circleView: UIView!
+  
     
     override func layoutSubviews() {
         
@@ -54,7 +55,8 @@ class ShelterDetailVC: UIViewController {
     @IBOutlet weak var shelterImageView: UIImageView!
     @IBOutlet weak var shelterFavBtnContainerView: UIView!
     @IBOutlet weak var imageContainerView: UIView!
-
+    @IBOutlet weak var shelterLikeBtn: UIButton!
+    
     @IBOutlet weak var lblShelterName: UILabel!
     @IBOutlet weak var lblShelterSub: UILabel!
     @IBOutlet weak var lblShelterDescription: UILabel!
@@ -69,10 +71,13 @@ class ShelterDetailVC: UIViewController {
 
     //MARK:- Class Variables
     var petModel: Animal?
+    var shelter : Shelter?
     var shelterModel: FavShelterModel?
     var petImagesArray = [String]()
     var indexOfCellBeforeDragging:Int = 0
-
+    var shelterLikedId = [String]()
+    var selectedShelterIds = [String]()
+    var fromFav = false
     //MARK:- View life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -91,8 +96,12 @@ class ShelterDetailVC: UIViewController {
     //MARK:- Custome Methods
     func setupUI(){
         imageContainerView.backgroundColor = UIColor.lightGray
+        if fromFav == false {
         if let pet = petModel {
-            
+            fetchAllShelterLikes()
+            if shelterLikedId.contains(pet.shelter.shelterId){
+                shelterLikeBtn.setImage(UIImage(named:"liked"), for: .normal)
+            }
             lblShelterName.text = pet.shelter.name
             lblShelterSub.text = pet.shelter.name
             lblEmail.text = pet.shelter.email
@@ -101,7 +110,18 @@ class ShelterDetailVC: UIViewController {
             getImages(imageArray: pet.shelter.pictures)
            
         }
-        
+        }else {
+            fetchAllShelterLikes()
+            if shelterLikedId.contains(shelter!.shelterId){
+                shelterLikeBtn.setImage(UIImage(named:"liked"), for: .normal)
+            }
+            lblShelterName.text = shelter!.name
+            lblShelterSub.text = shelter!.name
+            lblEmail.text = shelter!.email
+            lblPhoneNumber.text = shelter!.phoneNumber
+            lblShelterDescription.text = shelter!.description
+            getImages(imageArray:shelter!.pictures)
+        }
       
         
         
@@ -138,8 +158,18 @@ class ShelterDetailVC: UIViewController {
     }
     
     @IBAction func favoriteButtonAction(_ sender: UIButton) {
-        
-    }
+        if self.shelterLikedId.contains(petModel!.shelter.shelterId) {
+            shelterLikeBtn.setImage(UIImage(named:"like"), for: .normal)
+            selectedShelterIds.removeAll { $0 == "\(petModel!.shelter.shelterId)" }
+            shelterLikedId.removeAll { $0 == "\(petModel!.shelter.shelterId)" }
+            Shelterlike(Ids: selectedShelterIds)
+            
+        }else {
+            shelterLikeBtn.setImage(UIImage(named:"liked"), for: .normal)
+            selectedShelterIds.append(petModel!.shelter.shelterId)
+            shelterLikedId.append(petModel!.shelter.shelterId)
+            Shelterlike(Ids: selectedShelterIds)
+        }    }
         
     @IBAction func scheduleButtonAction(_ sender: UIButton) {
         
@@ -288,7 +318,46 @@ extension ShelterDetailVC {
         }
         }
     }
-
+    //SHELTER
+    func fetchAllShelterLikes(){
+        Alamofire.request("https://petsupportapp.com/api/clients/favourite/shelters/\(USER_ID)", method: .get).responseJSON { (reponse) in
+            if reponse.result.isSuccess {
+                KRProgressHUD.show()
+                let data:JSON = JSON(reponse.result.value!)
+                print(data)
+                self.parseShelterLikes(json:data["favouriteShelters"])
+            }else {
+                print(reponse.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseShelterLikes(json:JSON){
+        shelterLikedId.removeAll()
+        for item in json {
+            let id = item.1.string ?? ""
+            self.shelterLikedId.append(id)
+        }
+        selectedShelterIds = shelterLikedId
+        if selectedShelterIds.contains(shelter!.shelterId){
+            shelterLikeBtn.setImage(UIImage(named: "liked"), for: .normal)
+        }
+        KRProgressHUD.dismiss()
+    }
+    
+    func Shelterlike(Ids:[String]){
+        KRProgressHUD.show()
+        let petsId = self.selectedShelterIds.removeDuplicates()
+        let params : [String : Any] = ["favouriteShelters":petsId]
+        Alamofire.request("https://petsupportapp.com/api/clients/favourite/shelters/update/\(USER_ID)", method: .post,parameters: params).responseJSON { (reponse) in
+            if reponse.result.isSuccess {
+                let data:JSON = JSON(reponse.result.value!)
+                print(data)
+                KRProgressHUD.dismiss()
+            }else {
+                print(reponse.result.error!.localizedDescription)
+            }
+        }
+    }
 }
 /*
 extension ShelterDetailVC:UIScrollViewDelegate{

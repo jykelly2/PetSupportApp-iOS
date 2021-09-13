@@ -61,7 +61,9 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
     var filterMenuArray : [FilterMenu] = []
     var animalClient = [Animal]()
     var currentAnimalClient = [Animal]()
-
+    var animalSelectedId = [String]()
+    var animalLikedIds = [String]()
+    var petFavBtnIndex : Int?
     //MARK:- View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +74,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
         let vw = UIView.init(frame: CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: 100))
         vw.backgroundColor = UIColor.blue
        // petTableView.tableHeaderView = bannarView
-        getAnimalClient()
+        
         self.petTableView.delegate = self
         self.petTableView.dataSource = self
 
@@ -99,7 +101,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
             LOGGED_IN = isLoggedIn as! Bool
         }
         
-       
+        self.fetchAllPetsLikes()
         
        
     }
@@ -140,6 +142,8 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
     func goToAnimalDetailVC(_ petModel:Animal){
         let vc = SHome.instantiateViewController(withIdentifier: "AnimalDetailVC") as! AnimalDetailVC
         //vc.hidesBottomBarWhenPushed = true
+        vc.animalSelectedId = animalSelectedId
+        vc.animalLikedIds = animalLikedIds
         vc.petModel = petModel
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -270,8 +274,17 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PetTableViewCell") as? PetTableViewCell else { return UITableViewCell() }
         let petModel = currentAnimalClient[indexPath.row]
         cell.delegate = self
+        cell.btnShare.tag = indexPath.row
+        cell.btnShare.addTarget(self, action: #selector(shareBtnTapped(sender:)), for: .touchUpInside)
+        cell.btnFavorite.tag = indexPath.row
+        cell.btnFavorite.addTarget(self, action: #selector(favBtnTapped(sender:)), for: .touchUpInside)
         cell.setValues(values: petModel)
-        
+        if self.animalLikedIds.contains(petModel.id) {
+            cell.btnFavorite.setImage(UIImage(named:"liked"), for: .normal)
+        }else {
+            cell.btnFavorite.setImage(UIImage(named:"like"), for: .normal)
+        }
+
 
         return cell
     }
@@ -280,15 +293,37 @@ extension HomeVC:UITableViewDelegate,UITableViewDataSource{
         let petModel = currentAnimalClient[indexPath.row]
         goToAnimalDetailVC(petModel)
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//
-//        if let cell = cell as? PetTableViewCell {
-//
-//          //  cell.petCollectionView.dataSource = self
-//           // cell.petCollectionView.delegate = self
-//        }
-//    }
+    @objc func favBtnTapped(sender:UIButton!){
+      
+        let index = IndexPath(row: sender.tag, section: 0)
+        let cell = petTableView.cellForRow(at: index) as! PetTableViewCell
+        let petModel = currentAnimalClient[sender.tag]
+        self.petFavBtnIndex = sender.tag
+        if self.animalLikedIds.contains(petModel.id) {
+            cell.btnFavorite.setImage(UIImage(named:"liked"), for: .normal)
+            animalSelectedId.removeAll { $0 == "\(petModel.id)" }
+            animalLikedIds.removeAll { $0 == "\(petModel.id)" }
+            like(petId: animalSelectedId)
+            petTableView.reloadData()
+        }else {
+            cell.btnFavorite.setImage(UIImage(named:"like"), for: .normal)
+            animalSelectedId.append(petModel.id)
+            animalLikedIds.append(petModel.id)
+            petTableView.reloadData()
+            like(petId: animalSelectedId)
+        }
+    }
+    @objc func shareBtnTapped(sender:UIButton!){
+       
+        let petModel = currentAnimalClient[sender.tag]
+        let image = ""
+        let url =  "https://petsupport.com"
+        let text = "Support \(petModel.name)"
+        let shareVC = UIActivityViewController(activityItems: [text,url,image], applicationActivities: nil)
+        self.present(shareVC, animated: true, completion: nil)
+     
+    }
+
 }
 
 extension HomeVC:PetTableViewCellDelegate{
@@ -387,6 +422,8 @@ extension HomeVC {
         }
     }
     func parseValues(json:JSON){
+        animalClient.removeAll()
+        currentAnimalClient.removeAll()
         for item in json {
             
             let name = item.1["name"].string ?? ""
@@ -431,7 +468,7 @@ extension HomeVC {
             for item in shelterPictuersArray! {
                 shelterPictuers.append(item.string ?? "")
             }
-            let data = Animal(name: name, type: type, breed: breed, gender: gender, age: age, size: size, personalities: personalities, description: description, id: id, isNeutered: isNeutered, isVaccinated: isVaccinated, isPottyTrained: isPottyTrained, isLeashTrained: isLeashTrained, isAvailable: isAvailable, isAdobted: isAdobted, isScheduled: isScheduled, pictures: animalPicture, createdAt: createdAt,shelter: Shelter(name: shelterName, email: email, phoneNumber: phoneNum, address: streetAdd, city: city, province: province, postalCode: postalCode, pictures: shelterPictuers, shelterId: shelterId))
+            let data = Animal(name: name, type: type, breed: breed, gender: gender, age: age, size: size, personalities: personalities, description: description, id: id, isNeutered: isNeutered, isVaccinated: isVaccinated, isPottyTrained: isPottyTrained, isLeashTrained: isLeashTrained, isAvailable: isAvailable, isAdobted: isAdobted, isScheduled: isScheduled, pictures: animalPicture, createdAt: createdAt,shelter: Shelter(name: shelterName, email: email, phoneNumber: phoneNum, address: streetAdd, city: city, province: province, postalCode: postalCode, pictures: shelterPictuers, shelterId: shelterId, description: ""))
             self.animalClient.append(data)
         }
         self.currentAnimalClient = self.animalClient
@@ -441,12 +478,38 @@ extension HomeVC {
         
     }
     
-    func like(){
-        Alamofire.request("https://petsupportapp.com/api/animals/client/favourites", method: .get).responseJSON { (reponse) in
+    func fetchAllPetsLikes(){
+        Alamofire.request("https://petsupportapp.com/api/clients/favourite/pets/\(USER_ID)", method: .get).responseJSON { (reponse) in
             if reponse.result.isSuccess {
                 KRProgressHUD.show()
                 let data:JSON = JSON(reponse.result.value!)
-                print(data)
+               
+                self.parseLikes(json:data["favouritePets"])
+            }else {
+                print(reponse.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseLikes(json:JSON){
+        animalLikedIds.removeAll()
+        for item in json {
+            let id = item.1.string ?? ""
+            self.animalLikedIds.append(id)
+        }
+        animalSelectedId = animalLikedIds
+        getAnimalClient()
+        KRProgressHUD.dismiss()
+    }
+    
+    func like(petId:[String]){
+        KRProgressHUD.show()
+        let petsId = self.animalSelectedId.removeDuplicates()
+        let params : [String : Any] = ["favouritePets":petsId]
+        Alamofire.request("https://petsupportapp.com/api/clients/favourite/pets/update/\(USER_ID)", method: .post,parameters: params).responseJSON { (reponse) in
+            if reponse.result.isSuccess {
+                let data:JSON = JSON(reponse.result.value!)
+              
+                KRProgressHUD.dismiss()
             }else {
                 print(reponse.result.error!.localizedDescription)
             }

@@ -37,7 +37,7 @@ class IdealPetVC: UIViewController {
     var arrayIdealPets = [Account]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "My ideal pet"
+        self.title = ""
         tblIdealPet.rowHeight = 50
         
     }

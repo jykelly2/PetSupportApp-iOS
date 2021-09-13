@@ -18,4 +18,5 @@ struct Shelter {
     var postalCode: String
     var pictures: [String]
     var shelterId:String
+    var description : String
 }

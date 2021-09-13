@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import KRProgressHUD
 
 class IdealPetDetailsVC: UIViewController {
     @IBOutlet weak var lblProgess: UILabel!
     
     @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var petrestrictionBreedSV: UIStackView!
-    @IBOutlet weak var petRestrictionSizeSV: UIStackView!
+ 
     @IBOutlet weak var petSpecialNeedSV: UIStackView!
     @IBOutlet weak var petSearchSV: UIStackView!
     @IBOutlet weak var petActivitySV: UIStackView!
@@ -57,15 +59,6 @@ class IdealPetDetailsVC: UIViewController {
     @IBOutlet weak var btnSpecialNeedNo: UIButton!
     @IBOutlet weak var btnSpecialNeedYes: UIButton!
     
-    @IBOutlet weak var btnNoRestriction: UIButton!
-    @IBOutlet weak var btnOver25Restriction: UIButton!
-    @IBOutlet weak var btnOver50Restriction: UIButton!
-    @IBOutlet weak var btnOver70Restriction: UIButton!
-   
-    @IBOutlet weak var txtSearch: UITextField!
-    @IBOutlet weak var btnNoBreedRestriction: UIButton!
-    
-    
     var isAgePreferenceSelected:Bool = false
     var isGenderPreferenceSelected:Bool = false
     var isSizePreferenceSelected:Bool = false
@@ -85,8 +78,28 @@ class IdealPetDetailsVC: UIViewController {
     var specialNeedBtnArray:[UIButton] = []
     var selectedTxtField: UITextField!
 
-    var total:Float = 9.0
+    var total:Float = 7.0
     var totalOptionFillup:Float = 0.0
+    
+    var type = "Dog"
+    var age = ""
+    var gender = ""
+    var size  = ""
+    var breeds = [String]()
+    var activeness = ""
+    var training = [String]()
+    var specialNeeds  = false
+    
+    /*
+     "animalType": "Dog",
+            "age": "Young" ,
+            "gender": "Male",
+            "size": "Small (0-25 ibs)",
+            "breeds" : ["Golden Retriever", "French Bulldog"],
+            "activeness" : "Very Active",
+            "training" : ["isPottyTrained", "isLeashTrained"],
+            "specialNeeds": true
+     */
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,14 +109,14 @@ class IdealPetDetailsVC: UIViewController {
         sizePreferenceBtnArray = [btnNoSizePreference,btnSmallSize,btnMediumSize,btnLargeSize,btnXLSize]
         activePreferenceBtnArray = [btnNoActivePreference,btnLapPet,btnLaidBack,btnActive,btnVeryActive]
         lookingPreferenceBtnArray = [btnNoLookingPreference,btnAllergyFriendly,btnHouseTrained]
-        restrictionPreferenceBtnArray = [btnNoRestriction,btnOver25Restriction,btnOver50Restriction,btnOver70Restriction]
         specialNeedBtnArray = [btnSpecialNeedYes,btnSpecialNeedNo]
         
-        txtSearch.setRightIamge("search2")
+        
         txtBreedSearch.setRightIamge("search2")
 
         progressView.progress = 0.0
         lblProgess.text = "0 % complete"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveTapped))
 
     }
     
@@ -114,16 +127,6 @@ class IdealPetDetailsVC: UIViewController {
     
     
     func makeRound(){
-        petrestrictionBreedSV.layer.cornerRadius = 5
-        petrestrictionBreedSV.clipsToBounds = true
-        petrestrictionBreedSV.layer.borderWidth = 1
-        petrestrictionBreedSV.layer.borderColor = UIColor.lightGray.cgColor
-        
-        petRestrictionSizeSV.layer.cornerRadius = 5
-        petRestrictionSizeSV.clipsToBounds = true
-        petRestrictionSizeSV.layer.borderWidth = 1
-        petRestrictionSizeSV.layer.borderColor = UIColor.lightGray.cgColor
-        
         petAgeHSV.layer.borderWidth = 1
         petAgeHSV.layer.borderColor = UIColor.lightGray.cgColor
 
@@ -179,16 +182,24 @@ class IdealPetDetailsVC: UIViewController {
         btnHouseTrained.layer.borderWidth = 1
         btnHouseTrained.layer.borderColor = UIColor.lightGray.cgColor
     }
+    
+    @objc func saveTapped(){
+        if totalOptionFillup != 7 {
+            simpleAlert("Some options are remining")
+        }else{
+            updatePref(animalType: type, age: age, gender: gender, size: size, breed: breeds, activeness: activeness, training: training, specialNeeds: specialNeeds)
+        }
+    }
   
     @IBAction func lookingPreferenceButtonAction(_ sender:UIButton){
         for btn in lookingPreferenceBtnArray {
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(.black, for: .normal)
         }
-        
+     //   one = (sender.titleLabel!.text!)
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
-        
+        training.append(sender.titleLabel?.text ?? "")
         if !isLookingPreferenceSelected {
             isLookingPreferenceSelected = true
             totalOptionFillup += 1
@@ -208,7 +219,11 @@ class IdealPetDetailsVC: UIViewController {
         
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
-        
+        if sender.titleLabel?.text == "Yes"{
+            specialNeeds = true
+        }else {
+            specialNeeds = false
+        }
         if !isRestrictionPreferenceSelected {
             isRestrictionPreferenceSelected = true
             totalOptionFillup += 1
@@ -245,7 +260,7 @@ class IdealPetDetailsVC: UIViewController {
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(.black, for: .normal)
         }
-        
+        age = sender.titleLabel!.text ?? ""
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
@@ -264,7 +279,7 @@ class IdealPetDetailsVC: UIViewController {
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(.black, for: .normal)
         }
-        
+        gender = sender.titleLabel?.text ?? ""
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
@@ -283,7 +298,7 @@ class IdealPetDetailsVC: UIViewController {
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(.black, for: .normal)
         }
-        
+        size = sender.titleLabel?.text ?? ""
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
@@ -302,7 +317,7 @@ class IdealPetDetailsVC: UIViewController {
             btn.backgroundColor = UIColor.white
             btn.setTitleColor(.black, for: .normal)
         }
-        
+        activeness = sender.titleLabel?.text ?? ""
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
 
@@ -317,8 +332,8 @@ class IdealPetDetailsVC: UIViewController {
     }
     
     @IBAction func noRestrictionButtonAction(_ sender: UIButton) {
-        txtSearch.superview?.backgroundColor = UIColor.white
-        txtSearch.textColor = .black
+       
+       
         
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
@@ -338,7 +353,7 @@ class IdealPetDetailsVC: UIViewController {
 
         sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
         sender.setTitleColor(.white, for: .normal)
-        
+       
         if !isBreadSelected {
             isBreadSelected = true
             totalOptionFillup += 1
@@ -369,17 +384,9 @@ extension IdealPetDetailsVC: BreadModalVCDelegate {
         if item.count > 0 {
             selectedTxtField.text = item
             if self.selectedTxtField == txtBreedSearch {
+                breeds.append(item)
                 if !isBreadSelected {
                     isBreadSelected = true
-                    totalOptionFillup += 1
-                    progressView.progress = totalOptionFillup/total
-                    let per = (totalOptionFillup/total)*100
-                    let perString = String(format: "%.2f", per)
-                    lblProgess.text = "\(perString)% complete"
-                }
-            }else if self.selectedTxtField == txtSearch{
-                if !isNorestrictionSelected {
-                    isNorestrictionSelected = true
                     totalOptionFillup += 1
                     progressView.progress = totalOptionFillup/total
                     let per = (totalOptionFillup/total)*100
@@ -399,13 +406,7 @@ extension IdealPetDetailsVC : UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
         selectedTxtField = textField
-        if textField == txtSearch {
-            txtSearch.superview?.backgroundColor = UIColor.init(rgb: 0x8256D6)
-            txtSearch.textColor = .white
-
-            btnNoBreedRestriction.backgroundColor = .white
-            btnNoBreedRestriction.setTitleColor(.lightGray, for: .normal)
-        }else if textField == txtBreedSearch {
+         if textField == txtBreedSearch {
             txtBreedSearch.superview?.backgroundColor = UIColor.init(rgb: 0x8256D6)
             txtBreedSearch.textColor = .white
             
@@ -423,9 +424,27 @@ extension IdealPetDetailsVC : UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         textField.resignFirstResponder()
         if textField == txtBreedSearch {
-        }else if textField == txtSearch{
-           
         }
         return true
     }
 }
+
+extension IdealPetDetailsVC {
+    func updatePref(animalType:String,age:String,gender:String,size:String,breed:[String],activeness:String,training:[String],specialNeeds:Bool){
+        let params:[String:Any] = ["petPreference":["animalType":animalType,"age":age,"gender":gender,"size":size,"breeds":breed,"activeness":activeness,"training":training,"specialNeeds":specialNeeds],"isCompleted":true]
+        
+        Alamofire.request("https://petsupportapp.com/api/clients/petPreference/update/\(USER_ID)", method: .post, parameters: params).responseJSON { (response) in
+            if response.result.isSuccess {
+                let data:JSON = JSON(response.result.value!)
+                print(data)
+                let alert = UIAlertController(title: "Pet Support", message: "Preference Saved", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+}
+
