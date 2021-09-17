@@ -23,8 +23,7 @@ class SignUpVC: UIViewController {
     
     @IBOutlet weak var submitButton: UIButton!
     
-    
-    var isTermsAndserviceSelected = false
+        var isTermsAndserviceSelected = false
 
     override func viewDidLoad() {
         super.viewDidLoad()

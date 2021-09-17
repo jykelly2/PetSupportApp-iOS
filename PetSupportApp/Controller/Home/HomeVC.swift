@@ -483,9 +483,10 @@ extension HomeVC {
             if reponse.result.isSuccess {
                 KRProgressHUD.show()
                 let data:JSON = JSON(reponse.result.value!)
-               
                 self.parseLikes(json:data["favouritePets"])
             }else {
+                //in case user id not signed in 
+                self.getAnimalClient()
                 print(reponse.result.error!.localizedDescription)
             }
         }

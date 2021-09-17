@@ -909,7 +909,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V8E-9c-aNv">
-                                        <rect key="frame" x="129.5" y="115" width="115" height="30"/>
+                                        <rect key="frame" x="159.5" y="115" width="55" height="30"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location" translatesAutoresizingMaskIntoConstraints="NO" id="W3P-hG-jKQ">
                                                 <rect key="frame" x="10" y="2.5" width="25" height="25"/>
@@ -919,7 +919,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHn-TJ-tqI">
-                                                <rect key="frame" x="40" y="5" width="74.5" height="20"/>
+                                                <rect key="frame" x="40" y="5" width="14.5" height="20"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -931,7 +931,7 @@
                                             <constraint firstAttribute="trailing" secondItem="lHn-TJ-tqI" secondAttribute="trailing" constant="0.5" id="Ecb-Rb-Ft6"/>
                                             <constraint firstAttribute="height" constant="30" id="PdI-cp-goc"/>
                                             <constraint firstItem="W3P-hG-jKQ" firstAttribute="centerY" secondItem="V8E-9c-aNv" secondAttribute="centerY" id="SqI-6t-cpg"/>
-                                            <constraint firstAttribute="width" constant="115" id="v6J-sW-2h8"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="v6J-sW-2h8"/>
                                             <constraint firstItem="lHn-TJ-tqI" firstAttribute="centerY" secondItem="V8E-9c-aNv" secondAttribute="centerY" id="wZ9-Hc-PKq"/>
                                             <constraint firstItem="W3P-hG-jKQ" firstAttribute="leading" secondItem="V8E-9c-aNv" secondAttribute="leading" constant="10" id="zwI-qe-T4Y"/>
                                         </constraints>
@@ -1099,13 +1099,13 @@
                                     <constraint firstItem="SKc-hE-GHs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RSX-aW-GLU" secondAttribute="trailing" constant="8" symbolic="YES" id="yl4-3L-ffJ"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hki-88-S5D">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GENERAL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hki-88-S5D">
                                 <rect key="frame" x="20" y="299" width="199" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="199" id="2pY-1K-es5"/>
                                     <constraint firstAttribute="height" constant="21" id="wIl-tc-IJ1"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>

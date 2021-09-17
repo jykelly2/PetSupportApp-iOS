@@ -11,4 +11,9 @@ pod 'Alamofire', '~> 4.8.0'
 pod 'SwiftyJSON'
 pod "KRProgressHUD"
 pod 'SDWebImage'
+pod 'GoogleSignIn'
+pod 'FacebookCore'
+pod 'FacebookLogin'
+pod 'MFCard'
+pod 'CountryPickerView'
 end

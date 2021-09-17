@@ -104,7 +104,7 @@ class SignInModalVC: UIViewController {
         
         sender.backgroundColor = UIColor(rgb: 0x000000)
         sender.setTitleColor(.white, for: .normal)
-        self.delegate?.didSelectSignOption(self, signInOption: 1)
+        self.delegate?.didSelectSignOption(self, signInOption: sender.tag)
         self.dismissAnimation()
     }
         

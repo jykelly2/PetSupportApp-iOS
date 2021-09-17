@@ -32,7 +32,7 @@ class IdealPetTableViewCell: UITableViewCell {
 
 class IdealPetVC: UIViewController {
     let viewModel = PetViewModel()
-
+    var petPrefModel : PetPrefrences? = nil
     @IBOutlet weak var tblIdealPet: UITableView!
     var arrayIdealPets = [Account]()
     override func viewDidLoad() {
@@ -71,6 +71,7 @@ extension IdealPetVC:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = SAccount.instantiateViewController(withIdentifier: "IdealPetDetailsVC") as! IdealPetDetailsVC
+        vc.petPrefModel = petPrefModel
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

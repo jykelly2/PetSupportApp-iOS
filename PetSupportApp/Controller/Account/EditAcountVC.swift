@@ -41,7 +41,7 @@ class EditAcountVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-
+       
     }
    
     
@@ -54,17 +54,17 @@ class EditAcountVC: UIViewController {
         txtFirstName.clipsToBounds = true
         txtFirstName.layer.borderWidth = 1
         txtFirstName.layer.borderColor = UIColor.lightGray.cgColor
-        
+        txtFirstName.setLeftPaddingPoints(10)
         txtLastName.layer.cornerRadius = 10
         txtLastName.clipsToBounds = true
         txtLastName.layer.borderWidth = 1
         txtLastName.layer.borderColor = UIColor.lightGray.cgColor
-        
+        txtLastName.setLeftPaddingPoints(10)
         txtPhone.layer.cornerRadius = 10
         txtPhone.clipsToBounds = true
         txtPhone.layer.borderWidth = 1
         txtPhone.layer.borderColor = UIColor.lightGray.cgColor
- 
+        txtPhone.setLeftPaddingPoints(10)
         submitButton.layer.cornerRadius = submitButton.frame.height/2
         submitButton.clipsToBounds = true
         
@@ -83,7 +83,10 @@ class EditAcountVC: UIViewController {
     @IBAction func submitButtonTapped(_ sender: UIButton) {
         if txtLastName.text == "" || txtFirstName.text == "" || txtPhone.text == "" {
             simpleAlert("Fill all fields")
-        }else {
+        }else if !isValidEmail(testStr: txtPhone.text!){
+            simpleAlert("invalid email")
+        }
+        else {
             updateClient(firstName: txtFirstName.text!, lastName: txtLastName.text!, email: txtPhone.text!)
         }
     }

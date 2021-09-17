@@ -19,10 +19,40 @@ var NAME = ""
 var LOGGED_IN = false
 var FIRST_NAME = ""
 var LAST_NAME = ""
+var paymentCardSaved =  false
+var profileCompleted =  false
+var schedulerProfileCompleted =  false
+var petPreferenceCompleted =  false
+let appPurple = hexStringToUIColor(hex: "926FE5")
 
 let HEADER = ["Authorization":"Bearer \(TOKEN)"]
 
+func hexStringToUIColor (hex:String) -> UIColor {
+    var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
+    if (cString.hasPrefix("#")) {
+        cString.remove(at: cString.startIndex)
+    }
+
+    if ((cString.count) != 6) {
+        return UIColor.gray
+    }
+
+    var rgbValue:UInt64 = 0
+    Scanner(string: cString).scanHexInt64(&rgbValue)
+
+    return UIColor(
+        red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+        green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+        blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+        alpha: CGFloat(1.0)
+    )
+}
+func isValidPhone(phone: String) -> Bool {
+        let phoneRegex = "^[0-9+]{0,1}+[0-9]{5,16}$"
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
+        return phoneTest.evaluate(with: phone)
+    }
 extension UIImage {
     func scaleImage(_ maxDimension: CGFloat) -> UIImage? {
         
@@ -418,6 +448,9 @@ var loadingCircle = UIImageView()
 var toast = UILabel()
 
 extension UIViewController {
+    
+
+    
     func isValidEmail(testStr:String) -> Bool {
         // print("validate calendar: \(testStr)")
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -428,6 +461,7 @@ extension UIViewController {
     
     open override func awakeFromNib() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
     }
     // ------------------------------------------------
     // MARK: - FIRE A SIMPLE ALERT

@@ -7,68 +7,37 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import KRProgressHUD
 
 class AboutMeVC: UIViewController {
     @IBOutlet weak var lblProgess: UILabel!
     @IBOutlet weak var progressView: UIProgressView!
-    @IBOutlet weak var yardSV: UIStackView!
-    @IBOutlet weak var outdoorSV: UIStackView!
-    @IBOutlet weak var kidsSV: UIStackView!
-    @IBOutlet weak var adoptingSV: UIStackView!
-    @IBOutlet weak var currentPetAtHomeSV: UIStackView!
-    @IBOutlet weak var petOwnerTypeStackView: UIStackView!
-    @IBOutlet weak var kidsHSV: UIStackView!
-    @IBOutlet weak var catsDogsSV: UIStackView!
+    @IBOutlet weak var address: UITextField!
+    @IBOutlet weak var city: UITextField!
+    @IBOutlet weak var phoneNumber: UITextField!
+    @IBOutlet weak var province: UITextField!
+    @IBOutlet weak var addAttachmentOutlet: UIButton!
+    @IBOutlet weak var ageCheckImage: UIImageView!
+    @IBOutlet weak var conditionCheckImage: UIImageView!
     
-    @IBOutlet weak var btnFirst: UIButton!
-    @IBOutlet weak var btnPrevious: UIButton!
-    @IBOutlet weak var btnCurrent: UIButton!
-    @IBOutlet weak var btnNone: UIButton!
-    @IBOutlet weak var btnCats: UIButton!
-    @IBOutlet weak var btnDogs: UIButton!
-    @IBOutlet weak var btnBoth: UIButton!
-    @IBOutlet weak var btnMySelf: UIButton!
-    @IBOutlet weak var btnFamily: UIButton!
-    @IBOutlet weak var btnKidsNone: UIButton!
-    @IBOutlet weak var btnUnder8: UIButton!
-    @IBOutlet weak var btn8andMore: UIButton!
-    @IBOutlet weak var btnOlder: UIButton!
-    @IBOutlet weak var btnNoYard: UIButton!
-    @IBOutlet weak var btnFenchedYard: UIButton!
-    @IBOutlet weak var btnOpenYard: UIButton!
-    @IBOutlet weak var btnOutDoorArea: UIButton!
-    @IBOutlet weak var btnNearByPark: UIButton!
-    
-    var isPetOwnerTypeSelected:Bool = false
-    var isYardSelected:Bool = false
-    var isAdoptingTypeSelected:Bool = false
-    var isHomePetTypeSelected:Bool = false
-    var isKidsOptionSelected:Bool = false
-    var isParkSelected:Bool = false
-
-    
-    var yardBtnArray:[UIButton] = []
-    var kidsBtnArray:[UIButton] = []
-    var adoptingBtnArray:[UIButton] = []
-    var currentPetBtnArray:[UIButton] = []
-    var petOwnerBtnTypeArray:[UIButton] = []
-    var outDoorParkBtnTypeArray:[UIButton] = []
     var total:Float = 6.0
     var totalOptionFillup:Float = 0.0
-
+    var isAgeSelected = false
+    var isTermsAndserviceSelected = false
+    var isPictureSelected = false
+    var imageId : UIImage? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        address.delegate = self
+        city.delegate = self
+        phoneNumber.delegate = self
+        province.delegate = self
+        
+        
         self.title = "Scheduler Profile"
-        
-        petOwnerBtnTypeArray = [btnFirst,btnPrevious,btnCurrent]
-        currentPetBtnArray = [btnNone,btnCats,btnDogs,btnBoth]
-        adoptingBtnArray = [btnMySelf,btnFamily]
-        kidsBtnArray = [btnKidsNone,btnUnder8,btn8andMore,btnOlder]
-        yardBtnArray = [btnNoYard,btnFenchedYard,btnOpenYard]
-        petOwnerBtnTypeArray = [btnFirst,btnPrevious,btnCurrent]
-        outDoorParkBtnTypeArray = [btnOutDoorArea,btnNearByPark]
-        
         progressView.progress = 0.0/total
         lblProgess.text = "0 % complete"
     }
@@ -88,161 +57,252 @@ class AboutMeVC: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
 
     }
-    
+  
     
     func makeRound(){
-        yardSV.layer.cornerRadius = 5
-        yardSV.clipsToBounds = true
-        yardSV.layer.borderWidth = 1
-        yardSV.layer.borderColor = UIColor.lightGray.cgColor
+        address.layer.cornerRadius = 10
+        address.clipsToBounds = true
+        address.layer.borderWidth = 1
+        address.layer.borderColor = UIColor.lightGray.cgColor
+        address.setLeftPaddingPoints(10)
         
-        kidsSV.layer.cornerRadius = 5
-        kidsSV.clipsToBounds = true
-        kidsSV.layer.borderWidth = 1
-        kidsSV.layer.borderColor = UIColor.lightGray.cgColor
+        city.layer.cornerRadius = 10
+        city.clipsToBounds = true
+        city.layer.borderWidth = 1
+        city.layer.borderColor = UIColor.lightGray.cgColor
+        city.setLeftPaddingPoints(10)
         
-        catsDogsSV.layer.borderWidth = 1
-        catsDogsSV.layer.borderColor = UIColor.lightGray.cgColor
+        province.layer.cornerRadius = 10
+        province.clipsToBounds = true
+        province.layer.borderWidth = 1
+        province.layer.borderColor = UIColor.lightGray.cgColor
+        province.setLeftPaddingPoints(10)
         
-        kidsHSV.layer.borderWidth = 1
-        kidsHSV.layer.borderColor = UIColor.lightGray.cgColor
+        phoneNumber.layer.cornerRadius = 10
+        phoneNumber.clipsToBounds = true
+        phoneNumber.layer.borderWidth = 1
+        phoneNumber.layer.borderColor = UIColor.lightGray.cgColor
+        phoneNumber.setLeftPaddingPoints(10)
+    }
+    
+    @IBAction func conditionAction(_ sender: Any) {
+        isTermsAndserviceSelected = !isTermsAndserviceSelected
+        conditionCheckImage.image = isTermsAndserviceSelected ? UIImage(named: "check") :  UIImage(named: "uncheck")
+        if isTermsAndserviceSelected == true {
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
+        }else {
+            totalOptionFillup -= 1
+            progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
+        }
+    }
+    
+    @IBAction func ageAction(_ sender: Any) {
+        isAgeSelected = !isAgeSelected
+        ageCheckImage.image = isAgeSelected ? UIImage(named: "check") :  UIImage(named: "uncheck")
+        if isAgeSelected == true {
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
+        }else {
+            totalOptionFillup -= 1
+            progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
+        }
+    }
+    
+    @IBAction func addImage(_ sender: Any) {
+        let AlertController = UIAlertController(title: "Pet Support", message: "Select an image", preferredStyle: .actionSheet)
+        let camera = UIAlertAction(title: "Take from camera", style: .default) { (action) in
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .camera;
+            imagePicker.allowsEditing = false
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        let gallery = UIAlertAction(title: "Choose from gallery", style: .default) { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = .photoLibrary;
+                imagePicker.allowsEditing = false
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        AlertController.addAction(camera)
+        AlertController.addAction(gallery)
+        AlertController.addAction(cancel)
         
-        adoptingSV.layer.cornerRadius = 5
-        adoptingSV.clipsToBounds = true
-        adoptingSV.layer.borderWidth = 1
-        adoptingSV.layer.borderColor = UIColor.lightGray.cgColor
-        
-        currentPetAtHomeSV.layer.cornerRadius = 5
-        currentPetAtHomeSV.clipsToBounds = true
-        currentPetAtHomeSV.layer.borderWidth = 1
-        currentPetAtHomeSV.layer.borderColor = UIColor.lightGray.cgColor
+        self.present(AlertController, animated: true, completion: nil)
+    }
+    @IBAction func saveAction(_ sender: Any) {
+        if address.text == "" {
+            simpleAlert("Enter your address")
+            address.layer.borderColor = UIColor.red.cgColor
+        }else if city.text == "" {
+            simpleAlert("Enter your city")
+            city.layer.borderColor = UIColor.red.cgColor
+        }else if province.text == "" {
+            simpleAlert("Enter your Province / State")
+            province.layer.borderColor = UIColor.red.cgColor
+        }else if phoneNumber.text == "" {
+            simpleAlert("Enter your phone number")
+            phoneNumber.layer.borderColor = UIColor.red.cgColor
+        }else if !isValidPhone(phone: phoneNumber.text!){
+            simpleAlert("Invalid phone number")
+            phoneNumber.layer.borderColor = UIColor.red.cgColor
+        }else if !isPictureSelected {
+            simpleAlert("Upload the document picture")
+        }else if !isAgeSelected {
+            simpleAlert("Check mark the age")
+        }else if !isTermsAndserviceSelected {
+            simpleAlert("Accept the terms and condition")
+        }else if imageId == nil {
+            simpleAlert("Upload id image")
+        }else if phoneNumber.text!.count < 10 {
+            simpleAlert("Enter proper number with code")
+        }
+        else {
+            address.layer.borderColor = UIColor.lightGray.cgColor
+            city.layer.borderColor = UIColor.lightGray.cgColor
+            province.layer.borderColor = UIColor.lightGray.cgColor
+            phoneNumber.layer.borderColor = UIColor.lightGray.cgColor
+            uploadArtistImage(image: self.imageId!)
+            uploadOtherData()
+        }
+    }
+    
+}
+extension AboutMeVC:UITextFieldDelegate {
+    /*
+     if !isPetOwnerTypeSelected {
+         isPetOwnerTypeSelected = true
+         totalOptionFillup += 1
+         progressView.progress = totalOptionFillup/total
+         let per = (totalOptionFillup/total)*100
+         let perString = String(format: "%.2f", per)
+         lblProgess.text = "\(perString)% complete"
+     }
+     */
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == address {
+            if textField.text != "" {
+                totalOptionFillup += 1
+                progressView.progress = totalOptionFillup/total
+                let per = (totalOptionFillup/total)*100
+                let perString = String(format: "%.2f", per)
+                lblProgess.text = "\(perString)% complete"
+            }
+        }else if textField == city {
+            if textField.text != "" {
+                totalOptionFillup += 1
+                progressView.progress = totalOptionFillup/total
+                let per = (totalOptionFillup/total)*100
+                let perString = String(format: "%.2f", per)
+                lblProgess.text = "\(perString)% complete"
+            }
+        }else if textField == province {
+            if textField.text != "" {
+                totalOptionFillup += 1
+                progressView.progress = totalOptionFillup/total
+                let per = (totalOptionFillup/total)*100
+                let perString = String(format: "%.2f", per)
+                lblProgess.text = "\(perString)% complete"
+            }
+        }else if textField == phoneNumber {
+            if textField.text != "" {
+                totalOptionFillup += 1
+                progressView.progress = totalOptionFillup/total
+                let per = (totalOptionFillup/total)*100
+                let perString = String(format: "%.2f", per)
+                lblProgess.text = "\(perString)% complete"
+            }
+        }
+    }
+}
 
-        petOwnerTypeStackView.layer.cornerRadius = 5
-        petOwnerTypeStackView.clipsToBounds = true
-        petOwnerTypeStackView.layer.borderWidth = 1
-        petOwnerTypeStackView.layer.borderColor = UIColor.lightGray.cgColor
-        
-        btnOutDoorArea.layer.cornerRadius = 5
-        btnOutDoorArea.clipsToBounds = true
-        btnOutDoorArea.layer.borderWidth = 1
-        btnOutDoorArea.layer.borderColor = UIColor.lightGray.cgColor
-        
-        btnNearByPark.layer.cornerRadius = 5
-        btnNearByPark.clipsToBounds = true
-        btnNearByPark.layer.borderWidth = 1
-        btnNearByPark.layer.borderColor = UIColor.lightGray.cgColor        
-    }
-    
-    @IBAction func petOwnerButtonAction(_ sender:UIButton){
-        for btn in petOwnerBtnTypeArray {
-            btn.backgroundColor = UIColor.white
-            btn.setTitleColor(.black, for: .normal)
-        }
-        
-        sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
-        sender.setTitleColor(.white, for: .normal)
-        if !isPetOwnerTypeSelected {
-            isPetOwnerTypeSelected = true
+extension AboutMeVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.imageId = image
+            isPictureSelected = true
             totalOptionFillup += 1
             progressView.progress = totalOptionFillup/total
             let per = (totalOptionFillup/total)*100
             let perString = String(format: "%.2f", per)
             lblProgess.text = "\(perString)% complete"
+            
+            
         }
+        dismiss(animated: true, completion: nil)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
 
-    }
+extension AboutMeVC {
     
-    @IBAction func currentAtHomeButtonAction(_ sender:UIButton){
-        for btn in currentPetBtnArray {
-            btn.backgroundColor = UIColor.white
-            btn.setTitleColor(.black, for: .normal)
-        }
+    func uploadArtistImage(image:UIImage){
         
-        sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
-        sender.setTitleColor(.white, for: .normal)
-        if !isHomePetTypeSelected {
-            isHomePetTypeSelected = true
-            totalOptionFillup += 1
-            progressView.progress = totalOptionFillup/total
-            let per = (totalOptionFillup/total)*100
-            let perString = String(format: "%.2f", per)
-            lblProgess.text = "\(perString)% complete"
-        }
-    }
-    
-    @IBAction func adoptingButtonAction(_ sender:UIButton){
-        for btn in adoptingBtnArray {
-            btn.backgroundColor = UIColor.white
-            btn.setTitleColor(.black, for: .normal)
-        }
-        
-        sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
-        sender.setTitleColor(.white, for: .normal)
-        if !isAdoptingTypeSelected {
-            isAdoptingTypeSelected = true
-            totalOptionFillup += 1
-            progressView.progress = totalOptionFillup/total
-            let per = (totalOptionFillup/total)*100
-            let perString = String(format: "%.2f", per)
-            lblProgess.text = "\(perString)% complete"
-        }
-    }
-    
-    @IBAction func kidsButtonAction(_ sender:UIButton){
-        for btn in kidsBtnArray {
-            btn.backgroundColor = UIColor.white
-            btn.setTitleColor(.black, for: .normal)
-        }
-        
-        sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
-        sender.setTitleColor(.white, for: .normal)
-
-        if !isKidsOptionSelected {
-            isKidsOptionSelected = true
-            totalOptionFillup += 1
-            progressView.progress = totalOptionFillup/total
-            let per = (totalOptionFillup/total)*100
-            let perString = String(format: "%.2f", per)
-            lblProgess.text = "\(perString)% complete"
+        KRProgressHUD.show()
+//        let param: [String:Any] = ["schedulerProfile":["phoneNumber":intPhone!,"streetAddress":address.text!,"city":city.text!,"province":province.text!,"isOver18":true,"isConsented":true,"consents":["test"],"photoId":"testingImage"]]
+        let param = ["":""]
+        Alamofire.upload(multipartFormData:
+            {
+                (multipartFormData) in
+                multipartFormData.append(image.jpegData(compressionQuality: 0.6)!, withName: "\(USER_ID)User_id_Image", fileName: "file.jpeg", mimeType: "image/jpeg")
+                for (key, value) in param
+                {
+                    multipartFormData.append((value as AnyObject).data(using: String.Encoding.utf8.rawValue)!, withName: key)
+                }
+        }, to:"https://petsupportapp.com/api/clients/schedulerProfile/update/\(USER_ID)",headers:nil)
+        { (result) in
+            switch result {
+            case .success(let upload,_,_ ):
+                upload.uploadProgress(closure: { (progress) in
+                    print("Progress.. \(progress)")
+                })
+                upload.responseJSON
+                    { response in
+                        print(response.result)
+                        if response.result.value != nil
+                        {
+                            let userData:JSON = JSON(response.result.value!)
+                            print(JSON(response.result.value!)) // for JSOn format result
+                            KRProgressHUD.dismiss()
+                            self.simpleAlert("Profile updated")
+                        }
+                }
+            case .failure( _):
+                KRProgressHUD.dismiss()
+                break
+            }
         }
     }
     
-    @IBAction func yardButtonAction(_ sender:UIButton){
-        for btn in yardBtnArray {
-            btn.backgroundColor = UIColor.white
-            btn.setTitleColor(.black, for: .normal)
-        }
+    func uploadOtherData(){
+        let intPhone = Int(phoneNumber.text!)
+        let param: [String:Any] = ["schedulerProfile":["phoneNumber":intPhone!,"streetAddress":address.text!,"city":city.text!,"province":province.text!,"isOver18":true,"isConsented":true,"consents":["61342ec8c2bd0959a6e3b9ee"],"photoId":"testingImage"]]
         
-        sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
-        sender.setTitleColor(.white, for: .normal)
-
-        if !isYardSelected {
-            isYardSelected = true
-            totalOptionFillup += 1
-            progressView.progress = totalOptionFillup/total
-            let per = (totalOptionFillup/total)*100
-            let perString = String(format: "%.2f", per)
-            lblProgess.text = "\(perString)% complete"
+        Alamofire.request("https://petsupportapp.com/api/clients/schedulerProfile/update/\(USER_ID)", method: .post, parameters: param).responseJSON { (response) in
+            if response.result.isSuccess {
+                print(response.result.value!)
+            }
         }
     }
     
-    @IBAction func outDoorParkButtonAction(_ sender:UIButton){
-        for btn in outDoorParkBtnTypeArray {
-            btn.backgroundColor = UIColor.white
-            btn.setTitleColor(.black, for: .normal)
-        }
-        
-        sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
-        sender.setTitleColor(.white, for: .normal)
-        if !isParkSelected {
-            isParkSelected = true
-            totalOptionFillup += 1
-            progressView.progress = totalOptionFillup/total
-            let per = (totalOptionFillup/total)*100
-            let perString = String(format: "%.2f", per)
-            lblProgess.text = "\(perString)% complete"
-        }
-    }
-   
-
 }

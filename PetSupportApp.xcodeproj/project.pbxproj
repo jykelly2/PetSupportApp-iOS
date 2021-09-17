@@ -70,6 +70,12 @@
 		F854A1ED26E7B6B300B01B7F /* PetFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F854A1EC26E7B6B300B01B7F /* PetFilterCell.swift */; };
 		F854A1F026E7DA5900B01B7F /* PetsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F854A1EF26E7DA5900B01B7F /* PetsCollectionViewCell.swift */; };
 		F854A1F326E7DD1600B01B7F /* PetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F854A1F226E7DD1600B01B7F /* PetTableViewCell.swift */; };
+		F8D618E926F2BDB400A44BC6 /* PaymentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D618E826F2BDB400A44BC6 /* PaymentListVC.swift */; };
+		F8D618EC26F2C26800A44BC6 /* CardsListningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D618EB26F2C26800A44BC6 /* CardsListningVC.swift */; };
+		F8D618EF26F2C27700A44BC6 /* AddCardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D618EE26F2C27700A44BC6 /* AddCardVC.swift */; };
+		F8D618F226F2C28600A44BC6 /* SavedCardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D618F126F2C28600A44BC6 /* SavedCardsVC.swift */; };
+		F8D618F526F2C29600A44BC6 /* PayPalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D618F426F2C29600A44BC6 /* PayPalVC.swift */; };
+		F8D6508526F40C3100392953 /* SavedCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D6508426F40C3100392953 /* SavedCardCell.swift */; };
 		F8E2048826E980CC00862ABA /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E2048726E980CC00862ABA /* Helper.swift */; };
 /* End PBXBuildFile section */
 
@@ -138,9 +144,16 @@
 		CEE3529F26C86AB100C3B377 /* ScheduleDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDetailVC.swift; sourceTree = "<group>"; };
 		CEE352A126C87F6200C3B377 /* ConfirmScheduleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmScheduleVC.swift; sourceTree = "<group>"; };
 		D4BA3C048548A6B1FAF43469 /* Pods_PetSupportApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetSupportApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F80A6F0726F1684100C1F697 /* PetSupportApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PetSupportApp.entitlements; sourceTree = "<group>"; };
 		F854A1EC26E7B6B300B01B7F /* PetFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetFilterCell.swift; sourceTree = "<group>"; };
 		F854A1EF26E7DA5900B01B7F /* PetsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsCollectionViewCell.swift; sourceTree = "<group>"; };
 		F854A1F226E7DD1600B01B7F /* PetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTableViewCell.swift; sourceTree = "<group>"; };
+		F8D618E826F2BDB400A44BC6 /* PaymentListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentListVC.swift; sourceTree = "<group>"; };
+		F8D618EB26F2C26800A44BC6 /* CardsListningVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsListningVC.swift; sourceTree = "<group>"; };
+		F8D618EE26F2C27700A44BC6 /* AddCardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardVC.swift; sourceTree = "<group>"; };
+		F8D618F126F2C28600A44BC6 /* SavedCardsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCardsVC.swift; sourceTree = "<group>"; };
+		F8D618F426F2C29600A44BC6 /* PayPalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPalVC.swift; sourceTree = "<group>"; };
+		F8D6508426F40C3100392953 /* SavedCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCardCell.swift; sourceTree = "<group>"; };
 		F8E2048726E980CC00862ABA /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -194,6 +207,7 @@
 		BA388ADC26BCEF030073E496 /* PetSupportApp */ = {
 			isa = PBXGroup;
 			children = (
+				F80A6F0726F1684100C1F697 /* PetSupportApp.entitlements */,
 				CE29F86B26C5C6C4008DCA60 /* View */,
 				CEAE070826C24523005BF8CD /* Common */,
 				CEAE070926C24538005BF8CD /* Utilities */,
@@ -322,6 +336,7 @@
 		CEE2788726CC1F1E00CAEE85 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				F8D6508326F40C1D00392953 /* cell */,
 				CEE2788526CC1F1600CAEE85 /* AccountVC.swift */,
 				CE57944F26CD8FE2001BB55B /* IdealPetVC.swift */,
 				CED6608B26CF046A006EF167 /* IdealPetDetailsVC.swift */,
@@ -332,6 +347,11 @@
 				CEB0B7D426CC4B5000065F66 /* LoginVC.swift */,
 				CEE2788B26CC397600CAEE85 /* SettingInfoVC.swift */,
 				CEE2788826CC329700CAEE85 /* PopUp */,
+				F8D618E826F2BDB400A44BC6 /* PaymentListVC.swift */,
+				F8D618EB26F2C26800A44BC6 /* CardsListningVC.swift */,
+				F8D618EE26F2C27700A44BC6 /* AddCardVC.swift */,
+				F8D618F126F2C28600A44BC6 /* SavedCardsVC.swift */,
+				F8D618F426F2C29600A44BC6 /* PayPalVC.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -374,6 +394,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		F8D6508326F40C1D00392953 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				F8D6508426F40C3100392953 /* SavedCardCell.swift */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -386,6 +414,7 @@
 				BA388AD726BCEF030073E496 /* Frameworks */,
 				BA388AD826BCEF030073E496 /* Resources */,
 				7EF9BDF5AF2DDD6247A00F14 /* [CP] Embed Pods Frameworks */,
+				E4D43EE5C89A3CA28F7B661E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -487,6 +516,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PetSupportApp/Pods-PetSupportApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E4D43EE5C89A3CA28F7B661E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PetSupportApp/Pods-PetSupportApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PetSupportApp/Pods-PetSupportApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PetSupportApp/Pods-PetSupportApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -499,6 +545,7 @@
 				CE247A4226C441730075D25B /* ShelterRescueModalVC.swift in Sources */,
 				CE247A3C26C440DA0075D25B /* BreadModalVC.swift in Sources */,
 				CE247A4426C4418A0075D25B /* ColarModalVC.swift in Sources */,
+				F8D618EC26F2C26800A44BC6 /* CardsListningVC.swift in Sources */,
 				CE29F86E26C5DCA1008DCA60 /* FavoriteVC.swift in Sources */,
 				CE84B0D226C18F3C00667594 /* Shelter.swift in Sources */,
 				CE96EB6A26C083750071009C /* FilterVC.swift in Sources */,
@@ -526,23 +573,28 @@
 				CED6608C26CF046A006EF167 /* IdealPetDetailsVC.swift in Sources */,
 				CE0D43FB26C6ED3300221319 /* PetFavOptionPopUpVC.swift in Sources */,
 				CE0D4A9026C1CC3D00366CE0 /* SearchVC.swift in Sources */,
+				F8D6508526F40C3100392953 /* SavedCardCell.swift in Sources */,
 				F854A1F326E7DD1600B01B7F /* PetTableViewCell.swift in Sources */,
 				CE75838626BF2D980028E99C /* PetModel.swift in Sources */,
 				CE0D43FD26C6FE4700221319 /* FilterItems.swift in Sources */,
 				CE0AE3B126C061BD00D1058B /* MapVC.swift in Sources */,
 				CE0AE3B526C0796300D1058B /* ShelterAnnotation.swift in Sources */,
+				F8D618F226F2C28600A44BC6 /* SavedCardsVC.swift in Sources */,
 				CEB0B7D926CC631900065F66 /* EditAcountVC.swift in Sources */,
 				CEE352A226C87F6200C3B377 /* ConfirmScheduleVC.swift in Sources */,
+				F8D618F526F2C29600A44BC6 /* PayPalVC.swift in Sources */,
 				BA388AE026BCEF030073E496 /* SceneDelegate.swift in Sources */,
 				CE29F86A26C59ECD008DCA60 /* CreateScheduleModalVC.swift in Sources */,
 				CEE3529A26C8658500C3B377 /* ScheduleOptionVC.swift in Sources */,
 				CEE2788C26CC397600CAEE85 /* SettingInfoVC.swift in Sources */,
+				F8D618EF26F2C27700A44BC6 /* AddCardVC.swift in Sources */,
 				CE247A4826C44B390075D25B /* PSGEnum.swift in Sources */,
 				CEB0B7D726CC588500065F66 /* SignUpVC.swift in Sources */,
 				CE29F87226C5DCD9008DCA60 /* FavoriteShelterListVC.swift in Sources */,
 				CEE2788A26CC32AE00CAEE85 /* SignInModalVC.swift in Sources */,
 				CE0AE3AF26BFE35F00D1058B /* AnimalDetailVC.swift in Sources */,
 				CE897DAA26C31C6100A33D8E /* OptionVC.swift in Sources */,
+				F8D618E926F2BDB400A44BC6 /* PaymentListVC.swift in Sources */,
 				CEB0B7DB26CC6D5100065F66 /* AdopterProfileVC.swift in Sources */,
 				CEE3529726C856E100C3B377 /* ScheduleVC.swift in Sources */,
 				CEE2788626CC1F1600CAEE85 /* AccountVC.swift in Sources */,
@@ -693,8 +745,9 @@
 			baseConfigurationReference = BAC025CA338DB3DDE437457A /* Pods-PetSupportApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PetSupportApp/PetSupportApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G237Z2G383;
+				DEVELOPMENT_TEAM = PE4RJNY3XK;
 				INFOPLIST_FILE = PetSupportApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -712,8 +765,9 @@
 			baseConfigurationReference = BE2552F8E21F593B238BFAD6 /* Pods-PetSupportApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PetSupportApp/PetSupportApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G237Z2G383;
+				DEVELOPMENT_TEAM = PE4RJNY3XK;
 				INFOPLIST_FILE = PetSupportApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
