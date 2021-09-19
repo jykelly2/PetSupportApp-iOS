@@ -82,12 +82,12 @@ class IdealPetDetailsVC: UIViewController {
     var totalOptionFillup:Float = 0.0
     var petPrefModel:PetPrefrences? = nil
     var type = "Dog"
-    var age = ""
-    var gender = ""
-    var size  = ""
-    var breeds = [String]()
-    var activeness = ""
-    var training = [String]()
+    var age = "No preference"
+    var gender = "No preference"
+    var size  = "No preference"
+    var breeds = ["No preference"]
+    var activeness = "No preference"
+    var training = ["No preference"]
     var specialNeeds  = false
     
     /*
@@ -333,17 +333,10 @@ class IdealPetDetailsVC: UIViewController {
                     lblProgess.text = "\(perString)% complete"
                 }
             }else if model.specialNeeds == false {
-                btnSpecialNeedNo.backgroundColor = UIColor.init(rgb: 0x8256D6)
-                btnSpecialNeedNo.setTitleColor(.white, for: .normal)
-                    specialNeeds = false
-                if !isSpecialNeedSelected {
-                    isSpecialNeedSelected = true
-                    totalOptionFillup += 1
-                    progressView.progress = totalOptionFillup/total
-                    let per = (totalOptionFillup/total)*100
-                    let perString = String(format: "%.2f", per)
-                    lblProgess.text = "\(perString)% complete"
-                }
+                btnSpecialNeedNo.backgroundColor = UIColor.white
+                btnSpecialNeedNo.setTitleColor(.black, for: .normal)
+                specialNeeds = false
+             
             }
             
             for item in model.training {
@@ -458,21 +451,50 @@ class IdealPetDetailsVC: UIViewController {
     
     @objc func saveTapped(){
         if totalOptionFillup != 7 {
+            if training.count <= 2 {
+                training.removeAll { $0 == "No preference" }
+            }
             updatePref(animalType: type, age: age, gender: gender, size: size, breed: breeds, activeness: activeness, training: training, specialNeeds: specialNeeds, isCompleted: false)
         }else{
+            if training.count <= 2 {
+                training.removeAll { $0 == "No preference" }
+            }
             updatePref(animalType: type, age: age, gender: gender, size: size, breed: breeds, activeness: activeness, training: training, specialNeeds: specialNeeds, isCompleted: true)
         }
     }
-  
+    var potty = false
+    var leash = false
     @IBAction func lookingPreferenceButtonAction(_ sender:UIButton){
-        for btn in lookingPreferenceBtnArray {
-            btn.backgroundColor = UIColor.white
-            btn.setTitleColor(.black, for: .normal)
-        }
-     //   one = (sender.titleLabel!.text!)
-        sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
-        sender.setTitleColor(.white, for: .normal)
-        training.append(sender.titleLabel?.text ?? "")
+//        for btn in lookingPreferenceBtnArray {
+//            btn.backgroundColor = UIColor.white
+//            btn.setTitleColor(.black, for: .normal)
+//        }
+       
+        if !sender.isSelected {
+            sender.isSelected = true
+            sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
+            sender.setTitleColor(.white, for: .normal)
+            if sender.tag == 8 {
+                potty = true
+                training.append(sender.titleLabel?.text ?? "")
+            }else if sender.tag == 9 {
+                leash = true
+                training.append(sender.titleLabel?.text ?? "")
+            }
+            
+         }
+         else {
+            sender.isSelected = false
+            sender.backgroundColor = UIColor.white
+            sender.setTitleColor(.black, for: .normal)
+            if sender.tag == 8 {
+                potty = false
+                training.removeAll { $0 == sender.titleLabel!.text }
+            }else if sender.tag == 9 {
+                leash = false
+                training.removeAll { $0 == sender.titleLabel!.text }
+            }
+         }
         if !isLookingPreferenceSelected {
             isLookingPreferenceSelected = true
             totalOptionFillup += 1
@@ -483,7 +505,7 @@ class IdealPetDetailsVC: UIViewController {
         }
 
     }
-    
+        
     @IBAction func restrictionPreferenceButtonAction(_ sender:UIButton){
         for btn in restrictionPreferenceBtnArray {
             btn.backgroundColor = UIColor.white

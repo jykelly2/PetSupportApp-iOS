@@ -100,7 +100,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
         if let isLoggedIn  = UserDefaults.standard.object(forKey: "isLoggedIn") {
             LOGGED_IN = isLoggedIn as! Bool
         }
-        
+        print("THIS IS MY USER ID = \(USER_ID)")
         self.fetchAllPetsLikes()
         
        
@@ -487,6 +487,8 @@ extension HomeVC {
             }else {
                 //in case user id not signed in 
                 self.getAnimalClient()
+                self.animalLikedIds.removeAll()
+                self.animalSelectedId.removeAll()
                 print(reponse.result.error!.localizedDescription)
             }
         }

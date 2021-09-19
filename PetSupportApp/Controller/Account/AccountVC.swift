@@ -45,6 +45,13 @@ class AccountVC: UIViewController, SignInModalVCDelegate,CLLocationManagerDelega
         switch signInOption {
         case 1:
             print("google")
+            GIDSignIn.sharedInstance()?.presentingViewController = self
+            
+            // Automatically sign in the user.
+            GIDSignIn.sharedInstance()?.restorePreviousSignIn()
+            GIDSignIn.sharedInstance().delegate = self
+            
+            GIDSignIn.sharedInstance().signIn()
         case 2:
             print("facebook")
             let loginManager = LoginManager()
@@ -316,9 +323,26 @@ extension AccountVC:UITableViewDelegate,UITableViewDataSource{
                     cell.btnIncompleteInfo.setTitle("INCOMPLETE", for: .normal)
                 }
             }else{
+                
                 cell.incompleBtnContainerV.isHidden = true
             }
-        }else{
+        }else if indexPath.row == 2 {
+            if LOGGED_IN != false {
+            cell.incompleBtnContainerV.isHidden = false
+                if paymentCardSaved == true{
+                    cell.incompleBtnContainerV.backgroundColor = UIColor.green
+                    cell.btnIncompleteInfo.setTitleColor(UIColor.black, for: .normal)
+                    cell.btnIncompleteInfo.setTitle("COMPLETED", for: .normal)
+                }else {
+                    cell.incompleBtnContainerV.backgroundColor = appPurple
+                    cell.btnIncompleteInfo.setTitleColor(UIColor.white, for: .normal)
+                    cell.btnIncompleteInfo.setTitle("INCOMPLETE", for: .normal)
+                }
+            }else {
+                cell.incompleBtnContainerV.isHidden = true
+            }
+        }
+        else{
             cell.incompleBtnContainerV.isHidden = true
         }
         cell.btnIncompleteInfo.addTarget(self, action: #selector(pressedMenuItem(_:)), for: .touchUpInside)
@@ -381,14 +405,18 @@ extension AccountVC:UITableViewDelegate,UITableViewDataSource{
         tblAccount.reloadData()
         var breedArray = [String]()
         var trainingArray = [String]()
-        let breed = json["petPreference"]["breeds"].array
-        let training = json["petPreference"]["training"].array
-        for b in breed! {
-            breedArray.append(b.string ?? "")
+        if let breed = json["petPreference"]["breeds"].array {
+            for b in breed {
+                breedArray.append(b.string ?? "")
+            }
         }
-        for t in training! {
-            trainingArray.append(t.string ?? "")
+        if  let training = json["petPreference"]["training"].array {
+            for t in training {
+                trainingArray.append(t.string ?? "")
+            }
         }
+       
+       
         let specialNeeds = json["petPreference"]["specialNeeds"].bool ?? false
         let age = json["petPreference"]["age"].string ?? ""
         let activeness = json["petPreference"]["activeness"].string ?? ""
@@ -410,7 +438,30 @@ struct PetPrefrences {
     var size :String
     var gender :String
 }
-
+//MARK:- Google SignIn Delegates
+extension AccountVC : GIDSignInDelegate {
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if error == nil {
+            
+            print("Gmail login success")
+            print(user!)
+            let userId = user.userID                  // For client-side use only!
+            let idToken = user.authentication.idToken // Safe to send to the server
+            let name = user.profile.name
+            let email = user.profile.email
+            let userImageURL = user.profile.imageURL(withDimension: 200)
+            // ...
+            print(userImageURL!)
+            print(userId!)
+            print(idToken!)
+            print(name!)
+            print(email!)
+            
+            self.socialSignIn(email: email!)
+        }
+    }
+}
 extension AccountVC {
     //MARK:- 3RD PARTY SIGNIN FUNCTIONS
     func getUserProfile () {

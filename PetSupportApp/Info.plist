@@ -26,15 +26,23 @@
 				<string>fb570255814324535</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.928739773656-k0sol34fsupreoascsjbo9c1pmceleg4</string>
+			</array>
+		</dict>
 	</array>
-    <key>FacebookAppID</key>
-    <string>570255814324535</string>
-    <key>FacebookClientToken</key>
-    <string>e803dd87db72671411bd8bbc96553d4c</string>
-    <key>FacebookDisplayName</key>
-    <string>Pet Support</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>570255814324535</string>
+	<key>FacebookClientToken</key>
+	<string>e803dd87db72671411bd8bbc96553d4c</string>
+	<key>FacebookDisplayName</key>
+	<string>Pet Support</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

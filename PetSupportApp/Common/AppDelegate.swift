@@ -8,6 +8,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(rgb: 0xffffff)]
         UITabBar.appearance().barTintColor = UIColor(rgb: 0xf2f2f2)
         IQKeyboardManager.shared.enable = true
+        GIDSignIn.sharedInstance().clientID = "928739773656-k0sol34fsupreoascsjbo9c1pmceleg4.apps.googleusercontent.com"
         return true
     }
 

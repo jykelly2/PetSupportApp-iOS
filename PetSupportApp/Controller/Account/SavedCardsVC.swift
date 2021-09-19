@@ -10,8 +10,11 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import KRProgressHUD
+import MFCard
 
-class SavedCardsVC: UIViewController {
+class SavedCardsVC: UIViewController ,MFCardDelegate{
+
+    
 
     @IBOutlet weak var tableView: UITableView!
     var savedCards = [SavedCards]()
@@ -42,7 +45,31 @@ extension SavedCardsVC : UITableViewDataSource,UITableViewDelegate {
         cell.cardNumber.text = "...\(last4)"
         return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*
+        var myCard : MFCardView
+        myCard  = MFCardView(withViewController: self)
+        myCard.delegate = self
+        myCard.autoDismiss = true
+        myCard.toast = true
+        let demoCard :Card? = Card(holderName: "Rahul Chandnani", number: "6552552665526625", month: Month.Dec, year: "2019", cvc: "234", paymentType: Card.PaymentType.bank, cardType: CardType.Discover, userId: 0)
+        myCard.showCardWithCardDetails(card: demoCard!)
+ */
+        let vc = storyboard?.instantiateViewController(identifier: "AddCardVC") as! AddCardVC
+        vc.savedCards = self.currentSavedCards[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    func cardDoneButtonClicked(_ card: Card?, error: String?) {
+            
+    }
     
+    func cardTypeDidIdentify(_ cardType: String) {
+        
+    }
+    
+    func cardDidClose() {
+        
+    }
     func getUserSavedCards(){
         KRProgressHUD.show()
         Alamofire.request("https://petsupportapp.com/api/clients/paymentCard/\(USER_ID)", method: .get).responseJSON { (response) in

@@ -16,10 +16,11 @@ import KRProgressHUD
 
 class AddCardVC: UIViewController ,CLLocationManagerDelegate{
 
-    @IBOutlet weak var cardView: MFCardView!
+ 
     @IBOutlet weak var countryPicker: CountryPickerView!
     @IBOutlet weak var postalCode: UITextField!
     
+    var savedCards:SavedCards? = nil
     let locationManager = CLLocationManager()
     var cardType = ""
     var cardNumber = ""
@@ -30,12 +31,36 @@ class AddCardVC: UIViewController ,CLLocationManagerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cardView.delegate = self
+        
         countryPicker.delegate = self
         countryPicker.dataSource = self
         countryPicker.showPhoneCodeInView = false
         countryPicker.showCountryNameInView = true
         self.country = countryPicker.selectedCountry.name
+        var myCard : MFCardView
+        myCard  = MFCardView(withViewController: self)
+        myCard.delegate = self
+        myCard.autoDismiss = true
+        myCard.toast = true
+        if let card = savedCards {
+            let sepDate = card.expiryDate.components(separatedBy: "T")
+            let formatter = DateFormatter()
+               formatter.dateFormat = "yyyy-MM-dd"
+               guard let date = formatter.date(from: sepDate[0]) else {
+                   return
+               }
+
+               formatter.dateFormat = "yyyy"
+               let year = formatter.string(from: date)
+               formatter.dateFormat = "MM"
+               let month = formatter.string(from: date)
+               formatter.dateFormat = "dd"
+               let day = formatter.string(from: date)
+               print(year, month, day) // 2018 12 24
+            let demoCard :Card? = Card(holderName: "", number: "\(card.cardNumber)", month: Month(rawValue:"\(month)")!, year: year, cvc: "\(card.cvv)", paymentType: Card.PaymentType.bank, cardType: .Visa, userId: 0)
+        myCard.showCardWithCardDetails(card: demoCard!)
+        }
+        
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -117,7 +142,7 @@ extension AddCardVC : MFCardDelegate {
     }
     
     func cardDidClose() {
-      
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     
@@ -140,4 +165,5 @@ extension AddCardVC {
     }
    
 }
+
 
