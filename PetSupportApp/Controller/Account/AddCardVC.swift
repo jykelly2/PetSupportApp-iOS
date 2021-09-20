@@ -162,8 +162,13 @@ extension AddCardVC {
             if response.result.isSuccess {
                 print(response.result.value!)
                 KRProgressHUD.dismiss()
-                self.simpleAlert("Card saved")
-                self.navigationController?.popToRootViewController(animated: true)
+                let alert = UIAlertController(title: "Pet Support", message: "Card Updated", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+                
             }
         }
     }

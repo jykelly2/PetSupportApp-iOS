@@ -24,7 +24,7 @@ class AccountTableViewCell: UITableViewCell {
     @IBOutlet weak var itemName: UILabel!
     @IBOutlet weak var imageIcon: UIImageView!
     
-   
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -83,7 +83,7 @@ class AccountVC: UIViewController, SignInModalVCDelegate,CLLocationManagerDelega
         default:
             self.signIn()
         }
-       
+        
     }
     
     @IBOutlet weak var topView: UIView!
@@ -102,7 +102,7 @@ class AccountVC: UIViewController, SignInModalVCDelegate,CLLocationManagerDelega
         super.viewDidLoad()
         
         tblAccount.rowHeight = 60
-      
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -113,7 +113,7 @@ class AccountVC: UIViewController, SignInModalVCDelegate,CLLocationManagerDelega
         locationManager.startUpdatingLocation()
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         if LOGGED_IN == true {
-        self.signIn(email: EMAIL)
+            self.signIn(email: EMAIL)
         }
         if LOGGED_IN == false {
             
@@ -147,7 +147,7 @@ class AccountVC: UIViewController, SignInModalVCDelegate,CLLocationManagerDelega
         arrayAccountOptions.append(Account(title: "Feedback", icon: "support-icon", identifier: "ContactUsViewController"))
         arrayAccountOptions.append(Account(title: "Sign out", icon: "logout-icon", identifier: "SupportViewController"))
         
-       
+        
     }
     func updateArrayForNoSigninUsers(){
         arrayAccountOptions.removeAll()
@@ -171,16 +171,16 @@ class AccountVC: UIViewController, SignInModalVCDelegate,CLLocationManagerDelega
                     print("error in reverseGeocode")
                 }
                 if placemarks != nil {
-                let placemark = placemarks! as [CLPlacemark]
-                if placemark.count > 0 {
-                    let placemark = placemarks![0]
-                    print(placemark.locality!)
-                    print(placemark.administrativeArea!)
-                    print(placemark.country!)
-                   
-                    self.userLoc.text = placemark.locality
-                    
-                    
+                    let placemark = placemarks! as [CLPlacemark]
+                    if placemark.count > 0 {
+                        let placemark = placemarks![0]
+                        print(placemark.locality!)
+                        print(placemark.administrativeArea!)
+                        print(placemark.country!)
+                        
+                        self.userLoc.text = placemark.locality
+                        
+                        
                     }
                 }
             }
@@ -219,9 +219,9 @@ class AccountVC: UIViewController, SignInModalVCDelegate,CLLocationManagerDelega
                 let backItem = UIBarButtonItem()
                 backItem.title = " "
                 navigationItem.backBarButtonItem = backItem
-//                if petPredModel.count > 0 {
-//                    vc.petPrefModel = petPredModel[0]
-//                }
+                //                if petPredModel.count > 0 {
+                //                    vc.petPrefModel = petPredModel[0]
+                //                }
                 self.navigationController?.pushViewController(vc, animated: true)
             }else if index == 3 {
                 let vc = SAccount.instantiateViewController(withIdentifier: "SettingInfoVC") as! SettingInfoVC
@@ -312,7 +312,7 @@ extension AccountVC:UITableViewDelegate,UITableViewDataSource{
             }
         }else if indexPath.row == 1 {
             if LOGGED_IN != false {
-            cell.incompleBtnContainerV.isHidden = false
+                cell.incompleBtnContainerV.isHidden = false
                 if schedulerProfileCompleted == true{
                     cell.incompleBtnContainerV.backgroundColor = UIColor.green
                     cell.btnIncompleteInfo.setTitleColor(UIColor.black, for: .normal)
@@ -328,7 +328,7 @@ extension AccountVC:UITableViewDelegate,UITableViewDataSource{
             }
         }else if indexPath.row == 2 {
             if LOGGED_IN != false {
-            cell.incompleBtnContainerV.isHidden = false
+                cell.incompleBtnContainerV.isHidden = false
                 if paymentCardSaved == true{
                     cell.incompleBtnContainerV.backgroundColor = UIColor.green
                     cell.btnIncompleteInfo.setTitleColor(UIColor.black, for: .normal)
@@ -357,24 +357,24 @@ extension AccountVC:UITableViewDelegate,UITableViewDataSource{
     @objc func pressedMenuItem(_ sender:UIButton) {
         debugPrint("pressedMenuItem:\(sender.tag)")
         if LOGGED_IN != false {
-        if sender.tag == 0 {
-            let vc = SAccount.instantiateViewController(withIdentifier: "EditAcountVC") as! EditAcountVC
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else if sender.tag == 1 {
-            let vc = SAccount.instantiateViewController(withIdentifier: "AdopterProfileVC") as! AdopterProfileVC
-            if petPredModel.count > 0 {
-                vc.petPrefModel = petPredModel[0]
+            if sender.tag == 0 {
+                let vc = SAccount.instantiateViewController(withIdentifier: "EditAcountVC") as! EditAcountVC
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else if sender.tag == 1 {
+                let vc = SAccount.instantiateViewController(withIdentifier: "AdopterProfileVC") as! AdopterProfileVC
+                if petPredModel.count > 0 {
+                    vc.petPrefModel = petPredModel[0]
+                }
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else if sender.tag == 2 {
+                let vc = SAccount.instantiateViewController(withIdentifier: "PaymentListVC") as! PaymentListVC
+                let backItem = UIBarButtonItem()
+                backItem.title = " "
+                navigationItem.backBarButtonItem = backItem
+                self.navigationController?.pushViewController(vc, animated: true)
             }
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else if sender.tag == 2 {
-            let vc = SAccount.instantiateViewController(withIdentifier: "PaymentListVC") as! PaymentListVC
-            let backItem = UIBarButtonItem()
-            backItem.title = " "
-            navigationItem.backBarButtonItem = backItem
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
             
-      }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -422,8 +422,8 @@ extension AccountVC:UITableViewDelegate,UITableViewDataSource{
                 trainingArray.append(t.string ?? "")
             }
         }
-       
-       
+        
+        
         let specialNeeds = json["petPreference"]["specialNeeds"].bool ?? false
         let age = json["petPreference"]["age"].string ?? ""
         let activeness = json["petPreference"]["activeness"].string ?? ""
@@ -465,7 +465,7 @@ extension AccountVC : GIDSignInDelegate {
             print(name!)
             print(email!)
             
-            self.socialSignIn(email: email!)
+            self.socialSignIn(email: email!, firstname: name!, lastname: userId!, profileImage: "\(userImageURL!)")
         }
     }
 }
@@ -473,19 +473,19 @@ extension AccountVC {
     //MARK:- 3RD PARTY SIGNIN FUNCTIONS
     func getUserProfile () {
         let connection = GraphRequestConnection()
-        var type = ""
+        _ = ""
         var email1 = ""
         var name1 = ""
         var img1 = ""
         var fbId = ""
-        var facebookToken =
+        //var facebookToken =
         connection.add(GraphRequest(graphPath: "/me", parameters: ["fields": "id, name, email, first_name, last_name, picture.type(large),birthday, location{location{country, country_code}}"])) { (httpResponse, result, error) in
             print("result == ", result!)
             print("httpResponse == ", httpResponse!)
             let resposne = result as! NSDictionary
             if error == nil
             {
-            
+                
                 if let picture = resposne.value(forKey: "picture") as? NSDictionary
                 {
                     if let data = picture.value(forKey: "data") as? NSDictionary
@@ -518,8 +518,8 @@ extension AccountVC {
                     name1 += last_name
                     print("LAST_NAME :=> \(last_name)")
                 }
-                self.socialSignIn(email: EMAIL)
-              //  self.signIn(type: "3", email: email1, image: img1, name: name1)
+                self.socialSignIn(email: email1, firstname: name1, lastname: name1, profileImage: img1)
+                //  self.signIn(type: "3", email: email1, image: img1, name: name1)
             }
             else{
                 print("Graph Request Failed: \(error!.localizedDescription)")
@@ -549,7 +549,7 @@ extension AccountVC {
             
             print("** APPLE **:\nUSERNAME: \(username)\nPASSWORD: \(password)\nEMAIL: \(String(describing: email!))\nFULL NAME: \(fullName)\n--------------------")
             
-            self.socialSignIn(email: email!)
+            self.socialSignIn(email: email ?? "", firstname: firstName ?? "", lastname: lastName ?? "", profileImage: "")
             
         } else if let passwordCredential = authorization.credential as? ASPasswordCredential {
             // Sign in using an existing iCloud Keychain credential.
@@ -564,20 +564,22 @@ extension AccountVC {
         KRProgressHUD.dismiss()
         print("ERROR: \(error)")
     }
-        
+    
     @available(iOS 13.0, *)
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window!
     }
     
-    func socialSignIn(email:String) {
+    func socialSignIn(email:String,firstname:String,lastname:String,profileImage:String) {
         KRProgressHUD.show()
-        let params = ["email":email]
-        Alamofire.request("https://petsupportapp.com/api/clients/login", method: .post, parameters: params).responseJSON { (response) in
+        let params = ["email":email,"firstname":firstname,"lastname":lastname,"profileImage":profileImage]
+        Alamofire.request("https://petsupportapp.com/api/clients/register", method: .post, parameters: params).responseJSON { (response) in
             if response.result.isSuccess {
                 let result:JSON = JSON(response.result.value!)
                 print(result)
                 self.parseSocialSigninValues(json: result)
+                
+                
             }else {
                 KRProgressHUD.dismiss()
                 print(response.result.error!.localizedDescription)
@@ -608,6 +610,6 @@ extension AccountVC {
         }
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
-       
+        
     }
 }

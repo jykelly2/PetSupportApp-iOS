@@ -173,7 +173,7 @@ class IdealPetDetailsVC: UIViewController {
                         let perString = String(format: "%.2f", per)
                         lblProgess.text = "\(perString)% complete"
                     }
-                }else {
+                }else if model.age == "No preference"{
                     age = btnAgeNoPreference.titleLabel!.text ?? ""
                     btnAgeNoPreference.backgroundColor = UIColor.init(rgb: 0x8256D6)
                     btnAgeNoPreference.setTitleColor(.white, for: .normal)
@@ -216,13 +216,13 @@ class IdealPetDetailsVC: UIViewController {
                         let perString = String(format: "%.2f", per)
                         lblProgess.text = "\(perString)% complete"
                     }
-                }else {
+                }else if model.gender == "No preference"{
                     gender = btnGenderNoPreference.titleLabel!.text ?? ""
                     btnGenderNoPreference.backgroundColor = UIColor.init(rgb: 0x8256D6)
                     btnGenderNoPreference.setTitleColor(.white, for: .normal)
 
-                    if !isAgePreferenceSelected {
-                        isAgePreferenceSelected = true
+                    if !isGenderPreferenceSelected {
+                        isGenderPreferenceSelected = true
                         totalOptionFillup += 1
                         progressView.progress = totalOptionFillup/total
                         let per = (totalOptionFillup/total)*100
@@ -290,13 +290,13 @@ class IdealPetDetailsVC: UIViewController {
                         let perString = String(format: "%.2f", per)
                         lblProgess.text = "\(perString)% complete"
                     }
-                }else{
+                }else if model.size == "No preference"{
                     size = btnNoSizePreference.titleLabel!.text ?? ""
                     btnNoSizePreference.backgroundColor = UIColor.init(rgb: 0x8256D6)
                     btnNoSizePreference.setTitleColor(.white, for: .normal)
 
-                    if !isAgePreferenceSelected {
-                        isAgePreferenceSelected = true
+                    if !isSizePreferenceSelected {
+                        isSizePreferenceSelected = true
                         totalOptionFillup += 1
                         progressView.progress = totalOptionFillup/total
                         let per = (totalOptionFillup/total)*100
@@ -361,13 +361,13 @@ class IdealPetDetailsVC: UIViewController {
                     let perString = String(format: "%.2f", per)
                     lblProgess.text = "\(perString)% complete"
                 }
-            }else{
+            }else if model.activeness == "No preference"{
                 activeness = btnNoActivePreference.titleLabel!.text ?? ""
                 btnNoActivePreference.backgroundColor = UIColor.init(rgb: 0x8256D6)
                 btnNoActivePreference.setTitleColor(.white, for: .normal)
 
-                if !isAgePreferenceSelected {
-                    isAgePreferenceSelected = true
+                if !isActivePreferenceSelected {
+                    isActivePreferenceSelected = true
                     totalOptionFillup += 1
                     progressView.progress = totalOptionFillup/total
                     let per = (totalOptionFillup/total)*100
@@ -380,7 +380,7 @@ class IdealPetDetailsVC: UIViewController {
             
             if model.specialNeeds == true {
                 btnSpecialNeedYes.backgroundColor = UIColor.init(rgb: 0x8256D6)
-                btnSpecialNeedYes.setTitleColor(.white, for: .normal)
+                btnSpecialNeedYes.setTitleColor(.black, for: .normal)
                 specialNeeds = true
                 if !isSpecialNeedSelected {
                     isSpecialNeedSelected = true
@@ -391,10 +391,17 @@ class IdealPetDetailsVC: UIViewController {
                     lblProgess.text = "\(perString)% complete"
                 }
             }else if model.specialNeeds == false {
-                btnSpecialNeedNo.backgroundColor = UIColor.white
+                btnSpecialNeedNo.backgroundColor = UIColor.init(rgb: 0x8256D6)
                 btnSpecialNeedNo.setTitleColor(.black, for: .normal)
                 specialNeeds = false
-             
+                if !isSpecialNeedSelected {
+                    isSpecialNeedSelected = true
+                    totalOptionFillup += 1
+                    progressView.progress = totalOptionFillup/total
+                    let per = (totalOptionFillup/total)*100
+                    let perString = String(format: "%.2f", per)
+                    lblProgess.text = "\(perString)% complete"
+                }
             }
             
             for item in model.training {
@@ -424,13 +431,13 @@ class IdealPetDetailsVC: UIViewController {
                         lblProgess.text = "\(perString)% complete"
                     }
 
-                }else{
+                }else if item == "No preference"{
                     activeness = btnNoLookingPreference.titleLabel!.text ?? ""
                     btnNoLookingPreference.backgroundColor = UIColor.init(rgb: 0x8256D6)
                     btnNoLookingPreference.setTitleColor(.white, for: .normal)
 
-                    if !isAgePreferenceSelected {
-                        isAgePreferenceSelected = true
+                    if !isLookingPreferenceSelected {
+                        isLookingPreferenceSelected = true
                         totalOptionFillup += 1
                         progressView.progress = totalOptionFillup/total
                         let per = (totalOptionFillup/total)*100
@@ -444,7 +451,6 @@ class IdealPetDetailsVC: UIViewController {
             
             for dog in model.breed {
                 if dog == "No preference" {
-                    
                     btnSearchNoPreference.superview?.backgroundColor = UIColor.init(rgb: 0x8256D6)
                     btnSearchNoPreference.setTitleColor(.white, for: .normal)
                     if !isBreadSelected {
@@ -539,16 +545,27 @@ class IdealPetDetailsVC: UIViewController {
     @objc func saveTapped(){
         print("this is total breed count = \(breeds.count)")
         if totalOptionFillup != 7 {
-            if training.contains("Potty Trained") || training.contains("Leash Trained") {
-                training.removeAll { $0 == "No preference" }
+            if leashPottyNoPref == false {
+                if training.contains("Potty Trained") || training.contains("Leash Trained") {
+                    training.removeAll { $0 == "No preference" }
+                }
+            }else {
+                training.removeAll()
+                training.append("No preference")
             }
+           
             if breeds.count <= 0 {
                 breeds.append("No preference")
             }
             updatePref(animalType: type, age: age, gender: gender, size: size, breed: breeds, activeness: activeness, training: training, specialNeeds: specialNeeds, isCompleted: false)
         }else{
-            if training.contains("Potty Trained") || training.contains("Leash Trained") {
-                training.removeAll { $0 == "No preference" }
+            if leashPottyNoPref == false {
+                if training.contains("Potty Trained") || training.contains("Leash Trained") {
+                    training.removeAll { $0 == "No preference" }
+                }
+            }else {
+                training.removeAll()
+                training.append("No preference")
             }
             if breeds.count <= 0 {
                 breeds.append("No preference")
@@ -558,12 +575,36 @@ class IdealPetDetailsVC: UIViewController {
     }
     var potty = false
     var leash = false
+    var leashPottyNoPref = false
+    @IBAction func lookingNoPrefrence(_ sender: UIButton) {
+        leashPottyNoPref = true
+        btnAllergyFriendly.isSelected = false
+        btnHouseTrained.isSelected = false
+        btnAllergyFriendly.setTitleColor(.black, for: .normal)
+        btnAllergyFriendly.backgroundColor = UIColor.white
+        btnHouseTrained.backgroundColor = UIColor.white
+        btnHouseTrained.setTitleColor(.black, for: .normal)
+        sender.backgroundColor = UIColor.init(rgb: 0x8256D6)
+        sender.setTitleColor(.white, for: .normal)
+       
+        if !isLookingPreferenceSelected {
+            isLookingPreferenceSelected = true
+            totalOptionFillup += 1
+            progressView.progress = totalOptionFillup/total
+            let per = (totalOptionFillup/total)*100
+            let perString = String(format: "%.2f", per)
+            lblProgess.text = "\(perString)% complete"
+        }
+    }
+    
     @IBAction func lookingPreferenceButtonAction(_ sender:UIButton){
 //        for btn in lookingPreferenceBtnArray {
 //            btn.backgroundColor = UIColor.white
 //            btn.setTitleColor(.black, for: .normal)
 //        }
-       
+        leashPottyNoPref = false
+        btnNoLookingPreference.backgroundColor = UIColor.white
+        btnNoLookingPreference.setTitleColor(.black, for: .normal)
         if !sender.isSelected {
             sender.isSelected = true
             sender.backgroundColor = UIColor.init(rgb: 0x8256D6)

@@ -2714,7 +2714,7 @@
                                                             <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="lookingPreferenceButtonAction:" destination="cBh-un-c8K" eventType="touchUpInside" id="C3r-HF-C5z"/>
+                                                            <action selector="lookingNoPrefrence:" destination="cBh-un-c8K" eventType="touchUpInside" id="r50-jp-Xiv"/>
                                                         </connections>
                                                     </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1zC-4H-KA2">
