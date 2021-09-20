@@ -85,7 +85,7 @@ class IdealPetDetailsVC: UIViewController {
     var age = "No preference"
     var gender = "No preference"
     var size  = "No preference"
-    var breeds = ["No preference"]
+    var breeds = [String]()
     var activeness = "No preference"
     var training = ["No preference"]
     var specialNeeds  = false
@@ -173,6 +173,20 @@ class IdealPetDetailsVC: UIViewController {
                         let perString = String(format: "%.2f", per)
                         lblProgess.text = "\(perString)% complete"
                     }
+                }else {
+                    age = btnAgeNoPreference.titleLabel!.text ?? ""
+                    btnAgeNoPreference.backgroundColor = UIColor.init(rgb: 0x8256D6)
+                    btnAgeNoPreference.setTitleColor(.white, for: .normal)
+
+                    if !isAgePreferenceSelected {
+                        isAgePreferenceSelected = true
+                        totalOptionFillup += 1
+                        progressView.progress = totalOptionFillup/total
+                        let per = (totalOptionFillup/total)*100
+                        let perString = String(format: "%.2f", per)
+                        lblProgess.text = "\(perString)% complete"
+                    }
+
                 }
            
             
@@ -180,7 +194,7 @@ class IdealPetDetailsVC: UIViewController {
                     gender = btnMale.titleLabel?.text ?? ""
                     btnMale.backgroundColor = UIColor.init(rgb: 0x8256D6)
                     btnMale.setTitleColor(.white, for: .normal)
-
+                    
                     if !isGenderPreferenceSelected {
                         isGenderPreferenceSelected = true
                         totalOptionFillup += 1
@@ -202,7 +216,22 @@ class IdealPetDetailsVC: UIViewController {
                         let perString = String(format: "%.2f", per)
                         lblProgess.text = "\(perString)% complete"
                     }
+                }else {
+                    gender = btnGenderNoPreference.titleLabel!.text ?? ""
+                    btnGenderNoPreference.backgroundColor = UIColor.init(rgb: 0x8256D6)
+                    btnGenderNoPreference.setTitleColor(.white, for: .normal)
+
+                    if !isAgePreferenceSelected {
+                        isAgePreferenceSelected = true
+                        totalOptionFillup += 1
+                        progressView.progress = totalOptionFillup/total
+                        let per = (totalOptionFillup/total)*100
+                        let perString = String(format: "%.2f", per)
+                        lblProgess.text = "\(perString)% complete"
+                    }
+
                 }
+
           
             
            
@@ -261,6 +290,20 @@ class IdealPetDetailsVC: UIViewController {
                         let perString = String(format: "%.2f", per)
                         lblProgess.text = "\(perString)% complete"
                     }
+                }else{
+                    size = btnNoSizePreference.titleLabel!.text ?? ""
+                    btnNoSizePreference.backgroundColor = UIColor.init(rgb: 0x8256D6)
+                    btnNoSizePreference.setTitleColor(.white, for: .normal)
+
+                    if !isAgePreferenceSelected {
+                        isAgePreferenceSelected = true
+                        totalOptionFillup += 1
+                        progressView.progress = totalOptionFillup/total
+                        let per = (totalOptionFillup/total)*100
+                        let perString = String(format: "%.2f", per)
+                        lblProgess.text = "\(perString)% complete"
+                    }
+
                 }
             
             
@@ -318,7 +361,22 @@ class IdealPetDetailsVC: UIViewController {
                     let perString = String(format: "%.2f", per)
                     lblProgess.text = "\(perString)% complete"
                 }
+            }else{
+                activeness = btnNoActivePreference.titleLabel!.text ?? ""
+                btnNoActivePreference.backgroundColor = UIColor.init(rgb: 0x8256D6)
+                btnNoActivePreference.setTitleColor(.white, for: .normal)
+
+                if !isAgePreferenceSelected {
+                    isAgePreferenceSelected = true
+                    totalOptionFillup += 1
+                    progressView.progress = totalOptionFillup/total
+                    let per = (totalOptionFillup/total)*100
+                    let perString = String(format: "%.2f", per)
+                    lblProgess.text = "\(perString)% complete"
+                }
+
             }
+
             
             if model.specialNeeds == true {
                 btnSpecialNeedYes.backgroundColor = UIColor.init(rgb: 0x8256D6)
@@ -366,10 +424,38 @@ class IdealPetDetailsVC: UIViewController {
                         lblProgess.text = "\(perString)% complete"
                     }
 
+                }else{
+                    activeness = btnNoLookingPreference.titleLabel!.text ?? ""
+                    btnNoLookingPreference.backgroundColor = UIColor.init(rgb: 0x8256D6)
+                    btnNoLookingPreference.setTitleColor(.white, for: .normal)
+
+                    if !isAgePreferenceSelected {
+                        isAgePreferenceSelected = true
+                        totalOptionFillup += 1
+                        progressView.progress = totalOptionFillup/total
+                        let per = (totalOptionFillup/total)*100
+                        let perString = String(format: "%.2f", per)
+                        lblProgess.text = "\(perString)% complete"
+                    }
+
                 }
+                
             }
             
             for dog in model.breed {
+                if dog == "No preference" {
+                    
+                    btnSearchNoPreference.superview?.backgroundColor = UIColor.init(rgb: 0x8256D6)
+                    btnSearchNoPreference.setTitleColor(.white, for: .normal)
+                    if !isBreadSelected {
+                        isBreadSelected = true
+                        totalOptionFillup += 1
+                        progressView.progress = totalOptionFillup/total
+                        let per = (totalOptionFillup/total)*100
+                        let perString = String(format: "%.2f", per)
+                        lblProgess.text = "\(perString)% complete"
+                  }
+                }else {
                 txtBreedSearch.text = dog
                 txtBreedSearch.superview?.backgroundColor = UIColor.init(rgb: 0x8256D6)
                 txtBreedSearch.textColor = .white
@@ -380,6 +466,7 @@ class IdealPetDetailsVC: UIViewController {
                     let per = (totalOptionFillup/total)*100
                     let perString = String(format: "%.2f", per)
                     lblProgess.text = "\(perString)% complete"
+                   }
                 }
             }
             
@@ -450,14 +537,21 @@ class IdealPetDetailsVC: UIViewController {
     }
     
     @objc func saveTapped(){
+        print("this is total breed count = \(breeds.count)")
         if totalOptionFillup != 7 {
-            if training.count <= 2 {
+            if training.contains("Potty Trained") || training.contains("Leash Trained") {
                 training.removeAll { $0 == "No preference" }
+            }
+            if breeds.count <= 0 {
+                breeds.append("No preference")
             }
             updatePref(animalType: type, age: age, gender: gender, size: size, breed: breeds, activeness: activeness, training: training, specialNeeds: specialNeeds, isCompleted: false)
         }else{
-            if training.count <= 2 {
+            if training.contains("Potty Trained") || training.contains("Leash Trained") {
                 training.removeAll { $0 == "No preference" }
+            }
+            if breeds.count <= 0 {
+                breeds.append("No preference")
             }
             updatePref(animalType: type, age: age, gender: gender, size: size, breed: breeds, activeness: activeness, training: training, specialNeeds: specialNeeds, isCompleted: true)
         }

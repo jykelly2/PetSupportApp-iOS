@@ -26,6 +26,10 @@ class CardsListningVC: UIViewController,CLLocationManagerDelegate {
     @IBOutlet weak var countryPicker: CountryPickerView!
     @IBOutlet weak var postalCode: UITextField!
     @IBOutlet weak var popUpView: UIView!
+    //layout
+    //height constrainet for saved cards field to make the add new card on top
+    @IBOutlet weak var imageHeight: NSLayoutConstraint!
+    @IBOutlet weak var labelHeight: NSLayoutConstraint!
     
     let locationManager = CLLocationManager()
     var cardType = ""
@@ -41,10 +45,14 @@ class CardsListningVC: UIViewController,CLLocationManagerDelegate {
             saveImage.isHidden = true
             saveCardOL.isHidden = true
             lineView.isHidden = true
+            imageHeight.constant = 0
+            labelHeight.constant = 0
         }else{
             saveImage.isHidden = false
             saveCardOL.isHidden = false
             lineView.isHidden = false
+            imageHeight.constant = 30
+            labelHeight.constant = 30
         }
         popUpView.isHidden = true
         countryPicker.delegate = self
@@ -161,10 +169,14 @@ extension CardsListningVC : MFCardDelegate {
             saveImage.isHidden = true
             saveCardOL.isHidden = true
             lineView.isHidden = true
+            imageHeight.constant = 0
+            labelHeight.constant = 0
         }else{
             saveImage.isHidden = false
             saveCardOL.isHidden = false
             lineView.isHidden = false
+            imageHeight.constant = 30
+            labelHeight.constant = 30
         }
         addCardImage.isHidden = false
         addCardBtnOL.isHidden = false

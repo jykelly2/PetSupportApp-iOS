@@ -366,7 +366,14 @@ extension AccountVC:UITableViewDelegate,UITableViewDataSource{
                 vc.petPrefModel = petPredModel[0]
             }
             self.navigationController?.pushViewController(vc, animated: true)
+        }else if sender.tag == 2 {
+            let vc = SAccount.instantiateViewController(withIdentifier: "PaymentListVC") as! PaymentListVC
+            let backItem = UIBarButtonItem()
+            backItem.title = " "
+            navigationItem.backBarButtonItem = backItem
+            self.navigationController?.pushViewController(vc, animated: true)
         }
+            
       }
     }
     

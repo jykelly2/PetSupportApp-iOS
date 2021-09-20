@@ -36,7 +36,10 @@ class AddCardVC: UIViewController ,CLLocationManagerDelegate{
         countryPicker.dataSource = self
         countryPicker.showPhoneCodeInView = false
         countryPicker.showCountryNameInView = true
-        self.country = countryPicker.selectedCountry.name
+        self.country = savedCards!.country
+        self.postalCode.text = savedCards!.postoalCode
+        self.cardType = savedCards!.cardType
+        self.countryPicker.countryDetailsLabel.text = savedCards!.country
         var myCard : MFCardView
         myCard  = MFCardView(withViewController: self)
         myCard.delegate = self
@@ -59,6 +62,7 @@ class AddCardVC: UIViewController ,CLLocationManagerDelegate{
                print(year, month, day) // 2018 12 24
             let demoCard :Card? = Card(holderName: "", number: "\(card.cardNumber)", month: Month(rawValue:"\(month)")!, year: year, cvc: "\(card.cvv)", paymentType: Card.PaymentType.bank, cardType: .Visa, userId: 0)
         myCard.showCardWithCardDetails(card: demoCard!)
+            
         }
         
         // Do any additional setup after loading the view.

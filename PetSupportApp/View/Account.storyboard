@@ -880,6 +880,8 @@
                         <outlet property="addCardBtnOL" destination="GfN-aQ-05m" id="HFz-bE-7rU"/>
                         <outlet property="addCardImage" destination="fF4-pk-lEX" id="Tef-Nh-Uet"/>
                         <outlet property="countryPicker" destination="t7e-na-VMk" id="nAv-AM-jxx"/>
+                        <outlet property="imageHeight" destination="tP5-wI-qUg" id="NfR-uQ-fQ3"/>
+                        <outlet property="labelHeight" destination="G9v-Ku-DVC" id="NXH-3i-RJT"/>
                         <outlet property="lineView" destination="jrN-41-y4G" id="7bo-M1-mqG"/>
                         <outlet property="navTitle" destination="NVc-Uh-Mgg" id="r0m-P4-t6C"/>
                         <outlet property="popUpView" destination="m1N-u8-pTM" id="Lbz-NX-qXU"/>
