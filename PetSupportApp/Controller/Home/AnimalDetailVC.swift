@@ -240,6 +240,7 @@ class AnimalDetailVC: UIViewController {
         let vc = SHome.instantiateViewController(withIdentifier: "ShelterDetailVC") as! ShelterDetailVC
         //vc.hidesBottomBarWhenPushed = true
         //anish
+        vc.shelterLikedId = self.shelterLikedId
         vc.petModel = petModel
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -382,6 +383,7 @@ extension AnimalDetailVC {
                 print(data)
                 self.parseLikes(json:data["favouritePets"])
             }else {
+                KRProgressHUD.dismiss()
                 print(reponse.result.error!.localizedDescription)
             }
         }
@@ -420,6 +422,7 @@ extension AnimalDetailVC {
                 print(data)
                 self.parseShelterLikes(json:data["favouriteShelters"])
             }else {
+                KRProgressHUD.dismiss()
                 print(reponse.result.error!.localizedDescription)
             }
         }
@@ -431,8 +434,10 @@ extension AnimalDetailVC {
             self.shelterLikedId.append(id)
         }
         selectedShelterIds = shelterLikedId
-        if selectedShelterIds.contains(petModel!.shelter.shelterId){
+        if let petModel = petModel {
+        if selectedShelterIds.contains(petModel.shelter.shelterId){
             shelterLikeBtn.setImage(UIImage(named: "liked"), for: .normal)
+           }
         }
         KRProgressHUD.dismiss()
     }
@@ -447,6 +452,7 @@ extension AnimalDetailVC {
                 print(data)
                 KRProgressHUD.dismiss()
             }else {
+                KRProgressHUD.dismiss()
                 print(reponse.result.error!.localizedDescription)
             }
         }

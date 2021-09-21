@@ -327,6 +327,7 @@ extension ShelterDetailVC {
                 print(data)
                 self.parseShelterLikes(json:data["favouriteShelters"])
             }else {
+                KRProgressHUD.dismiss()
                 print(reponse.result.error!.localizedDescription)
             }
         }
@@ -338,8 +339,10 @@ extension ShelterDetailVC {
             self.shelterLikedId.append(id)
         }
         selectedShelterIds = shelterLikedId
-        if selectedShelterIds.contains(shelter!.shelterId){
+        if let shelter = shelter {
+        if selectedShelterIds.contains(shelter.shelterId){
             shelterLikeBtn.setImage(UIImage(named: "liked"), for: .normal)
+          }
         }
         KRProgressHUD.dismiss()
     }
@@ -354,6 +357,7 @@ extension ShelterDetailVC {
                 print(data)
                 KRProgressHUD.dismiss()
             }else {
+                KRProgressHUD.dismiss()
                 print(reponse.result.error!.localizedDescription)
             }
         }

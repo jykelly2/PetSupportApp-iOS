@@ -84,6 +84,7 @@ class FavoriteShelterListVC: UIViewController,ShelterFavOptionPopUpVCDelegate  {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchAllShelterLikes()
+        tblFavoriteShelter.isHidden = false
         if let parent = self.parent?.parent as? FavoriteVC{
             parent.selectIndex = 1
             parent.setViewSelection(index: 1)
@@ -100,6 +101,9 @@ class FavoriteShelterListVC: UIViewController,ShelterFavOptionPopUpVCDelegate  {
 
     }
 
+    @IBAction func addpet(_ sender: Any) {
+        self.tabBarController?.selectedIndex = 0
+    }
     
     //MARK:- Action Methods
     @objc func optionButtonAction(_ sender:UIButton){
@@ -216,6 +220,9 @@ extension FavoriteShelterListVC {
         tblFavoriteShelter.reloadData()
         lblTotalShelter.text = "\(favShelterlists.count) Shelters"
         KRProgressHUD.dismiss()
+        if favShelterlists.count <= 0 {
+            tblFavoriteShelter.isHidden = true
+        }
     }
     
     

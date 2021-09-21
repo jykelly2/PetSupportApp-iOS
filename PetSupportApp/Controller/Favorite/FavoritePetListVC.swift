@@ -37,8 +37,19 @@ class PetListTableViewCell: UITableViewCell {
               let timeTogo = timeAgoSinceDate(date!, currentDate: Date(), numericDates: true)
         self.lblTime.text = "\(timeTogo)"
         self.lblPetName.text = value.name
-        self.lblPetDescription.text = value.description
+       
         self.getImages(imageArray: value.pictures)
+        if value.age <= 1 {
+            self.lblPetDescription.text = "Puppy"
+        }else if value.age >= 2 && value.age <= 4 {
+            self.lblPetDescription.text = "Young"
+        }else if value.age >= 5 && value.age <= 8 {
+            self.lblPetDescription.text = "Adult"
+        }else if value.age >= 9 {
+            self.lblPetDescription.text = "Senior"
+        }
+        
+        
     }
     func getImages(imageArray:[String]) {
         
@@ -109,7 +120,7 @@ class FavoritePetListVC: UIViewController, PetFavOptionPopUpVCDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        tblFavoritePet.isHidden = false
         fetchAllPetsLikes()
         if let parent = self.parent?.parent as? FavoriteVC{
             parent.selectIndex = 0
@@ -122,12 +133,15 @@ class FavoritePetListVC: UIViewController, PetFavOptionPopUpVCDelegate {
 //        headerView.layer.borderWidth = 0.5
 //        headerView.layer.borderColor = UIColor.black.cgColor
 
-        tblFavoritePet.rowHeight = 250
+        tblFavoritePet.rowHeight = 150
         favPetlists = viewModel.favPetList
         lblTotalPets.text = "\(viewModel.favPetList.count) Pets"
 
     }
 
+    @IBAction func addpet(_ sender: Any) {
+        self.tabBarController?.selectedIndex = 0
+    }
     
     //MARK:- Action Methods
     @objc func optionButtonAction(_ sender:UIButton){
@@ -267,7 +281,9 @@ extension FavoritePetListVC {
         self.lblTotalPets.text = "\(selectedAnimals.count) Favourite Pets"
         self.tblFavoritePet.reloadData()
         KRProgressHUD.dismiss()
-        
+        if selectedAnimals.count <= 0 {
+            tblFavoritePet.isHidden = true
+        }
     }
 }
 

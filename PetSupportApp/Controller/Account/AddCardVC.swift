@@ -37,9 +37,11 @@ class AddCardVC: UIViewController ,CLLocationManagerDelegate{
         countryPicker.showPhoneCodeInView = false
         countryPicker.showCountryNameInView = true
         self.country = savedCards!.country
+        
         self.postalCode.text = savedCards!.postoalCode
         self.cardType = savedCards!.cardType
         self.countryPicker.countryDetailsLabel.text = savedCards!.country
+        
         var myCard : MFCardView
         myCard  = MFCardView(withViewController: self)
         myCard.delegate = self
