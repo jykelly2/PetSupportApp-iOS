@@ -66,16 +66,18 @@ class AnimalDetailVC: UIViewController {
     var animalLikedIds = [String]()
     var shelterLikedId = [String]()
     var selectedShelterIds = [String]()
-    
+   
     //MARK:- View life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+      
+        setupUI()
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+       
         
     }
     
@@ -266,6 +268,7 @@ extension AnimalDetailVC: UICollectionViewDelegate,UICollectionViewDataSource{
         return cell
 
       }
+   
 }
 
 extension AnimalDetailVC: UICollectionViewDelegateFlowLayout {
@@ -435,9 +438,11 @@ extension AnimalDetailVC {
         }
         selectedShelterIds = shelterLikedId
         if let petModel = petModel {
-        if selectedShelterIds.contains(petModel.shelter.shelterId){
-            shelterLikeBtn.setImage(UIImage(named: "liked"), for: .normal)
-           }
+            if selectedShelterIds.contains(petModel.shelter.shelterId){
+                shelterLikeBtn.setImage(UIImage(named: "liked"), for: .normal)
+            }else {
+                shelterLikeBtn.setImage(UIImage(named: "like"), for: .normal)
+            }
         }
         KRProgressHUD.dismiss()
     }

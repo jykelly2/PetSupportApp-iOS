@@ -41,6 +41,9 @@ class AddCardVC: UIViewController ,CLLocationManagerDelegate{
         self.postalCode.text = savedCards!.postoalCode
         self.cardType = savedCards!.cardType
         self.countryPicker.countryDetailsLabel.text = savedCards!.country
+        let myLocale = NSLocale.locales1(countryName1: savedCards!.country)
+        self.countryPicker.flagImageView.image = UIImage(named: myLocale)
+      
         
         var myCard : MFCardView
         myCard  = MFCardView(withViewController: self)
@@ -126,7 +129,15 @@ extension AddCardVC : CountryPickerViewDelegate,CountryPickerViewDataSource {
         print(country.name)
         self.country = country.name
     }
-    
+    func countryPickerView(_ countryPickerView: CountryPickerView, didShow viewController: CountryPickerViewController) {
+     let code =  countryPickerView.selectedCountry.code
+        print(code)
+    }
+    func countryPickerView(_ countryPickerView: CountryPickerView, willShow viewController: CountryPickerViewController) {
+        let code =  countryPickerView.selectedCountry.code
+           print(code)
+
+    }
     
 }
 extension AddCardVC : MFCardDelegate {
@@ -174,7 +185,18 @@ extension AddCardVC {
             }
         }
     }
-   
 }
 
 
+extension NSLocale {
+class func locales1(countryName1 : String) -> String {
+    let locales : String = ""
+    for localeCode in NSLocale.isoCountryCodes {
+        let countryName = (Locale.current as NSLocale).displayName(forKey: .countryCode, value: localeCode)
+        if countryName1.lowercased() == countryName?.lowercased() {
+            return localeCode
+        }
+    }
+    return locales
+}
+}

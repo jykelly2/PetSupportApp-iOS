@@ -67,6 +67,7 @@
 		CEE3529E26C8693B00C3B377 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEE3529D26C8693B00C3B377 /* Account.storyboard */; };
 		CEE352A026C86AB100C3B377 /* ScheduleDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE3529F26C86AB100C3B377 /* ScheduleDetailVC.swift */; };
 		CEE352A226C87F6200C3B377 /* ConfirmScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE352A126C87F6200C3B377 /* ConfirmScheduleVC.swift */; };
+		F84F9AAC26FBCBFE0055FAB2 /* MySelectedAnimalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84F9AAB26FBCBFE0055FAB2 /* MySelectedAnimalVC.swift */; };
 		F854A1ED26E7B6B300B01B7F /* PetFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F854A1EC26E7B6B300B01B7F /* PetFilterCell.swift */; };
 		F854A1F026E7DA5900B01B7F /* PetsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F854A1EF26E7DA5900B01B7F /* PetsCollectionViewCell.swift */; };
 		F854A1F326E7DD1600B01B7F /* PetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F854A1F226E7DD1600B01B7F /* PetTableViewCell.swift */; };
@@ -145,6 +146,7 @@
 		CEE352A126C87F6200C3B377 /* ConfirmScheduleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmScheduleVC.swift; sourceTree = "<group>"; };
 		D4BA3C048548A6B1FAF43469 /* Pods_PetSupportApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetSupportApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F80A6F0726F1684100C1F697 /* PetSupportApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PetSupportApp.entitlements; sourceTree = "<group>"; };
+		F84F9AAB26FBCBFE0055FAB2 /* MySelectedAnimalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySelectedAnimalVC.swift; sourceTree = "<group>"; };
 		F854A1EC26E7B6B300B01B7F /* PetFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetFilterCell.swift; sourceTree = "<group>"; };
 		F854A1EF26E7DA5900B01B7F /* PetsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsCollectionViewCell.swift; sourceTree = "<group>"; };
 		F854A1F226E7DD1600B01B7F /* PetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTableViewCell.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				CE69B5FF26C2989100BDBE57 /* ShelterDetailVC.swift */,
 				CE96EB6926C083750071009C /* FilterVC.swift */,
 				CE0D4A8F26C1CC3D00366CE0 /* SearchVC.swift */,
+				F84F9AAB26FBCBFE0055FAB2 /* MySelectedAnimalVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				CE0D4A9026C1CC3D00366CE0 /* SearchVC.swift in Sources */,
 				F8D6508526F40C3100392953 /* SavedCardCell.swift in Sources */,
 				F854A1F326E7DD1600B01B7F /* PetTableViewCell.swift in Sources */,
+				F84F9AAC26FBCBFE0055FAB2 /* MySelectedAnimalVC.swift in Sources */,
 				CE75838626BF2D980028E99C /* PetModel.swift in Sources */,
 				CE0D43FD26C6FE4700221319 /* FilterItems.swift in Sources */,
 				CE0AE3B126C061BD00D1058B /* MapVC.swift in Sources */,
