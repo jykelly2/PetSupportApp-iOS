@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import KRProgressHUD
 
 class CreateScheduleModalVC: UIViewController {
     //MARK:- UIControl's Outlets
@@ -33,7 +36,9 @@ class CreateScheduleModalVC: UIViewController {
 //    var dateFormatter = DateFormatter()
     let datePicker = UIDatePicker()
     var selectedTextField:UITextField =  UITextField()
-    
+    var selectedAnimal:Animal? = nil
+    var myCustomTime1 = ""
+    var myCustomTime2 = ""
     //MARK:- View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,7 +142,17 @@ class CreateScheduleModalVC: UIViewController {
             dateFormatter.dateFormat = DateTimeFormaterEnum.ddmm_yyyy.rawValue
         }else if selectedTextField == txtFromDate || selectedTextField == txtToDate{
             dateFormatter.dateFormat = DateTimeFormaterEnum.hhmmA.rawValue         }
+//        if selectedTextField == txtFromDate {
+//            dateFormatter.dateFormat = DateTimeFormaterEnum.HHmm.rawValue
+//            let mycustomDate = dateFormatter.string(from: datePicker.date)
+//            self.myCustomTime1 = mycustomDate
+//        }else if selectedTextField == txtToDate {
+//            dateFormatter.dateFormat = DateTimeFormaterEnum.HHmm.rawValue
+//            let mycustomDate = dateFormatter.string(from: datePicker.date)
+//            self.myCustomTime2 = mycustomDate
+//        }
         selectedTextField.text = dateFormatter.string(from: datePicker.date)
+      
        //dismiss date picker dialog
        self.view.endEditing(true)
     }
@@ -200,10 +215,18 @@ class CreateScheduleModalVC: UIViewController {
     }
     
     @IBAction func scheduleButtonAction(_ sender: UIButton) {
-        self.dismissAnimation()
-        let vc = SSchedule.instantiateViewController(withIdentifier: "ConfirmScheduleVC") as! ConfirmScheduleVC
-      // vc.petModel = petModel
-       self.navigationController?.pushViewController(vc, animated: true)
+        if txtMeetingDate.text == "" {
+            simpleAlert("Please select the date")
+        }else if txtFromDate.text == "" {
+            simpleAlert("Select your starting time")
+        }else if txtToDate.text == "" {
+            simpleAlert("Select your end time")
+        }else if txtToDate.text == txtFromDate.text {
+            simpleAlert("Select proper start and end time")
+        }
+        else {
+            checkDuplicated(date: "\(datePicker.date)")
+        }
     }
 
 }
@@ -222,3 +245,26 @@ extension CreateScheduleModalVC : UITextFieldDelegate{
     
 }
 
+extension CreateScheduleModalVC {
+    func checkDuplicated(date:String) {
+        let params = ["date":date,"animalId":ANIMAL_ID,"clientId":USER_ID]
+        Alamofire.request("https://petsupportapp.com/api/bookings/client/checkDuplicate", method: .post, parameters: params).responseJSON { (response) in
+            if response.result.isSuccess {
+                let data:JSON = JSON(response.result.value!)
+                print(data)
+                if data.int == 0 {
+                    print("success")
+                            self.dismissAnimation()
+                            let vc = SSchedule.instantiateViewController(withIdentifier: "ConfirmScheduleVC") as! ConfirmScheduleVC
+                    vc.selectedAnimal = self.selectedAnimal
+                    vc.selectedDate = self.txtMeetingDate.text!
+                    vc.startTime = self.txtFromDate.text!
+                    vc.endTime = self.txtToDate.text!
+                           self.navigationController?.pushViewController(vc, animated: true)
+                }else {
+                    self.simpleAlert("Booking exists for Client or Pet already for the selected Date. Please select another date")
+                }
+            }
+        }
+    }
+}

@@ -23,6 +23,8 @@ var paymentCardSaved =  false
 var profileCompleted =  false
 var schedulerProfileCompleted =  false
 var petPreferenceCompleted =  false
+var ANIMAL_ID = ""
+var CARD_NUM = ""
 let appPurple = hexStringToUIColor(hex: "926FE5")
 
 let HEADER = ["Authorization":"Bearer \(TOKEN)"]

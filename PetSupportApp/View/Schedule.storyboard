@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -62,7 +62,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ScheduleListTableViewCell" rowHeight="150" id="QfL-lR-EjI" customClass="ScheduleListTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="74.5" width="414" height="150"/>
+                                        <rect key="frame" x="0.0" y="78" width="414" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QfL-lR-EjI" id="v3Z-5a-i4r">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
@@ -181,7 +181,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoItemTableViewCell" rowHeight="60" id="OCJ-HU-PJX" customClass="NoItemTableViewCell" customModule="PetSupportApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="224.5" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="228" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OCJ-HU-PJX" id="cL1-6O-Z6X">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -769,8 +769,8 @@
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="CA$ 30.00" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Geu-8K-Vv4">
-                                                        <rect key="frame" x="279.5" y="0.0" width="94.5" height="30"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="..." textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Geu-8K-Vv4">
+                                                        <rect key="frame" x="284" y="0.0" width="90" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="XJI-2g-Iqe"/>
                                                         </constraints>
@@ -1499,6 +1499,7 @@
                         <outlet property="lblTotalTimeTitle" destination="gKy-Dt-jKD" id="3pm-au-MYh"/>
                         <outlet property="lblcardLastfourDigit" destination="yby-Tg-XT3" id="v3j-7J-MYu"/>
                         <outlet property="lbldateTitle" destination="F1a-Ca-pBl" id="qLt-rb-0Lk"/>
+                        <outlet property="mapView" destination="WdR-Ry-xXa" id="zQL-ra-BWK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l2G-Nr-cM0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

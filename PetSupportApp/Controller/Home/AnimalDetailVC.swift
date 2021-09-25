@@ -91,7 +91,7 @@ class AnimalDetailVC: UIViewController {
         if let pet = petModel{
             
             fetchAllShelterLikes()
-            
+            ANIMAL_ID = pet.id
             if animalLikedIds.contains(pet.id){
                 petLikeBtn.setImage(UIImage(named: "liked"), for: .normal)
             }
@@ -178,7 +178,7 @@ class AnimalDetailVC: UIViewController {
         self.addChild(vc)
         vc.delegate = self
         //anish
-     //   vc.petModel = petModel
+        //   vc.petModel = petModel
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)
@@ -220,6 +220,7 @@ class AnimalDetailVC: UIViewController {
         
         let vc = SHome.instantiateViewController(withIdentifier: "CreateScheduleModalVC") as! CreateScheduleModalVC
         self.addChild(vc)
+        vc.selectedAnimal = self.petModel
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)
@@ -347,6 +348,7 @@ extension AnimalDetailVC:OptionVCDelegate{
     func didSelectOption(_ controller: OptionVC, optionname: String) {
         let vc = SHome.instantiateViewController(withIdentifier: "CreateScheduleModalVC") as! CreateScheduleModalVC
         self.addChild(vc)
+        vc.selectedAnimal = self.petModel
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)

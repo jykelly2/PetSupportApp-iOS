@@ -96,6 +96,7 @@ class HomeVC: UIViewController, BreadModalVCDelegate, ShelterRescueModalVCDelega
         }
         if let email  = UserDefaults.standard.object(forKey: "email") {
             EMAIL = email as! String
+            self.signIn(email: EMAIL)
         }
         if let isLoggedIn  = UserDefaults.standard.object(forKey: "isLoggedIn") {
             LOGGED_IN = isLoggedIn as! Bool
@@ -518,5 +519,32 @@ extension HomeVC {
             }
         }
     }
+    func signIn(email:String) {
+        KRProgressHUD.show()
+        let params = ["email":email]
+        Alamofire.request("https://petsupportapp.com/api/clients/login", method: .post, parameters: params).responseJSON { (response) in
+            if response.result.isSuccess {
+                let result:JSON = JSON(response.result.value!)
+                print(result)
+                self.parseSigninValues(json: result)
+            }else {
+                KRProgressHUD.dismiss()
+                print(response.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseSigninValues(json:JSON){
+        let payment_CardSaved = json["paymentCardSaved"].bool ?? false
+        let profile_Completed = json["profileCompleted"].bool ?? false
+        let scheduler_ProfileCompleted = json["schedulerProfileCompleted"].bool ?? false
+        let petPreference_Completed = json["petPreferenceCompleted"].bool ?? false
+        paymentCardSaved = payment_CardSaved
+        profileCompleted = profile_Completed
+        schedulerProfileCompleted = scheduler_ProfileCompleted
+        petPreferenceCompleted = petPreference_Completed
+        KRProgressHUD.dismiss()
+
+    }
+
 }
 

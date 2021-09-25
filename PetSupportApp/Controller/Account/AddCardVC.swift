@@ -146,6 +146,7 @@ extension AddCardVC : MFCardDelegate {
             print(card!)
             self.cvv = (card?.cvc)!
             self.cardNumber = (card?.number)!
+            CARD_NUM = (card?.number)!
             let exMonth = card?.month
             let exYear = card?.year
             self.expirationDate = "\(exMonth!)-\(exYear!)"

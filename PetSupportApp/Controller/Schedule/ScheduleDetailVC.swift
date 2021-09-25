@@ -38,7 +38,7 @@ class ScheduleDetailVC: UIViewController {
     
     
     //MARK:- Class Variables
-    var scheduleListModel:ScheduleListModel!
+    var scheduleListModel:Schedule!
 
     //MARK:- View life cycle
     override func viewWillAppear(_ animated: Bool) {
@@ -57,22 +57,22 @@ class ScheduleDetailVC: UIViewController {
     
     //MARK:- Custome Methods
     func setupUI(){
-        switch scheduleListModel.petStatus {
-        case .Approved:
-            statusIconView.backgroundColor = .green
-            break
-            
-        case .Reviewing:
-            statusIconView.backgroundColor = .orange
-        break
-
-        case .InProgress:
+        if let value = scheduleListModel {
+        if value.status == "Approved" {
             statusIconView.backgroundColor = .blue
-        break
+        }else if value.status == "Reviewing" {
+            statusIconView.backgroundColor = .red
+        }else if value.status == "In Progress" {
+            statusIconView.backgroundColor = .yellow
+        }else if value.status == "Cancelled" {
+            statusIconView.backgroundColor = .gray
+        }else if value.status == "Completed" {
+            statusIconView.backgroundColor = .green
         }
-        lblMeetPet.text =  scheduleListModel.petName
-        lblProgress.text =  scheduleListModel.petStatus.rawValue
-
+      
+            lblMeetPet.text =  value.animalName
+            lblProgress.text =  value.status
+        }
         
     }
     

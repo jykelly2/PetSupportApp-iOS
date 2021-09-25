@@ -22,7 +22,7 @@ class OptionVC: UIViewController {
     @IBOutlet weak var btnClose : UIButton!
   
     var delegate: OptionVCDelegate?
-    var petModel: PetModel?
+    var petModel: Animal?
 
     //MARK:- View life cycle
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ class OptionVC: UIViewController {
     func configureUI(){
         //self.mainView.alpha = 0.0
         if let _petModel = petModel {
-            lblPetName.text = _petModel.petName
+            lblPetName.text = _petModel.name
         }
         self.view.backgroundColor = .clear
         self.presentAnimation()
@@ -80,8 +80,19 @@ class OptionVC: UIViewController {
     }
         
     @IBAction func scheduleButtonAction(_ sender: UIButton) {
+        if LOGGED_IN == false {
+            simpleAlert("Log in to shedule pet")
+        }
+        else if paymentCardSaved == false {
+            simpleAlert("To shedule pet first add your payment method")
+        }
+       else if schedulerProfileCompleted == false {
+            simpleAlert("Your shedule profile is not complete")
+        }
+       else {
         delegate?.didSelectOption(self, optionname: "")
         self.dismissAnimation()
+       }
     }
     
     
