@@ -38,7 +38,8 @@ class MySelectedAnimalVC: UIViewController {
     var indexOfCellBeforeDragging:Int = 0
     var animalSelectedId = [String]()
     var animalLikedIds = [String]()
-    
+    var fromScheduleScreen = false
+    var animailId = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -95,6 +96,10 @@ class MySelectedAnimalVC: UIViewController {
             pageControl.currentPage = 0
             pageControl.numberOfPages = 4
             
+        }else {
+            print(self.fromScheduleScreen)
+            self.fetchAllPetsLikes()
+            self.getAnimalFromId(id: self.animailId)
         }
     }
     
@@ -103,9 +108,6 @@ class MySelectedAnimalVC: UIViewController {
             favBtnContainerView.layer.cornerRadius = favBtnContainerView.frame.height/2
             favBtnContainerView.clipsToBounds = true
         
-            calenderBtnContainerView.layer.cornerRadius = calenderBtnContainerView.frame.height/2
-            calenderBtnContainerView.clipsToBounds = true
-            
             petProfileImageView.layer.cornerRadius = petProfileImageView.frame.height/2
             petProfileImageView.clipsToBounds = true
     }
@@ -271,6 +273,99 @@ extension MySelectedAnimalVC {
                 print(reponse.result.error!.localizedDescription)
             }
         }
+    }
+    
+    //IF USER IS COMING FROM ONLY PET ID
+    
+    func getAnimalFromId(id:String) {
+        Alamofire.request("https://petsupportapp.com/api/animals/client/detail/\(id)", method: .get).responseJSON { (response) in
+            if response.result.isSuccess {
+                let data:JSON = JSON(response.result.value!)
+                print(data)
+                self.parseAnimalData(json: data)
+            }
+        }
+    }
+    func parseAnimalData(json:JSON){
+   //     for item in json {
+            let name = json["name"].string ?? ""
+            let type = json["animalType"].string ?? ""
+            let breed = json["breed"].string ?? ""
+            let gender = json["gender"].string ?? ""
+            let age = json["age"].int ?? 0
+            let size = json["size"].string ?? ""
+            var personalities = [String]()
+            let personalitiesArray = json["personalities"].array
+            for item in personalitiesArray! {
+                personalities.append(item.string ?? "")
+            }
+            let description = json["description"].string ?? ""
+            let id = json["_id"].string ?? ""
+            let createdAt = json["createdAt"].string ?? ""
+            
+            let isNeutered = json["isNeuteured"].bool ?? false
+            let isVaccinated = json["isVaccinated"].bool ?? false
+            let isPottyTrained = json["isPottyTrained"].bool ?? false
+            let isLeashTrained = json["isLeashTrained"].bool ?? false
+            let isAvailable = json["isAvailable"].bool ?? false
+            let isAdobted = json["isAdopted"].bool ?? false
+            let isScheduled = json["isScheduled"].bool ?? false
+            var animalPicture = [String]()
+            let pictures = json["pictures"].array
+            for item in pictures! {
+                animalPicture.append(item.string ?? "")
+            //    getImages(imageArray:item.string ?? "")
+            }
+            lblAnimalName.text = name
+            lblMeetPet.text = "Meet \(name)"
+            lblAnimalSubTitle.text = "\(breed)"
+            lblAnimalType.text = "\(breed)"
+            lblAnimalWeight.text = size
+            lblAnimalGender.text = gender
+            lblAnimalAge.text = "\(age) years old"
+            lblAnimalDescription.text = description
+            getImages(imageArray:animalPicture)
+            if isNeutered == true {
+                lblSpayed.text = "Spayed/Neutered"
+            }else{
+                lblSpayed.text = "Not Spayed/Neutered"
+            }
+            if isVaccinated == true {
+                lblVaccination.text = "Vaccinations up-to-date"
+            }else {
+                lblVaccination.text = "Not Vaccinated"
+            }
+            if isPottyTrained == true {
+                lblPottyTrained.text = "Potty Trained"
+            }else {
+                lblPottyTrained.text = "Not Potty Trained"
+            }
+            if isLeashTrained == true {
+                lblLeashTrained.text = "Leash Trained"
+            }else{
+                lblLeashTrained.text = "Not Leash Trained"
+            }
+             if animalLikedIds.contains(id){
+            petLikeBtn.setImage(UIImage(named: "liked"), for: .normal)
+             }
+            /*
+            //Shelter Values
+            let postalCode = item.1["shelter"]["postalCode"].string ?? ""
+            let city = item.1["shelter"]["city"].string ?? ""
+            let streetAdd = item.1["shelter"]["streetAddress"].string ?? ""
+            let province = item.1["shelter"]["province"].string ?? ""
+            let shelterName = item.1["shelter"]["name"].string ?? ""
+            let shelterId = item.1["shelter"]["_id"].string ?? ""
+            let phoneNum = item.1["shelter"]["phoneNumber"].string ?? ""
+            let email = item.1["shelter"]["email"].string ?? ""
+            var shelterPictuers = [String]()
+            let shelterPictuersArray = item.1["shelter"]["pictures"].array
+            for item in shelterPictuersArray! {
+                shelterPictuers.append(item.string ?? "")
+            }
+ */
+            
+       // }
     }
     
 }

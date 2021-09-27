@@ -117,6 +117,8 @@ class ShelterDetailVC: UIViewController {
     var shelterLikedId = [String]()
     var selectedShelterIds = [String]()
     var fromFav = false
+    var isfromScheduleScreen = false
+    var shlterid = ""
     //MARK:- View life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -165,6 +167,9 @@ class ShelterDetailVC: UIViewController {
             getAnimalClient(shelterId: shelter!.shelterId)
         }
       
+        if isfromScheduleScreen == true {
+            
+        }
         
         
     }
@@ -174,9 +179,6 @@ class ShelterDetailVC: UIViewController {
             favBtnContainerView.layer.cornerRadius = favBtnContainerView.frame.height/2
             favBtnContainerView.clipsToBounds = true
         
-            calenderBtnContainerView.layer.cornerRadius = calenderBtnContainerView.frame.height/2
-            calenderBtnContainerView.clipsToBounds = true
-                        
             shelterFavBtnContainerView.layer.cornerRadius = shelterFavBtnContainerView.frame.height/2
             shelterFavBtnContainerView.clipsToBounds = true
             

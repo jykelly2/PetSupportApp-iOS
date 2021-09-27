@@ -76,6 +76,10 @@ class ScheduleListTableViewCell: UITableViewCell {
 }
 
 class ScheduleList: UIViewController, ScheduleOptionVCDelegate {
+    
+    
+
+    
     func didScheduleOptionClose(_ isSelect: Bool) {
         if let parent = self.parent?.parent as? ScheduleVC{
             parent.hidefadeView()
@@ -98,7 +102,7 @@ class ScheduleList: UIViewController, ScheduleOptionVCDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        getBookingList()
+      
     }
     override func viewDidLayoutSubviews() {
     }
@@ -107,7 +111,7 @@ class ScheduleList: UIViewController, ScheduleOptionVCDelegate {
         super.viewWillAppear(animated)
         
         if let parent = self.parent?.parent as? ScheduleVC{
-            
+            getBookingList()
             switch self.scheduleType {
                 
             case .Future:
@@ -137,7 +141,7 @@ class ScheduleList: UIViewController, ScheduleOptionVCDelegate {
         
         let vc = SSchedule.instantiateViewController(withIdentifier: "ScheduleOptionVC") as! ScheduleOptionVC
         self.addChild(vc)
-      //  vc.scheduleListModel = scheduleLists[sender.tag]
+        vc.scheduleListModel = currentSchedule[sender.tag]
         vc.delegate = self
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
@@ -150,7 +154,18 @@ class ScheduleList: UIViewController, ScheduleOptionVCDelegate {
     @objc func selectButtonAction(_ sender:UIButton){
     }
   
-
+    func btnSelected(sender: UIButton,bookingId: String) {
+        if sender.tag == 4 {
+            let alert = UIAlertController(title: "Pet Support", message: "Are you sure you would like to cancel schedule", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Yes", style: .default) { (action) in
+                self.cancelBooking(bookingId:bookingId)
+            }
+            let cancel = UIAlertAction(title: "No", style: .cancel, handler: nil)
+            alert.addAction(action)
+            alert.addAction(cancel)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 //MARK:- UITableViewDelegate,UITableViewDataSource
@@ -191,7 +206,7 @@ extension ScheduleList:UITableViewDelegate,UITableViewDataSource{
 extension ScheduleList {
     func getBookingList(){
         KRProgressHUD.show()
-        Alamofire.request("https://petsupportapp.com/api/bookings/client/60c8237067811df9a1e33ca1", method: .get).responseJSON { (response) in
+        Alamofire.request("https://petsupportapp.com/api/bookings/client/\(USER_ID)", method: .get).responseJSON { (response) in
             if response.result.isSuccess {
                 let data :JSON = JSON(response.result.value!)
                 print(data)
@@ -245,6 +260,23 @@ extension ScheduleList {
             break
         }
         KRProgressHUD.dismiss()
+    }
+    func cancelBooking(bookingId:String){
+        let params = ["status":"Cancelled"]
+        Alamofire.request("https://petsupportapp.com/api/bookings/client/cancel/\(bookingId)", method: .post, parameters: params).responseJSON { (response) in
+            if response.result.isSuccess {
+                let res:JSON = JSON(response.result.value!)
+                print(res)
+                let alert = UIAlertController(title: "Pet Support", message: res.string ?? "", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+                    self.tabBarController?.selectedIndex = 0
+                    //self.navigationController?.popToRootViewController(animated: true)
+                }
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+        }
     }
 }
 

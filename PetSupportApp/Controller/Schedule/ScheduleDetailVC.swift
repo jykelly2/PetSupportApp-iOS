@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ScheduleDetailVC: UIViewController {
     //MARK:- UIControl's Outlets
     @IBOutlet weak var lblMeetPet: UILabel!
     @IBOutlet weak var lblPetDescription: UILabel!
     
+    @IBOutlet weak var animalImage: UIImageView!
     @IBOutlet weak var lblStatus: UILabel!
     @IBOutlet weak var statusIconView: UIView!
     @IBOutlet weak var lblProgress: UILabel!
@@ -72,6 +75,7 @@ class ScheduleDetailVC: UIViewController {
       
             lblMeetPet.text =  value.animalName
             lblProgress.text =  value.status
+            self.getImages(imageArray: value.animalPicture)
         }
         
     }
@@ -83,8 +87,7 @@ class ScheduleDetailVC: UIViewController {
         btnCancel.layer.borderColor = UIColor.init(rgb: 0xE62BFF).cgColor
         btnCancel.layer.borderWidth = 1
         
-        btnEdit.layer.cornerRadius = btnCancel.frame.height/2
-        btnEdit.clipsToBounds = true
+       
         
         statusIconView.layer.cornerRadius = statusIconView.frame.height/2
         statusIconView.clipsToBounds = true
@@ -113,7 +116,56 @@ class ScheduleDetailVC: UIViewController {
     }
     
     @IBAction func cancelButtonAction(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Pet Support", message: "Are you sure you would like to cancel schedule", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Yes", style: .default) { (action) in
+            self.cancelBooking(bookingId:self.scheduleListModel.id)
+        }
+        let cancel = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        alert.addAction(action)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+        
     }
-    
+    func cancelBooking(bookingId:String){
+        let params = ["status":"Cancelled"]
+        Alamofire.request("https://petsupportapp.com/api/bookings/client/cancel/\(bookingId)", method: .post, parameters: params).responseJSON { (response) in
+            if response.result.isSuccess {
+                let res:JSON = JSON(response.result.value!)
+                print(res)
+                let alert = UIAlertController(title: "Pet Support", message: res.string ?? "", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+                   // self.tabBarController?.selectedIndex = 0
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+        }
+    }
+
+    func getImages(imageArray:[String]) {
+        
+        let params:[String:Any] = ["bucket":"Animal","pictures":imageArray]
+        Alamofire.request("https://petsupportapp.com/api/images/getImageUrls/", method:.post, parameters: params, encoding: JSONEncoding.default).responseJSON { (response) in
+            if response.result.isSuccess {
+                let data : JSON = JSON(response.result.value!)
+                self.parseImage(json: data)
+            }else {
+                print(response.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseImage(json:JSON){
+      var petImages = [String]()
+        for item in json {
+            if let myItem = item.1.string {
+                    petImages.append(myItem)
+            }
+        }
+        if let url = URL(string: petImages[0]){
+            self.animalImage.sd_setImage(with: url, completed: nil)
+        }
+    }
 }
 

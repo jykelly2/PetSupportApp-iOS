@@ -16,6 +16,7 @@ class ConfirmScheduleVC: UIViewController,MKMapViewDelegate {
     //MARK:- UIControl's Outlets
     @IBOutlet weak var lblMeetPet: UILabel!
     @IBOutlet weak var lblPetDescription: UILabel!
+    @IBOutlet weak var animalImage: UIImageView!
     
     @IBOutlet weak var lbldateTitle: UILabel!
     @IBOutlet weak var lblDate: UILabel!
@@ -71,6 +72,7 @@ class ConfirmScheduleVC: UIViewController,MKMapViewDelegate {
     //MARK:- Custome Methods
     func setupUI(){
         if let pet = selectedAnimal {
+            self.getImages(imageArray: pet.pictures)
             mapView.delegate = self
             timesArray.append(self.startTime)
             timesArray.append(self.endTime)
@@ -227,7 +229,37 @@ extension ConfirmScheduleVC {
             if response.result.isSuccess {
                 let data : JSON = JSON(response.result.value!)
                 print(data)
+                let alert = UIAlertController(title: "Pet Support", message: data.string ?? "", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
             }
+        }
+    }
+    
+    func getImages(imageArray:[String]) {
+        
+        let params:[String:Any] = ["bucket":"Animal","pictures":imageArray]
+        Alamofire.request("https://petsupportapp.com/api/images/getImageUrls/", method:.post, parameters: params, encoding: JSONEncoding.default).responseJSON { (response) in
+            if response.result.isSuccess {
+                let data : JSON = JSON(response.result.value!)
+                self.parseImage(json: data)
+            }else {
+                print(response.result.error!.localizedDescription)
+            }
+        }
+    }
+    func parseImage(json:JSON){
+      var petImages = [String]()
+        for item in json {
+            if let myItem = item.1.string {
+                    petImages.append(myItem)
+            }
+        }
+        if let url = URL(string: petImages[0]){
+            self.animalImage.sd_setImage(with: url, completed: nil)
         }
     }
 }

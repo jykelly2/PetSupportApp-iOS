@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import KRProgressHUD
 
 @objc protocol ScheduleOptionVCDelegate {
         @objc func didScheduleOptionClose(_ isSelect: Bool)
+        func btnSelected(sender:UIButton,bookingId:String)
     }
 
 class ScheduleOptionVC: UIViewController {
@@ -20,7 +24,7 @@ class ScheduleOptionVC: UIViewController {
     @IBOutlet weak var mainView : UIView!
     @IBOutlet weak var btnClose : UIButton!
   
-    var scheduleListModel:ScheduleListModel?
+    var scheduleListModel:Schedule?
     weak var delegate:ScheduleOptionVCDelegate?
     //MARK:- View life cycle
     override func viewDidLoad() {
@@ -37,7 +41,7 @@ class ScheduleOptionVC: UIViewController {
     
     func configureUI(){
         if let _scheduleListModel = scheduleListModel {
-            lblPetName.text = _scheduleListModel.petName
+            lblPetName.text = _scheduleListModel.animalName
         }
         //self.mainView.alpha = 0.0
         self.view.backgroundColor = .clear
@@ -68,20 +72,32 @@ class ScheduleOptionVC: UIViewController {
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
         self.delegate?.didScheduleOptionClose(true)
-        self.dismissAnimation()
+       
     }
     
     @IBAction func viewScheduleButtonAction(_ sender: UIButton) {
+        let vc = storyboard?.instantiateViewController(identifier: "ScheduleDetailVC") as! ScheduleDetailVC
+        vc.scheduleListModel = self.scheduleListModel
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func viewPetButtonAction(_ sender: UIButton) {
+        let vc = SHome.instantiateViewController(withIdentifier: "MySelectedAnimalVC") as! MySelectedAnimalVC
+        vc.fromScheduleScreen = true
+        vc.animailId = self.scheduleListModel!.animalId
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func viewShelterButtonAction(_ sender: UIButton) {
+//        let vc = SHome.instantiateViewController(withIdentifier: "ShelterDetailVC") as! ShelterDetailVC
+//        vc.isfromScheduleScreen = true
+//
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func cancelScheduleButtonAction(_ sender: UIButton) {
-        
+        self.delegate?.btnSelected(sender: sender, bookingId: self.scheduleListModel!.id)
+        self.dismissAnimation()
     }
         
     @IBAction func scheduleButtonAction(_ sender: UIButton) {
@@ -94,6 +110,6 @@ class ScheduleOptionVC: UIViewController {
         */
     }
     
-    
+
 
 }
