@@ -13,7 +13,39 @@ This allows potential adopters to get to know different personality of dogs and 
 ## Screenshots
 <div>
 <img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/Home.png" height="600" width="280">
- &nbsp; &nbsp; &nbsp; &nbsp;
+ &nbsp; &nbsp; &nbsp; 
+   <img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/Filters.png" height="600" width="280">
+ &nbsp; &nbsp; &nbsp;
    <img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/Map.png" height="600" width="280">
 <div>
 </br>
+ 
+ <div>
+<img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/AnimalDetail1.png" height="600" width="280">
+ &nbsp; &nbsp; &nbsp; 
+   <img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/AnimalDetail2.png" height="600" width="280">
+ &nbsp; &nbsp; &nbsp;
+   <img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/ConfirmSchedule.png" height="600" width="280">
+<div>
+</br>
+   <div>
+<img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/FavouritesAnimals.png" height="600" width="280">
+ &nbsp; &nbsp; &nbsp; 
+   <img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/FavouriteShelters.png" height="600" width="280">
+ &nbsp; &nbsp; &nbsp;
+   <img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/ScheduleList.png" height="600" width="280">
+<div>
+</br>
+    
+       <div>
+<img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/ShelterDetail1.png" height="600" width="280">
+ &nbsp; &nbsp; &nbsp; 
+   <img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/ShelterDetail2.png" height="600" width="280">
+ &nbsp; &nbsp; &nbsp;
+   <img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/IdealPet.png" height="600" width="280">
+<div>
+</br>
+        
+<div>
+<img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/SignIn.png" height="600" width="280">
+ <div>
