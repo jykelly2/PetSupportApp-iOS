@@ -11,3 +11,9 @@ This allows potential adopters to get to know different personality of dogs and 
   * Swift, Xcode, MapKit, Core Location, Facebook Login, Google Sign-In, Alamofire, SDWebImage, SwiftyJSON, KRProgressHUD
  
 ## Screenshots
+<div>
+<img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/Home.png" height="600" width="280">
+ &nbsp; &nbsp; &nbsp; &nbsp;
+   <img src="https://github.com/jykelly2/PetSupportApp-iOS/blob/master/Pet%20Support%20iOS%20Pictures/Map.png" height="600" width="280">
+<div>
+</br>
