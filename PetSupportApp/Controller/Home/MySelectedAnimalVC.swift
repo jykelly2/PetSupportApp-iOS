@@ -281,8 +281,11 @@ extension MySelectedAnimalVC {
         Alamofire.request("https://petsupportapp.com/api/animals/client/detail/\(id)", method: .get).responseJSON { (response) in
             if response.result.isSuccess {
                 let data:JSON = JSON(response.result.value!)
-                print(data)
-                self.parseAnimalData(json: data)
+              
+                    print(data)
+                    self.parseAnimalData(json: data)
+                
+              
             }
         }
     }
@@ -296,7 +299,7 @@ extension MySelectedAnimalVC {
             let size = json["size"].string ?? ""
             var personalities = [String]()
             let personalitiesArray = json["personalities"].array
-            for item in personalitiesArray! {
+            for item in personalitiesArray ?? [] {
                 personalities.append(item.string ?? "")
             }
             let description = json["description"].string ?? ""
@@ -312,7 +315,7 @@ extension MySelectedAnimalVC {
             let isScheduled = json["isScheduled"].bool ?? false
             var animalPicture = [String]()
             let pictures = json["pictures"].array
-            for item in pictures! {
+            for item in pictures ?? [] {
                 animalPicture.append(item.string ?? "")
             //    getImages(imageArray:item.string ?? "")
             }

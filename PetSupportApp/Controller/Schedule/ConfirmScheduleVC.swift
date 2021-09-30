@@ -200,6 +200,7 @@ class ConfirmScheduleVC: UIViewController,MKMapViewDelegate {
         
         let vc = SSchedule.instantiateViewController(withIdentifier: "ScheduleOptionVC") as! ScheduleOptionVC
         self.addChild(vc)
+    //    vc.scheduleListModel = self.selectedAnimal
         vc.view.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height)
         self.view.addSubview(vc.view)
         vc.didMove(toParent: self)

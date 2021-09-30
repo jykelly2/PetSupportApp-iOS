@@ -1553,6 +1553,7 @@
                         <outlet property="shelterLikeBtn" destination="RSl-qo-hFE" id="WKA-Nk-v4N"/>
                         <outlet property="shelterTopImageView" destination="DnO-Xd-pau" id="ktt-cy-diq"/>
                         <outlet property="sheltetPetCollectionView" destination="4rw-ID-97U" id="beC-gF-v6B"/>
+                        <outlet property="shlterNameAgain" destination="2i9-ez-gmu" id="u27-Gu-g4a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RkI-ss-2S6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

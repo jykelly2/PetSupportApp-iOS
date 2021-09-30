@@ -252,11 +252,17 @@ extension ScheduleList {
             self.currentSchedule = futureSchedule
             self.tblSchedule.reloadData()
             lblTotalItems.text = "\(currentSchedule.count) Bookings"
+            if currentSchedule.count <= 0 {
+                tblSchedule.isHidden = true
+            }
             break
         case .Past:
             self.currentSchedule = pastSchedule
             self.tblSchedule.reloadData()
             lblTotalItems.text = "\(currentSchedule.count) Bookings"
+            if currentSchedule.count <= 0 {
+                tblSchedule.isHidden = true
+            }
             break
         }
         KRProgressHUD.dismiss()

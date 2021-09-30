@@ -25,6 +25,9 @@ class ScheduleOptionVC: UIViewController {
     @IBOutlet weak var btnClose : UIButton!
   
     var scheduleListModel:Schedule?
+    var animalListModel : Animal?
+    var fromScheduleVCS = false
+    var shelterId  = ""
     weak var delegate:ScheduleOptionVCDelegate?
     //MARK:- View life cycle
     override func viewDidLoad() {
@@ -72,12 +75,12 @@ class ScheduleOptionVC: UIViewController {
     //MARK:- Action Methods
     @IBAction func closeButtonAction(_ sender: UIButton) {
         self.delegate?.didScheduleOptionClose(true)
-       
+        self.dismissAnimation()
     }
     
     @IBAction func viewScheduleButtonAction(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(identifier: "ScheduleDetailVC") as! ScheduleDetailVC
-        vc.scheduleListModel = self.scheduleListModel
+       // vc.scheduleListModel = self.scheduleListModel
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -89,10 +92,13 @@ class ScheduleOptionVC: UIViewController {
     }
     
     @IBAction func viewShelterButtonAction(_ sender: UIButton) {
-//        let vc = SHome.instantiateViewController(withIdentifier: "ShelterDetailVC") as! ShelterDetailVC
-//        vc.isfromScheduleScreen = true
-//
-//        self.navigationController?.pushViewController(vc, animated: true)
+        if shelterId != "" {
+            let vc = SHome.instantiateViewController(withIdentifier: "ShelterDetailVC") as! ShelterDetailVC
+            vc.isfromScheduleScreen = true
+            vc.shelterId = self.shelterId
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
     }
     
     @IBAction func cancelScheduleButtonAction(_ sender: UIButton) {

@@ -93,6 +93,7 @@ class ShelterDetailVC: UIViewController {
     @IBOutlet weak var shelterFavBtnContainerView: UIView!
     @IBOutlet weak var imageContainerView: UIView!
     @IBOutlet weak var shelterLikeBtn: UIButton!
+    @IBOutlet weak var shlterNameAgain: UILabel!
     
     @IBOutlet weak var lblShelterName: UILabel!
     @IBOutlet weak var lblShelterSub: UILabel!
@@ -118,7 +119,7 @@ class ShelterDetailVC: UIViewController {
     var selectedShelterIds = [String]()
     var fromFav = false
     var isfromScheduleScreen = false
-    var shlterid = ""
+    var shelterId = ""
     //MARK:- View life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -168,7 +169,12 @@ class ShelterDetailVC: UIViewController {
         }
       
         if isfromScheduleScreen == true {
-            
+            shelterInfo(id: self.shelterId)
+            getAnimalClient(shelterId:shelterId)
+            fetchAllShelterLikes()
+            if shelterLikedId.contains(shelterId){
+                shelterLikeBtn.setImage(UIImage(named:"liked"), for: .normal)
+            }
         }
         
         
@@ -336,7 +342,20 @@ extension ShelterDetailVC {
     }
     func parseShelterInfo(json:JSON){
         self.lblShelterDescription.text = json["description"].string ?? ""
+        self.lblPhoneNumber.text = json["phoneNumber"].string ?? ""
+        self.lblEmail.text = json["email"].string ?? ""
+        self.lblShelterName.text = json["name"].string ?? ""
+        self.lblShelterSub.text = json["name"].string ?? ""
+        self.shlterNameAgain.text = json["name"].string ?? ""
+        
+        var image = [String]()
+        let jsonImage = json["pictures"].array ?? []
+        for images in jsonImage {
+            image.append(images.string ?? "")
+        }
+        getImages(imageArray: image)
     }
+    
     func getImages(imageArray:[String]) {
         
         let params:[String:Any] = ["bucket":"Shelter","pictures":imageArray]
@@ -362,7 +381,7 @@ extension ShelterDetailVC {
         if let url = URL(string: petImagesArray[0]){
         shelterImageView.sd_setImage(with: url, completed: nil)
             shelterTopImageView.sd_setImage(with: url, completed: nil)
-        }
+           }
         }
     }
     //SHELTER
@@ -415,6 +434,7 @@ extension ShelterDetailVC {
             if reponse.result.isSuccess {
                 KRProgressHUD.show()
                 let data:JSON = JSON(reponse.result.value!)
+                print(data)
                 self.parseValues(json: data["animals"])
             }else {
                 print(reponse.result.error!.localizedDescription)
@@ -473,6 +493,8 @@ extension ShelterDetailVC {
         KRProgressHUD.dismiss()
         
     }
+    
+
 }
 /*
 extension ShelterDetailVC:UIScrollViewDelegate{
